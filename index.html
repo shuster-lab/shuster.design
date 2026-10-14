@@ -9,7 +9,7 @@
 <meta property="og:title" content="Stepan Shuster · UX/UI a web designer">
 <meta property="og:description" content="Nový web se právě staví. Napište mi na stepan@shuster.design">
 <meta property="og:url" content="https://shuster.design/">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff4a1f'/><text y='.85em' font-size='78' font-family='Arial Black,sans-serif' font-weight='900' fill='%230c0c0c' x='14'>S</text></svg>">
+<link rel="icon" id="favicon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230c0c0c'/><text x='50' y='72' text-anchor='middle' font-size='64' font-family='Arial Black,sans-serif' font-weight='900' fill='%23ffffff'>S</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -61,13 +61,26 @@ h1{animation-delay:.25s}.lede{animation-delay:.35s}.actions{animation-delay:.45s
 .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:32px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:var(--r);font:inherit;font-size:15px;font-weight:600;letter-spacing:-.015em;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:background .25s,color .25s,border-color .25s,transform .35s var(--spring)}
 .btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
-.btn-solid{background:var(--accent);color:var(--fg)}
+.btn-solid{background:var(--accent);color:#fff}
 .btn-solid:hover{background:var(--fg);color:#fff}
 .btn-ghost{background:#fff;color:var(--fg);border-color:var(--border)}
 .btn-ghost:hover{border-color:rgba(var(--fg-rgb),.45)}
 @media(hover:hover){.btn:hover{transform:scale(.95)}}
 .btn:active{transform:scale(.91);transition-duration:.25s,.25s,.25s,.12s}
 .btn-ghost.done{border-color:var(--fg)}
+/* копировать почту: квадратная кнопка с иконкой, подсказка над ней */
+.btn-icon{position:relative;width:48px;padding:0;flex:0 0 48px}
+.btn-icon svg{width:18px;height:18px;stroke-width:1.8;transition:opacity .2s,transform .3s var(--spring)}
+.btn-icon .ok{position:absolute;opacity:0;transform:scale(.6)}
+.btn-icon.done .cp{opacity:0;transform:scale(.6)}
+.btn-icon.done .ok{opacity:1;transform:none}
+.btn-icon::after{
+  content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translate(-50%,4px);
+  padding:6px 9px;border-radius:6px;background:var(--fg);color:#fff;font-size:12px;font-weight:500;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s,transform .3s var(--out);
+}
+@media(hover:hover){.btn-icon:hover::after{opacity:1;transform:translate(-50%,0)}}
+.btn-icon.done::after{opacity:1;transform:translate(-50%,0)}
 
 .links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;margin-top:28px}
 .links a{font-size:14px;font-weight:500;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .2s}
@@ -82,8 +95,8 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:22px var(--ed
   :root{--edge:20px}
   .top{padding-top:18px}
   .logo{font-size:min(calc(84vw / 5.168),14vh)}
-  .actions{width:100%;max-width:360px}
-  .btn{width:100%}
+  .actions{width:100%;max-width:360px;flex-wrap:nowrap}
+  .btn-solid{flex:1;min-width:0}
   footer{flex-direction:column;align-items:center;text-align:center;gap:4px}
 }
 @media(max-height:560px) and (min-width:601px){.logo{margin-bottom:24px}main{padding-top:8px}}
@@ -112,7 +125,11 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:22px var(--ed
   <div class="actions">
     <a class="btn btn-solid" href="mailto:stepan@shuster.design">stepan@shuster.design
       <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <button class="btn btn-ghost" type="button" id="copy" data-cs="Kopírovat e‑mail" data-en="Copy email">Kopírovat e‑mail</button>
+    <button class="btn btn-ghost btn-icon" type="button" id="copy" aria-label="Kopírovat e‑mail" data-tip="Kopírovat e‑mail"
+            data-tip-cs="Kopírovat e‑mail" data-tip-en="Copy email" data-done-cs="Zkopírováno" data-done-en="Copied">
+      <svg class="cp" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M15 9V5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15H9"/></svg>
+      <svg class="ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </button>
   </div>
   <nav class="links" aria-label="Profily">
     <a href="https://www.linkedin.com/in/shusterdesign/" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
@@ -134,12 +151,34 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:22px var(--ed
   var calm = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
   if (window.ShusterLogo) calm ? ShusterLogo.mount(el) : ShusterLogo.spin(el, 150);
 
+  // фавиконка: белая S в чёрном скруглённом квадрате, шрифт S меняется по кругу
+  var fav = document.getElementById('favicon');
+  if (window.ShusterLogo && fav && !calm) {
+    var S = ShusterLogo.glyphs('S'), CAP = ShusterLogo.CAP, k = 0;
+    var BOX = 100, H = 58;                        // высота буквы в квадрате 100×100
+    var icons = S.map(function(g){
+      var sc = H / CAP, w = g[0] * sc;
+      if (w > 72) { sc = 72 / g[0]; w = 72; }     // широкие начертания ужимаем по ширине
+      var h = CAP * sc, x = (BOX - w) / 2, y = (BOX - h) / 2;
+      var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>"
+        + "<rect width='100' height='100' rx='24' fill='#0c0c0c'/>"
+        + "<path fill='#fff' transform='translate(" + x.toFixed(2) + "," + y.toFixed(2) + ") scale(" + sc.toFixed(4) + ")' d='" + g[1] + "'/></svg>";
+      return 'data:image/svg+xml,' + encodeURIComponent(svg);
+    });
+    fav.href = icons[0];
+    setInterval(function(){
+      k = (k + 1) % icons.length; fav.href = icons[k];   // во фоновой вкладке браузер сам замедлит до раза в секунду
+    }, 600);
+  }
+
   // язык: чешский главный, английский по кнопке; выбор запоминается
   var btns = document.querySelectorAll('.lang button'), copyBtn = document.getElementById('copy');
   function setLang(l){
     document.documentElement.lang = l;
     document.querySelectorAll('[data-cs]').forEach(function(n){ n.textContent = n.getAttribute('data-' + l); });
     btns.forEach(function(b){ b.classList.toggle('on', b.dataset.l === l); });
+    copyBtn.setAttribute('aria-label', copyBtn.getAttribute('data-tip-' + l));
+    if (!copyBtn.classList.contains('done')) copyBtn.setAttribute('data-tip', copyBtn.getAttribute('data-tip-' + l));
     try { localStorage.setItem('lang', l); } catch(e){}
   }
   btns.forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.l); }); });
@@ -150,9 +189,13 @@ footer{display:flex;justify-content:space-between;gap:16px;padding:22px var(--ed
   copyBtn.addEventListener('click', function(){
     var mail = 'stepan@shuster.design', l = document.documentElement.lang;
     function done(){
-      copyBtn.textContent = l === 'en' ? 'Copied' : 'Zkopírováno';
+      copyBtn.setAttribute('data-tip', copyBtn.getAttribute('data-done-' + l));
       copyBtn.classList.add('done');
-      setTimeout(function(){ copyBtn.textContent = copyBtn.getAttribute('data-' + document.documentElement.lang); copyBtn.classList.remove('done'); }, 1800);
+      clearTimeout(copyBtn._t);
+      copyBtn._t = setTimeout(function(){
+        copyBtn.classList.remove('done');
+        copyBtn.setAttribute('data-tip', copyBtn.getAttribute('data-tip-' + document.documentElement.lang));
+      }, 1800);
     }
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(mail).then(done, fallback); else fallback();
     function fallback(){
