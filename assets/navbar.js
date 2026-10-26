@@ -56,12 +56,14 @@
     });
     // Open CV: файл берётся из админки (Контакты в навбаре → CV) и открывается
     // в новой вкладке. Пока файла нет, строка серая с пометкой «Soon».
+    // чешская версия сайта открывает чешское CV, если оно загружено
+    function cvHref() { return (LANG === 'cs' && contacts.cv_cs) || contacts.cv; }
     var cv = el('a', 'dock-row dock-nav' + (contacts.cv ? '' : ' is-off'),
       '<span data-nav="opencv">' + t.opencv + '</span>' +
       (contacts.cv ? '<span class="row-note">' + ICON.ext + '</span>'
                    : '<span class="row-note" data-tip="soon">' + t.soon + '</span>'));
     if (contacts.cv) {
-      cv.href = contacts.cv; cv.target = '_blank'; cv.rel = 'noopener';
+      cv.href = cvHref(); cv.target = '_blank'; cv.rel = 'noopener';
       cv.addEventListener('click', function () { setOpen(false); });
     } else {
       cv.setAttribute('aria-disabled', 'true');
@@ -206,6 +208,7 @@
         b.classList.toggle('active', (b.id === 'btnCS' ? 'cs' : 'en') === LANG);
       });
       more.setAttribute('aria-label', t.more);
+      if (contacts.cv) cv.href = cvHref();
       measure();
     }
     window._dockRelabel = relabel;

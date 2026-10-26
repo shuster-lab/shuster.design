@@ -146,10 +146,21 @@
     var box = el && el.closest ? el.closest('.pj-img') : null;
     return box && grid.contains(box) ? box : null;
   }
+  // бокс 56px не выходит за края картинки и не налезает на плашку с нишей в углу
+  function place(box, r, x, y) {
+    var S = 56, M = 12;
+    x = Math.max(M, Math.min(r.width - S - M, x)); y = Math.max(M, Math.min(r.height - S - M, y));
+    var tg = box.querySelector('.pj-tag');
+    if (tg) {
+      var t = tg.getBoundingClientRect(), tl = t.left - r.left - 8, tt = t.top - r.top - 8;
+      if (x + S > tl && y + S > tt) y = Math.max(M, tt - S);
+    }
+    return [x, y];
+  }
   function follow() {
     raf = 0; if (!cur) return;
     var lb = cur.querySelector('.pj-lb'); if (!lb) return;
-    var r = cur.getBoundingClientRect(), tx = mx - r.left + 16, ty = my - r.top + 16;
+    var r = cur.getBoundingClientRect(), p = place(cur, r, mx - r.left + 16, my - r.top + 16), tx = p[0], ty = p[1];
     var dx = (tx - lx) * .28, dy = (ty - ly) * .28;
     lx += dx; ly += dy;                                      // мягко догоняет курсор
     lb.style.transform = 'translate3d(' + lx.toFixed(1) + 'px,' + ly.toFixed(1) + 'px,0)';
@@ -160,7 +171,7 @@
   }
   function enter(box) {
     var r = box.getBoundingClientRect();
-    lx = mx - r.left + 16; ly = my - r.top + 16;            // подпись сразу у курсора, без прыжка из угла
+    var p0 = place(box, r, mx - r.left + 16, my - r.top + 16); lx = p0[0]; ly = p0[1];   // подпись сразу у курсора, без прыжка из угла
     var lb = box.querySelector('.pj-lb');
     if (lb) lb.style.transform = 'translate3d(' + lx + 'px,' + ly + 'px,0)';
     box.classList.add('is-on');

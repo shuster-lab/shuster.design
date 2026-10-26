@@ -79,6 +79,8 @@ window.SEO={cs:{t:"Stepan Shuster · UX/UI a produktový designer, Praha",d:"Por
 <link rel="icon" type="image/png" sizes="96x96" href="/media/common/favicon-96.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" as="image" href="media/hero/stepan-cut.webp?v=3" fetchpriority="high">
+<link rel="preload" as="image" href="media/hero/stepan-depth.png">
 <link rel="stylesheet" href="assets/transition.css?v=20261102c">
 <link rel="stylesheet" href="assets/navbar.css?v=20261031d">
 <link rel="stylesheet" href="assets/reveal.css?v=20261025a">
@@ -913,9 +915,10 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size
   // где потом стоит фото из символов в hero; затем набирается имя
   function start() {
     var asc = document.querySelector('.hero-ascii'), done = false;
-    function fallback() { if (done) return; done = true; startLogo(); }
+    // старый логотип-спиннер больше не показываем: если символы не успели (медленная сеть, нет WebGL), просто открываем hero
+    function fallback() { if (done) return; done = true; exitLoader(); }
     if (!asc || matchMedia('(prefers-reduced-motion:reduce)').matches) return fallback();
-    var to = setTimeout(fallback, 1800);
+    var to = setTimeout(fallback, 4500);
     (function wait() { if (asc._ascii && window.AsciiAssemble) asc._ascii.ready(go); else if (!done) setTimeout(wait, 40); })();
     function go() {
       if (done) return;
@@ -1166,7 +1169,7 @@ body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size
   fetch('content/contacts.json', { cache: 'no-cache' }).then(function(r){ return r.ok ? r.json() : null; })
     .then(function(c){
       var b = document.getElementById('cvBtn');
-      if (b && c && c.cv) { b.href = c.cv; b.style.display = ''; }
+      if (b && c && c.cv) { window.__CV = c; b.href = (document.documentElement.getAttribute('data-lang') === 'cs' && c.cv_cs) || c.cv; b.style.display = ''; }
     }).catch(function(){});
 
 
@@ -1284,6 +1287,7 @@ function setLang(lang){
   var y=new Date().getFullYear();
   document.getElementById('footerCopy').textContent=lang==='cs'?'© '+y+' · Všechna práva vyhrazena':'© '+y+' · All rights reserved';
   document.documentElement.lang=lang;
+  var cvb=document.getElementById('cvBtn');if(cvb&&window.__CV)cvb.href=(lang==='cs'&&__CV.cv_cs)||__CV.cv;
   document.querySelectorAll('[data-ph-en]').forEach(function(el){el.placeholder=el.getAttribute('data-ph-'+lang)||el.placeholder;});
   if(window.SEO&&SEO[lang]){document.title=SEO[lang].t;var md=document.querySelector('meta[name=description]');if(md)md.content=SEO[lang].d;}
 }
@@ -1417,9 +1421,9 @@ document.addEventListener('visibilitychange',upd);})();
 <script src="assets/ascii.js?v=20261030a"></script>
 <script src="assets/grain.js?v=20261029a"></script>
 <script src="assets/playground.js?v=20261031e"></script>
-<script src="assets/projects-grid.js?v=20261026a"></script>
+<script src="assets/projects-grid.js?v=20261027a"></script>
 <script src="assets/logo.js?v=20261025a"></script>
-<script src="assets/navbar.js?v=20261031d"></script>
+<script src="assets/navbar.js?v=20261027a"></script>
 <script>
 /* О мне: объекты плывут на скролле и слегка тянутся за мышью.
    Каждый со своей «глубиной»: дальние двигаются меньше. Рядом с курсором
