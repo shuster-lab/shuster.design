@@ -1,0 +1,28 @@
+{
+  "featured": [
+    {
+      "case": "pragers",
+      "layout": "left"
+    },
+    {
+      "case": "smart-ek",
+      "layout": "right"
+    },
+    {
+      "case": "neibo",
+      "layout": "center"
+    },
+    {
+      "case": "nure",
+      "layout": "wide-left"
+    },
+    {
+      "case": "alterna",
+      "layout": "narrow-right"
+    },
+    {
+      "case": "carhunt",
+      "layout": "wide-center"
+    }
+  ]
+}

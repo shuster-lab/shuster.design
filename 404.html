@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="cs" data-lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- 404 отдаётся по любому адресу (/neco/neco), поэтому все пути считаем от корня сайта -->
+<base href="/">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="robots" content="noindex">
+<style>html.pt-in{background:#0a0a0a}html.pt-in::before{content:'';position:fixed;inset:0;z-index:2147483000;background:#0a0a0a;pointer-events:none}html.pt-in.pt-open::before{display:none}@view-transition{navigation:auto}::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation:none}</style>
+<script>/* ?lang=en или ?lang=cs в ссылке: язык для этого визита и дальше */(function(){var q=(location.search.match(/[?&]lang=(cs|en)(?:&|$)/)||[])[1];if(!q)return;window.__LANGQ=q;try{localStorage.setItem('lang',q);}catch(e){}document.documentElement.setAttribute('data-lang',q);document.documentElement.lang=q;})();</script>
+<script>try{if(sessionStorage.getItem('pt')){sessionStorage.removeItem('pt');document.documentElement.className+=' pt-in';}}catch(e){}</script>
+<title>404 · Stepan Shuster</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff4a1f'/><text y='.85em' font-size='78' font-family='Arial Black,sans-serif' font-weight='900' fill='%230c0c0c' x='14'>S</text></svg>">
+<link rel="icon" type="image/png" sizes="96x96" href="/media/common/favicon-96.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/transition.css?v=20261102c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{color-scheme:dark;--bg:#0a0a0a;--fg:#fff;--fg-dim:rgba(255,255,255,.56);--accent:#ff4a1f;--r:8px;--edge:40px;--font:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.5;letter-spacing:-.011em;overflow:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#fff}
+/* тёплое свечение за цифрами и затемнение к низу, под текст */
+.nf{position:relative;height:100vh;height:100svh;background:radial-gradient(55% 50% at 50% 42%,rgba(255,74,31,.11),rgba(255,74,31,0) 70%),linear-gradient(180deg,rgba(0,0,0,0) 60%,rgba(0,0,0,.35) 100%)}
+.nf-ascii{position:absolute;inset:0;z-index:0}
+.nf-ascii canvas{opacity:0;transition:opacity 1.2s cubic-bezier(.2,.7,.2,1)}
+.nf-ascii.is-on canvas{opacity:1}
+.nf-txt{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:20px;padding:0 max(var(--edge),env(safe-area-inset-right,0px)) calc(var(--edge) + env(safe-area-inset-bottom,0px)) max(var(--edge),env(safe-area-inset-left,0px))}
+.nf-h{font-size:clamp(28px,4.2vw,52px);font-weight:500;line-height:1.04;letter-spacing:-.04em;text-wrap:balance;max-width:20em}
+.nf-h span{display:block}
+.nf-h span:first-child{color:var(--accent)}
+.c-btn{display:inline-flex;align-items:center;height:40px;padding:0 16px;font:inherit;font-size:14px;font-weight:600;letter-spacing:-.011em;text-decoration:none;color:var(--fg);background:rgba(255,255,255,.08);border-radius:var(--r);white-space:nowrap;transition:transform .35s cubic-bezier(.3,1.5,.5,1);--hx-tint:rgba(255,255,255,.1)}
+.c-btn:active{transform:scale(.92);transition-duration:.12s}
+.c-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media(max-width:768px){:root{--edge:20px}.nf-txt{gap:16px}.nf-h{font-size:clamp(26px,7.4vw,36px)}}
+</style>
+</head>
+<body>
+<main class="nf">
+  <h1 class="sr">404</h1>
+  <div class="nf-ascii" id="ascii" aria-hidden="true"></div>
+  <div class="nf-txt">
+    <p class="nf-h"><span data-en="Page not found" data-cs="Stránka nenalezena">Stránka nenalezena</span><span data-en="The page you are looking for doesn’t exist or has moved." data-cs="Hledaná stránka neexistuje nebo se přesunula.">Hledaná stránka neexistuje nebo se přesunula.</span></p>
+    <a class="c-btn" href="./" data-en="Back to home" data-cs="Zpět na hlavní stránku">Zpět na hlavní stránku</a>
+  </div>
+</main>
+<script>
+/* ═══════════════════════════════════════════════════════════
+   404 из символов, как портрет в hero: цифры рисуются на холсте
+   шрифтом сайта, ascii.js раскладывает их на знаки, знаки текут,
+   от курсора расходится волна. Размер считается под экран;
+   при заметной смене пропорций картинка собирается заново.
+   ═══════════════════════════════════════════════════════════ */
+var LANG = 'cs';
+try { LANG = window.__LANGQ || localStorage.getItem('lang') || 'cs'; } catch (e) {}
+document.documentElement.lang = LANG; document.documentElement.setAttribute('data-lang', LANG);
+document.querySelectorAll('[data-en]').forEach(function (el) { var v = el.getAttribute('data-' + LANG); if (v) el.textContent = v; });
+window.setLang = function () {};
+
+var host = document.getElementById('ascii'), SRC = null, RATIO = 1, lastH = 0;
+/* «404»: светлая заливка сверху вниз гаснет к краям, мягкое свечение даёт редкие точки по контуру */
+function render() {
+  var fs = 600, c = document.createElement('canvas'), x = c.getContext('2d');
+  c.width = fs * 3; c.height = fs * 1.5;
+  x.font = '800 ' + fs + 'px "Inter Tight", Arial, sans-serif'; x.textBaseline = 'middle'; x.textAlign = 'center';
+  try { x.letterSpacing = '-' + Math.round(fs * .03) + 'px'; } catch (e) {}
+  var g = x.createLinearGradient(0, fs * .35, 0, fs * 1.15);
+  g.addColorStop(0, '#ffffff'); g.addColorStop(.6, '#dcdcdc'); g.addColorStop(1, '#9a9a9a');
+  x.fillStyle = g; x.shadowColor = 'rgba(255,255,255,.5)'; x.shadowBlur = fs * .05;
+  x.fillText('404', c.width / 2, c.height / 2);
+  /* обрезаем по самим знакам (со свечением), чтобы цифры стояли ровно по центру */
+  var d = x.getImageData(0, 0, c.width, c.height).data, x0 = c.width, x1 = 0, y0 = c.height, y1 = 0, i, j;
+  for (j = 0; j < c.height; j += 2) for (i = 0; i < c.width; i += 2) if (d[(j * c.width + i) * 4 + 3] > 24) { if (i < x0) x0 = i; if (i > x1) x1 = i; if (j < y0) y0 = j; if (j > y1) y1 = j; }
+  var pad = fs * .04, o = document.createElement('canvas');
+  o.width = Math.ceil(x1 - x0 + pad * 2); o.height = Math.ceil(y1 - y0 + pad * 2);
+  var ox = o.getContext('2d', { willReadFrequently: true });
+  ox.drawImage(c, x0 - pad, y0 - pad, o.width, o.height, 0, 0, o.width, o.height);
+  /* мягкий шум, как светотень на портрете: знаки получаются разной плотности, а не сплошные «@» */
+  var nz = document.createElement('canvas'), nx = nz.getContext('2d', { willReadFrequently: true });
+  nz.width = 48; nz.height = Math.max(8, Math.round(48 / (o.width / o.height)));
+  var nd = nx.createImageData(nz.width, nz.height);
+  for (i = 0; i < nd.data.length; i += 4) { nd.data[i] = nd.data[i + 1] = nd.data[i + 2] = 255 * Math.random(); nd.data[i + 3] = 255; }
+  nx.putImageData(nd, 0, 0);
+  var big = document.createElement('canvas'), bx = big.getContext('2d', { willReadFrequently: true });
+  big.width = o.width; big.height = o.height; bx.imageSmoothingQuality = 'high'; bx.drawImage(nz, 0, 0, o.width, o.height);
+  var N = bx.getImageData(0, 0, o.width, o.height).data, im = ox.getImageData(0, 0, o.width, o.height), D = im.data;
+  for (i = 0; i < D.length; i += 4) { var k = .5 + .5 * (N[i] / 255); D[i] *= k; D[i + 1] *= k; D[i + 2] *= k; }
+  ox.putImageData(im, 0, 0);
+  RATIO = o.width / o.height;
+  return o.toDataURL('image/png');
+}
+function size() {
+  var W = innerWidth, H = innerHeight, phone = W < 768;
+  var h = Math.min(phone ? .3 : .5, (W * (phone ? .9 : .8) / RATIO) / H);   // по ширине экрана, но не выше доли высоты
+  var mid = phone ? .4 : .42;                                                  // центр цифр чуть выше середины, снизу текст
+  return { h: h, at: [.5, mid + h / 2], fs: phone ? 5 : (W > 1600 ? 7 : 6) };
+}
+function mount() {
+  var s = size(); lastH = s.h;
+  var old = host.querySelector('canvas');
+  if (old) { try { var gl = old.getContext('webgl'); gl && gl.getExtension('WEBGL_lose_context') && gl.getExtension('WEBGL_lose_context').loseContext(); } catch (e) {} }
+  var el = document.createElement('div'); el.className = 'nf-ascii'; el.setAttribute('aria-hidden', 'true'); el.id = 'ascii';
+  el.setAttribute('data-ascii', JSON.stringify({
+    src: SRC, height: s.h, at: s.at, focus: [.5, .5], fontSize: s.fs, chars: ' .`:-~=+*cxoO#%@',
+    contrast: 1.25, brightnessBoost: 1.05, posterize: 48, threshold: .05, fade: .02,
+    colors: ['#8a2a12', '#ff6a3d'], flowStrength: 3, mouseStrength: 18, mouseRadius: 190
+  }));
+  host.replaceWith(el); host = el;
+  if (window.AsciiMount) { AsciiMount(el); el.removeAttribute('data-ascii'); }   // иначе boot() из ascii.js соберёт его второй раз
+  (function on(n) { var cv = el.querySelector('canvas'); if (cv && el._ascii) el._ascii.ready(function () { requestAnimationFrame(function () { el.classList.add('is-on'); }); }); else if (n < 60) setTimeout(function () { on(n + 1); }, 50); })(0);
+}
+var rt = 0;
+addEventListener('resize', function () {
+  clearTimeout(rt);
+  rt = setTimeout(function () { var s = size(); if (Math.abs(s.h - lastH) / lastH > .12) mount(); }, 250);
+});
+function go() { if (SRC) return; SRC = render(); mount(); }
+(document.fonts && document.fonts.load ? document.fonts.load('800 100px "Inter Tight"', '404') : Promise.resolve()).then(go, go);
+setTimeout(go, 1500);
+</script>
+<script src="assets/ascii.js?v=20261104a"></script>
+<script src="assets/hx.js?v=20261031b"></script>
+<script src="assets/transition.js?v=20261102c"></script>
+<script src="assets/analytics.js?v=20261025a"></script>
+</body>
+</html>

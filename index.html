@@ -1,209 +1,1584 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs" data-lang="cs">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#ffffff">
-<title>Stepan Shuster · UX/UI a web designer</title>
-<meta name="description" content="Stepan Shuster, UX/UI a web designer z Prahy. Nový web se právě staví.">
-<meta property="og:title" content="Stepan Shuster · UX/UI a web designer">
-<meta property="og:description" content="Nový web se právě staví. Napište mi na stepan@shuster.design">
+<!-- переход между страницами: чёрный экран с первого кадра, без белой вспышки (подробно в assets/transition.js) -->
+<style>html.pt-in{background:#0a0a0a}html.pt-in::before{content:'';position:fixed;inset:0;z-index:2147483000;background:#0a0a0a;pointer-events:none}html.pt-in.pt-open::before{display:none}@view-transition{navigation:auto}::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation:none}</style>
+<script>try{if(sessionStorage.getItem('pt')){sessionStorage.removeItem('pt');document.documentElement.className+=' pt-in';var tc=document.querySelector('meta[name=theme-color]');if(tc){tc.setAttribute('data-c',tc.content);tc.content='#0a0a0a';}}}catch(e){}</script>
+<title>Stepan Shuster · UX/UI a produktový designer, Praha</title>
+<meta name="description" content="Portfolio UX/UI a produktového designera z Prahy. Navrhuji weby, e‑shopy a aplikace ve Figmě od struktury a wireframů po design systém a předání vývojářům. Hledám práci na plný úvazek.">
+<meta name="author" content="Stepan Shuster">
+<link rel="canonical" href="https://shuster.design/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Stepan Shuster">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:url" content="https://shuster.design/">
-<link rel="icon" id="favicon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230c0c0c'/><text x='50' y='72' text-anchor='middle' font-size='64' font-family='Arial Black,sans-serif' font-weight='900' fill='%23ffffff'>S</text></svg>">
+<meta property="og:title" content="Stepan Shuster · UX/UI a produktový designer, Praha">
+<meta property="og:description" content="Portfolio UX/UI a produktového designera z Prahy. Navrhuji weby, e‑shopy a aplikace ve Figmě od struktury a wireframů po design systém a předání vývojářům. Hledám práci na plný úvazek.">
+<meta property="og:image" content="https://shuster.design/media/common/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="text/plain" href="https://shuster.design/llms.txt" title="LLM summary">
+<script>
+/* Обновление страницы всегда открывает её с начала, с hero: браузер не восстанавливает прокрутку.
+   Переход по ссылке с якорем (например index.html#contact из кейса) работает как раньше. */
+(function(){
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  var nav=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];
+  /* «Назад» из кейса: без загрузочной анимации и сразу на секцию «Проекты», а не на hero */
+  var ret=null;try{ret=sessionStorage.getItem('home-ret');}catch(e){}
+  if(nav&&nav.type==='back_forward'&&ret){
+    document.documentElement.className+=' pt-in';
+    var toRet=function(){var w=document.getElementById(ret);if(!w)return;window.scrollTo(0,w.getBoundingClientRect().top+window.scrollY);if(window._syncScrollTarget)window._syncScrollTarget();};
+    document.addEventListener('DOMContentLoaded',toRet);addEventListener('load',toRet);
+  }
+  /* уходим в кейс: запоминаем, куда вернуться */
+  document.addEventListener('click',function(e){
+    var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;if(!a)return;
+    var h=a.getAttribute('href')||'';if(h.charAt(0)==='#'||a.target==='_blank')return;
+    try{if(/case\.html/.test(h))sessionStorage.setItem('home-ret','works');else sessionStorage.removeItem('home-ret');}catch(err){}
+  },true);
+  if(nav&&nav.type==='reload'){
+    if(location.hash) try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+    var top=function(){ window.scrollTo(0,0); if(window._syncScrollTarget) window._syncScrollTarget(); };
+    top(); document.addEventListener('DOMContentLoaded',top); addEventListener('load',top);
+  }
+})();
+</script>
+<script>
+/* Автонастройка под железо. Анимации (градиент, символы, футер) отдают сюда время кадров.
+   Если кадры стабильно дольше 22 мс (меньше ~45 fps), качество снижается на ступень:
+   1 — WebGL в меньшем разрешении; 2 — ещё меньше, без размытия под стеклом и в появлении текста.
+   На нормальном железе всё остаётся в полном качестве. Ступень помнится до конца сессии. */
+(function(){
+  var K='perf-lv',lv=0;try{lv=+sessionStorage.getItem(K)||0;}catch(e){}
+  var hc=navigator.hardwareConcurrency||8,dm=navigator.deviceMemory||8;if(!lv&&(hc<=2||dm<=2))lv=1;
+  var subs=[],last=0,buf=[],bad=0,from=performance.now()+3500,root=document.documentElement;
+  var P=window.PERF={level:lv,scale:function(){return [1,.75,.55][P.level];},on:function(f){subs.push(f);},
+    tick:function(now){
+      if(now===last)return;var d=now-last;last=now;
+      if(now<from||d>250||document.hidden||P.level>=2)return;
+      buf.push(d);if(buf.length<90)return;
+      buf.sort(function(a,b){return a-b;});var med=buf[45];buf=[];
+      if(med>22){if(++bad>=2){bad=0;set(P.level+1);}}else bad=0;
+    }};
+  function set(v){P.level=v;try{sessionStorage.setItem(K,v);}catch(e){}apply();from=performance.now()+1500;subs.forEach(function(f){f(v);});}
+  function apply(){root.classList.toggle('perf-lite',P.level>=2);}
+  apply();
+})();
+// язык выставляется до отрисовки: сохранённый или чешский по умолчанию
+(function(){var l='cs';var q=(location.search.match(/[?&]lang=(cs|en)(?:&|$)/)||[])[1];if(q){l=q;try{localStorage.setItem('lang',q);}catch(e){}}else try{l=localStorage.getItem('lang')||'cs';}catch(e){}document.documentElement.setAttribute('data-lang',l);document.documentElement.lang=l;})();
+window.SEO={cs:{t:"Stepan Shuster · UX/UI a produktový designer, Praha",d:"Portfolio UX/UI a produktového designera z Prahy. Navrhuji weby, e‑shopy a aplikace ve Figmě od struktury a wireframů po design systém a předání vývojářům. Hledám práci na plný úvazek."},en:{t:"Stepan Shuster · UX/UI and product designer, Prague",d:"Portfolio of a UX/UI and product designer from Prague. I design websites, e‑shops and apps in Figma, from structure and wireframes to design systems and developer handoff. Open to full‑time roles."}};
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Person", "@id": "https://shuster.design/#stepan", "name": "Stepan Shuster", "jobTitle": "UX/UI and product designer", "url": "https://shuster.design/", "email": "mailto:ahoj@shuster.design", "image": "https://shuster.design/photos/about/01.jpg", "address": {"@type": "PostalAddress", "addressLocality": "Praha", "addressCountry": "CZ"}, "knowsLanguage": ["cs", "en", "ru"], "knowsAbout": ["UX design", "UI design", "Web design", "E‑commerce design", "App design", "Dashboard design", "CRM design", "Design systems", "Branding", "Figma", "Wireframing", "Prototyping", "Information architecture", "Real estate websites"], "sameAs": ["https://www.linkedin.com/in/shusterdesign/", "https://www.behance.net/shusters", "https://www.instagram.com/stepamonstaxd/"]}, {"@type": "ProfessionalService", "@id": "https://shuster.design/#service", "name": "Stepan Shuster · UX/UI design", "url": "https://shuster.design/", "provider": {"@id": "https://shuster.design/#stepan"}, "areaServed": ["CZ", "EU"], "address": {"@type": "PostalAddress", "addressLocality": "Praha", "addressCountry": "CZ"}, "description": "Portfolio UX/UI a produktového designera z Prahy. Navrhuji weby, e‑shopy a aplikace ve Figmě od struktury a wireframů po design systém a předání vývojářům. Hledám práci na plný úvazek.", "serviceType": ["UX/UI design webů", "Design e‑shopů", "Design mobilních aplikací", "Design systémy", "Wireframy a prototypy"]}, {"@type": "WebSite", "@id": "https://shuster.design/#web", "url": "https://shuster.design/", "name": "Stepan Shuster", "inLanguage": ["cs", "en"], "publisher": {"@id": "https://shuster.design/#stepan"}}]}</script>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff4a1f'/><text y='.85em' font-size='78' font-family='Arial Black,sans-serif' font-weight='900' fill='%230c0c0c' x='14'>S</text></svg>">
+<link rel="icon" type="image/png" sizes="96x96" href="/media/common/favicon-96.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/transition.css?v=20261102c">
+<link rel="stylesheet" href="assets/navbar.css?v=20261031d">
+<link rel="stylesheet" href="assets/reveal.css?v=20261025a">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Inter+Tight:wght@400..700&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#fff;--fg:#0c0c0c;--fg-rgb:12,12,12;--dim:rgba(12,12,12,.58);--border:rgba(12,12,12,.12);
-  --accent:#ff4a1f;--r:8px;--edge:32px;
-  --dots:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23a3a3a3' fill-opacity='.2'/%3E%3C/svg%3E");
-  --spring:cubic-bezier(.3,1.5,.5,1);--out:cubic-bezier(.16,1,.3,1);
-}
-html,body{height:100%}
-body{
-  min-height:100svh;display:flex;flex-direction:column;
-  background:radial-gradient(ellipse at center,rgba(255,255,255,0) 12%,#fff 70%),var(--dots),var(--bg);
-  color:var(--fg);font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
-  font-size:15px;line-height:1.55;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;
-}
-::selection{background:var(--accent);color:var(--fg)}
-a{color:inherit}
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{color-scheme:light;--bg:#fff;--bg-rgb:255,255,255;--surface:#fff;--fg:#0c0c0c;--fg-rgb:12,12,12;--fg-dim:rgba(12,12,12,.58);--border:rgba(12,12,12,.12);--accent:#ff4a1f;--on-accent:#fff;--r:8px;--dots:none;--font-display:'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;--font-body:'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;--font-mono:'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;font-weight:400;line-height:1.55;letter-spacing:-.011em;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:var(--on-accent)}
 
-/* ═══ Верх: статус и язык ═══ */
-.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:24px var(--edge)}
-.status{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:600;letter-spacing:-.005em;text-transform:uppercase;color:var(--dim)}
-.status i{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent)}
-.status i::after{content:'';position:absolute;inset:0;border-radius:50%;background:var(--accent);animation:ping 2s var(--out) infinite}
-@keyframes ping{from{transform:scale(1);opacity:.6}to{transform:scale(3);opacity:0}}
-.lang{display:flex;gap:2px;padding:3px;border:1px solid var(--border);border-radius:calc(var(--r) + 3px);background:rgba(255,255,255,.8);backdrop-filter:blur(8px)}
-.lang button{font:inherit;font-size:12px;font-weight:600;color:var(--dim);background:none;border:0;border-radius:var(--r);padding:6px 10px;cursor:pointer;transition:color .25s,background .25s,transform .3s var(--spring)}
-.lang button:hover{color:var(--fg)}
-.lang button:active{transform:scale(.9)}
-.lang button.on{color:#fff;background:var(--fg)}
 
-/* ═══ Середина ═══ */
-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px var(--edge) 40px}
-.logo{font-size:min(calc(min(62vw,560px) / 5.168),14vh);color:var(--fg);line-height:1;margin-bottom:clamp(36px,6vh,64px);opacity:0;transform:translateY(12px);animation:rise .9s var(--out) .1s forwards}
-/* стили логотипа те же, что в навбаре сайта */
-.sh-logo{position:relative;display:block;width:5.168em;height:1em}
-.sh-l{position:absolute;left:0;top:0;height:1em;will-change:transform}
-.sh-on .sh-l{transition:transform .55s var(--out)}
-.sh-l svg{display:block;height:1em;overflow:visible;fill:currentColor;transform-origin:50% 100%}
+  /* ═══ LOADER ═══ */
+  .loader-bg{position:fixed;inset:0;background:var(--surface);z-index:198;transition:opacity .8s cubic-bezier(.16,1,.3,1)}
+  .loader-bg.exit{opacity:0}
+  html.is-loading,html.is-loading body{overflow:hidden;overscroll-behavior:none}
+  .loader-text-wrap{position:fixed;inset:0;z-index:202;pointer-events:none;transition:opacity .7s cubic-bezier(.16,1,.3,1)}
+  .loader-text-wrap.exit{opacity:0}
+  .loader-ascii{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  /* под конец сборки силуэта тёмная заливка уходит, а градиент проявляется из размытия */
+  .loader-bg.gone{opacity:0;transition:none}
+  .hero-media{transition:opacity 1.6s cubic-bezier(.45,0,.2,1)}
+  .hero-media.grain>canvas{transition:opacity .6s,transform 2.2s cubic-bezier(.2,.7,.2,1)!important}
+  html.ld-veil .hero-media{opacity:0}
+  html.ld-veil .hero-media.grain>canvas{transform:scale(1.12)}
+  html.ld-hold .hero-ascii,html.ld-hold .hero-title{visibility:hidden}
+  .hero{background:#0a0a0a}
 
-h1{font-size:clamp(26px,3.2vw,42px);font-weight:600;line-height:1.08;letter-spacing:-.032em;max-width:20ch}
-.lede{margin-top:16px;max-width:42ch;font-size:clamp(16px,1.4vw,18px);line-height:1.55;color:var(--dim)}
-h1,.lede,.actions,.links{opacity:0;transform:translateY(12px);animation:rise .9s var(--out) forwards}
-h1{animation-delay:.25s}.lede{animation-delay:.35s}.actions{animation-delay:.45s}.links{animation-delay:.55s}
-@keyframes rise{to{opacity:1;transform:none}}
 
-.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:32px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:var(--r);font:inherit;font-size:15px;font-weight:600;letter-spacing:-.015em;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:background .25s,color .25s,border-color .25s,transform .35s var(--spring)}
-.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2}
-.btn-solid{background:var(--accent);color:#fff}
-.btn-solid:hover{background:var(--fg);color:#fff}
-.btn-ghost{background:#fff;color:var(--fg);border-color:var(--border)}
-.btn-ghost:hover{border-color:rgba(var(--fg-rgb),.45)}
-@media(hover:hover){.btn:hover{transform:scale(.95)}}
-.btn:active{transform:scale(.91);transition-duration:.25s,.25s,.25s,.12s}
-.btn-ghost.done{border-color:var(--fg)}
-/* копировать почту: квадратная кнопка с иконкой, подсказка над ней */
-.btn-icon{position:relative;width:48px;padding:0;flex:0 0 48px}
-.btn-icon svg{width:18px;height:18px;stroke-width:1.8;transition:opacity .2s,transform .3s var(--spring)}
-.btn-icon .ok{position:absolute;opacity:0;transform:scale(.6)}
-.btn-icon.done .cp{opacity:0;transform:scale(.6)}
-.btn-icon.done .ok{opacity:1;transform:none}
-.btn-icon::after{
-  content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translate(-50%,4px);
-  padding:6px 9px;border-radius:6px;background:var(--fg);color:#fff;font-size:12px;font-weight:500;white-space:nowrap;
-  opacity:0;pointer-events:none;transition:opacity .2s,transform .3s var(--out);
-}
-@media(hover:hover){.btn-icon:hover::after{opacity:1;transform:translate(-50%,0)}}
-.btn-icon.done::after{opacity:1;transform:translate(-50%,0)}
+  /* Логотип в прелоадере: буквы меняют шрифт, как в навбаре. Потом он улетает
+     во вторую строку заголовка и растворяется, а заголовок набирается буквами */
+  .loader-logo{
+    position:absolute;left:50%;top:50%;
+    font-size:calc(min(70vw,620px) / 5.168);   /* 5.168em это ширина слова */
+    color:var(--fg);line-height:1;
+    transform:translate(-50%,-50%);opacity:0;
+    transition:opacity .6s cubic-bezier(.16,1,.3,1);
+    will-change:transform,opacity;
+  }
+  .loader-logo.on{opacity:1}
+  .loader-logo.fly{
+    transition:transform .8s cubic-bezier(.65,0,.25,1),opacity .45s cubic-bezier(.4,0,.2,1) .4s;
+  }
+  @media(max-width:600px){.loader-logo{font-size:calc(82vw / 5.168)}}
 
-.links{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;margin-top:28px}
-.links a{font-size:14px;font-weight:500;color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:color .2s}
-.links a:hover{color:var(--fg)}
-.links svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2.2;transition:transform .3s var(--out)}
-.links a:hover svg{transform:translate(2px,-2px)}
+  .loader-text{
+    position:absolute;z-index:2;
+    font-family:var(--font-display);
+    font-weight:800;line-height:.9;letter-spacing:-.04em;text-transform:uppercase;text-align:center;
+  }
+  .loader-text-line{display:block;white-space:nowrap}
+  .loader-text-letter{display:inline-block;text-align:left;opacity:0;transition:opacity .06s}
+  .loader-text-letter.vis{opacity:1}
 
-/* ═══ Низ ═══ */
-footer{display:flex;justify-content:space-between;gap:16px;padding:22px var(--edge);font-size:13px;color:var(--dim);border-top:1px solid var(--border)}
 
-@media(max-width:600px){
-  :root{--edge:20px}
-  .top{padding-top:18px}
-  .logo{font-size:min(calc(84vw / 5.168),14vh)}
-  .actions{width:100%;max-width:360px;flex-wrap:nowrap}
-  .btn-solid{flex:1;min-width:0}
-  footer{flex-direction:column;align-items:center;text-align:center;gap:4px}
-}
-@media(max-height:560px) and (min-width:601px){.logo{margin-bottom:24px}main{padding-top:8px}}
-@media(prefers-reduced-motion:reduce){
-  *{animation-duration:.01s!important;animation-delay:0s!important}
-  .status i::after{display:none}
-}
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 40px 88px;position:sticky;top:0;overflow:hidden;z-index:1;background:var(--surface);will-change:filter,transform}
+  /* имя капсом по центру, под ним три короткие строки */
+  .hero-content{position:relative;z-index:2;max-width:100%;display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center}
+  .hero-label{display:flex;flex-direction:column;font-family:var(--font-body);font-size:16px;font-weight:600;line-height:1.1;letter-spacing:-.02em;text-transform:uppercase;color:rgba(var(--fg-rgb),.5);opacity:0;transform:translateY(12px)}
+  .hero-label.show{animation:fadeUp .6s forwards}
+  .hero-title{font-family:var(--font-display);font-size:clamp(88px,8.34vw,150px);font-weight:800;line-height:.9;letter-spacing:-.04em;text-transform:uppercase;overflow:visible}
+  .title-line{display:block;width:max-content;max-width:100%;margin:0 auto;padding-right:.04em;will-change:transform}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+
+
+
+  /* всё, что идёт после hero, лежит на одном полотне с точками: сетка общая,
+     без швов между секциями, и это же полотно закрывает собой липкий hero */
+  .page-body{position:relative;z-index:4;background:var(--bg);clip-path:inset(0)}
+  /* радиальный градиент в цвет фона стоит на экране и гасит точки к его краям;
+     clip-path выше не даёт ему вылезти на hero, пока тот ещё виден */
+  .page-body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(var(--bg-rgb),0) 12%,rgb(var(--bg-rgb)) 70%)}
+  section{padding:120px 40px;position:relative}
+  .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:60px;border-top:1px solid var(--border);padding-top:24px}
+  .section-eyebrow{font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:-.011em;color:var(--fg-dim);margin-bottom:10px}
+  .section-title{font-family:var(--font-display);font-size:clamp(30px,4.2vw,56px);font-weight:600;letter-spacing:-.032em;line-height:1.02}
+  .btn-outline{font-family:var(--font-body);font-size:13px;font-weight:600;letter-spacing:-.011em;color:var(--fg);text-decoration:none;border:1px solid var(--border);border-radius:var(--r);padding:10px 20px;transition:background .25s,color .25s;white-space:nowrap}
+  .btn-outline:hover{background:var(--fg);color:var(--bg)}
+
+  .hero::after{content:'';position:absolute;inset:0;z-index:3;background:var(--bg);opacity:0;pointer-events:none;transition:none}
+
+  /* ═══ PROJECTS ═══ */
+  .projects{padding:80px 40px 80px;position:relative}
+  @media(max-width:1024px){
+    .projects{padding:60px 28px 60px}
+  }
+  @media(max-width:768px){
+    .projects{padding:48px 20px 48px}
+  }
+  @media(max-width:480px){
+    .projects{padding:40px 16px 40px}
+  }
+
+  /* ═══ О МНЕ: слева списки, справа крупное высказывание с 3D-объектами ═══ */
+  .ab{overflow:clip}
+  .ab-grid{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));column-gap:20px;align-items:start}
+  .ab-side{grid-column:1/3;display:flex;flex-direction:column;gap:36px;padding-top:14px}
+  .ab-status{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:500;letter-spacing:-.011em;color:var(--fg-dim)}
+  .ab-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#5fd08a;box-shadow:0 0 0 4px rgba(95,208,138,.14);animation:pulseDot 2.6s cubic-bezier(.16,1,.3,1) infinite}
+  .ab-lists{display:flex;flex-direction:column;gap:28px}
+  .ab-label{display:flex;gap:8px;font-size:12px;font-weight:500;letter-spacing:-.005em;color:var(--fg-dim);margin-bottom:8px}
+  .ab-label span{color:var(--accent);font-variant-numeric:tabular-nums}
+  .ab-group ul{list-style:none;display:flex;flex-direction:column;gap:2px}
+  .ab-group li{font-size:16px;font-weight:600;letter-spacing:-.015em;line-height:1.35}
+  .ab-statement{grid-column:3/9;position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:clamp(14px,1.6vw,22px);--fs:clamp(30px,3.9vw,56px)}
+  .ab-p{font-family:var(--font-display);font-size:var(--fs);font-weight:600;line-height:1.08;letter-spacing:-.035em;max-width:13.6em;text-wrap:pretty}
+  .ab-p--lead{font-weight:700}
+  .ab-plus{font-size:calc(var(--fs)*.6);font-weight:500;line-height:1;color:var(--fg-mute,rgba(12,12,12,.3))}
+  .ab-cta{margin-top:clamp(16px,2vw,28px);display:flex;flex-wrap:wrap;gap:8px}
+  .ab-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;font-size:14px;font-weight:600;letter-spacing:-.011em;text-decoration:none;color:var(--fg);background:rgba(var(--fg-rgb),.05);border-radius:var(--r);transition:background .25s,color .25s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+  .ab-btn{--hx-tint:rgba(0,0,0,.07)}
+  .ab-btn:active{transform:scale(.92)}
+  /* якорь объекта стоит в тексте рядом со словом, картинка висит вокруг него */
+  .ab-o{position:relative;display:inline-block;width:0;height:0;vertical-align:middle;pointer-events:none}
+  .ab-o img{position:absolute;left:0;top:0;width:var(--w);max-width:none;height:auto;z-index:1;
+    transform:translate(-50%,-50%) translate(var(--x),var(--y)) translate(var(--mx,0px),calc(var(--py,0px) + var(--my,0px))) rotate(calc(var(--r0) + var(--pr,0deg) + var(--mr,0deg)));will-change:transform;filter:drop-shadow(0 .25em .35em rgba(12,12,12,.12))}
+  .ab-o--airplane img{--w:2.3em;--x:1.55em;--y:-.05em;--r0:-10deg}
+  .ab-o--gamepad img{--w:1.9em;--x:1.25em;--y:.05em;--r0:10deg}
+  .ab-o--keycap img{--w:1.45em;--x:-.95em;--y:.1em;--r0:-14deg;z-index:2}
+  .ab-o--football img{--w:1.85em;--x:1.35em;--y:.2em;--r0:0deg}
+  @media(max-width:1024px){
+    .ab-grid{grid-template-columns:minmax(0,1fr);row-gap:56px}
+    .ab-side{grid-column:1;order:2;padding-top:0}
+    .ab-lists{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px 20px}
+    .ab-statement{grid-column:1;order:1;--fs:clamp(30px,6vw,52px)}
+    /* текст во всю ширину: объекты встают в строку как буквы, ничего не перекрывают */
+    .ab-o{width:auto;height:auto;vertical-align:-.12em;margin:0 .08em}
+    .ab-o img{position:static;width:1.15em;transform:translate(var(--mx,0px),var(--my,0px)) rotate(calc(var(--r0) + var(--pr,0deg) + var(--mr,0deg)));filter:drop-shadow(0 .12em .18em rgba(12,12,12,.14))}
+    .ab-o--airplane img,.ab-o--football img{width:1.2em}
+    .ab-o--keycap{margin:0 .18em 0 0}
+  }
+  @media(max-width:768px){
+    .ab-lists{grid-template-columns:1fr 1fr}
+    .ab-statement{--fs:clamp(28px,8.4vw,44px)}
+    .ab-p{max-width:none}
+  }
+  .ab-o img{transition:opacity .8s .3s,scale 1.1s .3s cubic-bezier(.3,1.45,.5,1)}
+  .rv-words:not(.rv-on) .ab-o img{opacity:0;scale:.4}
+  @media(prefers-reduced-motion:reduce){.ab-status::before{animation:none}}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .about-text p{font-size:clamp(18px,1.85vw,23px);line-height:1.5;letter-spacing:-.018em;color:rgba(var(--fg-rgb),.62);font-weight:400;max-width:20em}
+
+  /* Статус, кнопки */
+  .about-status{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:-.011em;color:var(--fg-dim);margin-bottom:26px}
+  .about-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#5fd08a;box-shadow:0 0 0 4px rgba(95,208,138,.14);animation:pulseDot 2.6s cubic-bezier(.16,1,.3,1) infinite}
+  @keyframes pulseDot{0%,100%{box-shadow:0 0 0 4px rgba(95,208,138,.14)}50%{box-shadow:0 0 0 7px rgba(95,208,138,.05)}}
+  .about-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+  .btn-solid{display:inline-flex;align-items:center;gap:11px;font-family:var(--font-body);font-size:14px;font-weight:600;letter-spacing:-.011em;text-decoration:none;border:1px solid var(--accent);border-radius:var(--r);padding:13px 24px;background:var(--accent);color:var(--on-accent);transition:background .25s cubic-bezier(.16,1,.3,1),color .25s cubic-bezier(.16,1,.3,1),border-color .25s cubic-bezier(.16,1,.3,1)}
+  .btn-solid:hover{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+  .btn-solid svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+  .btn-solid:hover svg{transform:translateY(3px)}
+  .btn-ghost{display:inline-flex;align-items:center;font-family:var(--font-body);font-size:14px;font-weight:600;letter-spacing:-.011em;text-decoration:none;border:1px solid var(--border);border-radius:var(--r);padding:13px 24px;color:var(--fg);transition:background .25s,color .25s}
+  .btn-ghost:hover{background:var(--fg);color:var(--bg)}
+  @media(prefers-reduced-motion:reduce){.about-status::before{animation:none}}
+  .about-meta{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:48px}
+  .meta-cell{border:1px solid var(--border);padding:22px}
+  .meta-label{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:-.011em;color:var(--fg-dim);margin-bottom:8px}
+  .meta-val{font-family:var(--font-display);font-size:19px;font-weight:600;letter-spacing:-.02em}
+  .about-photo{position:relative}
+  .about-photo-placeholder{width:100%;max-width:400px;margin-left:auto;aspect-ratio:4/5;border:1px solid var(--border);border-radius:var(--r);position:relative;overflow:hidden;background:rgba(var(--fg-rgb),.03)}
+  .about-photo-placeholder img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(20%)}
+  .about-slides img{visibility:hidden}.about-slides img.is-on{visibility:visible}
+  .about-slides-count{position:absolute;left:14px;bottom:12px;z-index:2;font-family:var(--font-mono);font-size:11px;font-weight:500;letter-spacing:-.011em;color:#fff;mix-blend-mode:difference;pointer-events:none;font-variant-numeric:tabular-nums}
+  .about-photo-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+  .about-photo-label{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:-.011em;color:var(--fg-dim)}
+  .about-photo-hint{font-family:var(--font-mono);font-size:12px;letter-spacing:-.011em;color:rgba(var(--fg-rgb),.2)}
+
+  /* ═══ SKILLS ═══ */
+  .skills{margin-top:96px;border-top:1px solid var(--border);padding-top:46px}
+  .skills-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:54px 48px}
+  .sk-title{font-family:var(--font-display);font-size:clamp(20px,2.1vw,28px);font-weight:600;letter-spacing:-.032em;line-height:1;margin-bottom:22px}
+  .sk-chips{display:flex;flex-wrap:wrap;gap:9px}
+  .sk-chip{display:inline-flex;align-items:center;gap:9px;padding:9px 15px;border-radius:var(--r);background:rgba(var(--fg-rgb),.05);color:var(--fg);font-family:var(--font-body);font-size:14px;font-weight:500;letter-spacing:-.011em;line-height:1.15;white-space:nowrap;transition:background .35s cubic-bezier(.16,1,.3,1)}
+  .sk-chip:hover{background:rgba(var(--fg-rgb),.1)}
+  .sk-mark{width:18px;height:18px;flex:0 0 18px;border-radius:4px;display:grid;place-items:center;font-size:10px;font-weight:700;letter-spacing:0;line-height:1;color:#fff}
+  .sk-logo{width:18px;height:18px;flex:0 0 18px;display:block}
+  .sk-chip--invert .sk-logo{fill:var(--fg)}
+  .sk-flag{font-size:15px;line-height:1}
+  .sk-lv{color:var(--fg-dim);font-weight:500}
+  .skills-langs{margin-top:50px;padding-top:32px;border-top:1px solid var(--border)}
+
+  @media(max-width:1100px){.skills-cols{grid-template-columns:repeat(2,1fr);gap:44px 40px}}
+  @media(max-width:768px){
+    .skills{margin-top:64px;padding-top:36px}
+    .skills-cols{grid-template-columns:1fr;gap:36px}
+    .sk-chip{font-size:13px;padding:8px 13px;gap:8px}
+    .skills-langs{margin-top:36px;padding-top:26px}
+    .about-photo-placeholder{max-width:none;margin-left:0}
+  }
+
+  /* ═══ PLAYGROUND: свои приложения карточками, как в App Store ═══ */
+  .pg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .pg-card{display:flex;flex-direction:column;gap:18px;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--surface)}
+  .pg-card.reveal{transition:border-color .3s,box-shadow .45s cubic-bezier(.16,1,.3,1),opacity .7s,transform .7s}
+  @media(hover:hover){.pg-card:not(.pg-card--next):hover{border-color:rgba(var(--fg-rgb),.22);box-shadow:0 18px 44px rgba(var(--fg-rgb),.07)}.pg-card:hover .pg-top .pg-icon{transform:scale(1.04) rotate(-2deg)}}
+  .pg-top{display:flex;align-items:center;gap:16px;min-width:0}
+  .pg-icon{flex:0 0 72px;width:72px;height:72px;border-radius:22.5%;display:block;object-fit:cover;box-shadow:0 6px 18px rgba(var(--fg-rgb),.12),0 0 0 .5px rgba(var(--fg-rgb),.08);transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+  .pg-id{min-width:0}
+  .pg-name{font-family:var(--font-display);font-size:24px;font-weight:600;letter-spacing:-.03em;line-height:1.1}
+  .pg-sub{margin-top:5px;font-size:14px;line-height:1.4;color:var(--fg-dim)}
+  .pg-desc{font-size:15px;line-height:1.55;color:var(--fg);flex:1}
+  .pg-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border)}
+  .pg-more{display:inline-flex;align-items:center;padding:9px 14px;font:inherit;font-size:14px;font-weight:600;letter-spacing:-.011em;color:var(--fg);background:var(--surface);border:1px solid var(--border);border-radius:var(--r);cursor:pointer;transition:border-color .25s,transform .35s cubic-bezier(.3,1.5,.5,1),padding-right .6s cubic-bezier(.65,0,.25,1)}
+  .pg-more{--hx-tint:rgba(255,255,255,.1);--pl:19px;--pg:-.65px}
+  /* уголки складываются в плюс справа от подписи: ┘ и ┌ с зазором --pg вокруг центра (--pl от правого края) */
+  .pg-more .hx-c{transition:left .6s cubic-bezier(.65,0,.25,1),right .6s cubic-bezier(.65,0,.25,1),top .6s cubic-bezier(.65,0,.25,1),bottom .6s cubic-bezier(.65,0,.25,1),transform .6s cubic-bezier(.65,0,.25,1),border-radius .6s cubic-bezier(.65,0,.25,1)}
+  @media(hover:hover){
+    .pg-more.hx:hover,.pg-card:hover .pg-more.hx{padding-right:38px}
+    .pg-more.hx:hover .hx-c1,.pg-card:hover .pg-more.hx .hx-c1{left:calc(100% - var(--pl) - var(--pg) - var(--hx-s));top:calc(50% - var(--pg) - var(--hx-s));transform:rotate(180deg);border-top-left-radius:4px}
+    .pg-more.hx:hover .hx-c2,.pg-card:hover .pg-more.hx .hx-c2{right:calc(var(--pl) - var(--pg) - var(--hx-s));bottom:calc(50% - var(--pg) - var(--hx-s));transform:rotate(180deg);border-bottom-right-radius:4px}
+  }
+  @media(hover:none){
+    .pg-more.hx{padding-right:38px}
+    .pg-more.hx .hx-c1{left:calc(100% - var(--pl) - var(--pg) - var(--hx-s));top:calc(50% - var(--pg) - var(--hx-s));transform:rotate(180deg);border-top-left-radius:4px}
+    .pg-more.hx .hx-c2{right:calc(var(--pl) - var(--pg) - var(--hx-s));bottom:calc(50% - var(--pg) - var(--hx-s));transform:rotate(180deg);border-bottom-right-radius:4px}
+  }
+  .pg-more:active{transform:scale(.91);transition-duration:.25s,.12s,.6s}
+  .pg-gets{display:flex;gap:6px;flex-wrap:wrap}
+  .pg-get{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 11px;font-size:13px;font-weight:600;letter-spacing:-.011em;color:var(--fg);text-decoration:none;border:1px solid var(--border);border-radius:var(--r);background:var(--surface);transition:background .25s,border-color .25s,color .25s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+  .pg-get svg{width:15px;height:15px;flex:0 0 auto}
+  .pg-get em{font-style:normal;font-weight:500;color:var(--fg-dim)}
+  .pg-get.is-main{background:var(--fg);border-color:var(--fg);color:var(--bg)}
+  .pg-get.is-main em{color:rgba(var(--bg-rgb),.6)}
+  a.pg-get:hover{border-color:var(--accent);background:var(--accent);color:var(--on-accent)}
+  a.pg-get:hover em{color:var(--on-accent)}
+  @media(hover:hover){a.pg-get:hover{transform:scale(.95)}}
+  .pg-get.is-off{cursor:default;color:rgba(var(--fg-rgb),.42);background:transparent;border-style:dashed}
+  .pg-get.is-off.is-main{color:rgba(var(--fg-rgb),.55);background:rgba(var(--fg-rgb),.04);border-color:rgba(var(--fg-rgb),.2)}
+  .pg-get .pg-soon{font-size:11px;font-weight:600;color:var(--accent);margin-left:2px}
+  /* последняя карточка: «скоро будет ещё» */
+  .pg-card--next{background:transparent;border-style:dashed}
+  .pg-icon--next{display:flex;align-items:center;justify-content:center;gap:6px;border:1.5px dashed rgba(var(--fg-rgb),.22);box-shadow:none;background:transparent}
+  .pg-icon--next i{width:7px;height:7px;border-radius:50%;background:rgba(var(--fg-rgb),.28);animation:pgDot 1.4s ease-in-out infinite}
+  .pg-icon--next i:nth-child(2){animation-delay:.18s}.pg-icon--next i:nth-child(3){animation-delay:.36s}
+  @keyframes pgDot{0%,60%,100%{transform:none;opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+  .pg-card--next .pg-desc{color:var(--fg-dim)}
+
+  /* окно с подробностями */
+  /* страницу под окном не прячем через overflow:hidden: на iOS это ломало липкий фон с градиентом. Прокрутку держат обработчики в playground.js */
+  html.pg-lock{overscroll-behavior:none}
+  html.pg-lock .cur-dot{z-index:10001}   /* точка курсора остаётся над окном */
+  /* подробности приложения: лист снизу, примерно половина ширины экрана, чёрная подложка с лёгким размытием */
+  .pg-modal{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-end;justify-content:center;padding:0;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;visibility:hidden;transition:opacity .45s cubic-bezier(.16,1,.3,1),visibility 0s .55s}
+  .pg-modal.on{opacity:1;visibility:visible;transition-delay:0s}
+  .pg-sheet{position:relative;width:min(100%,max(560px,50vw));max-height:min(86vh,920px);max-height:min(86dvh,920px);overflow-y:auto;overscroll-behavior:contain;background:var(--bg);border-radius:24px 24px 0 0;box-shadow:0 -24px 80px rgba(0,0,0,.28);transform:translateY(100%);--bg:#141414;--bg-rgb:20,20,20;--surface:#1c1c1c;--fg:#f2f0ed;--fg-rgb:242,240,237;--fg-dim:rgba(242,240,237,.56);--border:rgba(255,255,255,.1);color:var(--fg);color-scheme:dark;border-top:1px solid rgba(255,255,255,.08);transition:transform .55s cubic-bezier(.16,1,.3,1)}
+  .pg-modal.on .pg-sheet{transform:none}
+  .pg-sheet.drag{transition:none}
+  .pg-grab{position:sticky;top:0;z-index:3;display:flex;justify-content:center;height:22px;margin-bottom:-22px;touch-action:none;cursor:grab}
+  .pg-grab::before{content:'';width:40px;height:4px;margin-top:10px;border-radius:2px;background:rgba(var(--fg-rgb),.18)}
+  .pg-sheet-in{padding:36px 40px calc(40px + env(safe-area-inset-bottom))}
+  @media(max-width:1024px){.pg-sheet{width:min(100%,max(560px,70vw))}}
+  .pg-x{position:sticky;top:14px;float:right;margin:14px 14px 0 0;width:36px;height:36px;border-radius:50%;border:0;background:rgba(var(--fg-rgb),.06);cursor:pointer;z-index:2;transition:background .2s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+  /* крестик = наш плюс из двух уголков, повёрнутый на 45° */
+  .pg-x{transform:rotate(45deg);--s:7px;--g:.65px}
+  .pg-x::before,.pg-x::after{content:'';position:absolute;left:50%;top:50%;width:var(--s);height:var(--s);border:1.5px solid var(--fg)}
+  .pg-x::before{margin:calc(var(--g) - var(--s)) 0 0 calc(var(--g) - var(--s));border-top:0;border-left:0;border-bottom-right-radius:4px}
+  .pg-x::after{margin:calc(0px - var(--g)) 0 0 calc(0px - var(--g));border-bottom:0;border-right:0;border-top-left-radius:4px}
+  .pg-x:hover{background:rgba(var(--fg-rgb),.12);transform:rotate(45deg) scale(.92)}
+  .pg-head{display:flex;align-items:center;gap:20px;padding-right:44px}
+  .pg-icon--big{flex-basis:96px;width:96px;height:96px}
+  .pg-head .pg-name{font-size:32px}
+  .pg-gets--big{margin-top:24px}
+  .pg-gets--big .pg-get{height:44px;padding:0 16px;font-size:14px}
+  .pg-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));margin-top:28px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .pg-facts:empty{display:none}
+  .pg-fact{padding:14px 12px 14px 0}
+  .pg-fact+.pg-fact{padding-left:14px;border-left:1px solid var(--border)}
+  .pg-fact-k{font-size:12px;font-weight:500;color:var(--fg-dim)}
+  .pg-fact-v{margin-top:5px;font-size:15px;font-weight:600;letter-spacing:-.015em;line-height:1.3}
+  .pg-about{margin-top:26px;font-size:17px;line-height:1.55;letter-spacing:-.015em}
+  .pg-feat-k{margin-top:28px;font-size:12px;font-weight:500;color:var(--fg-dim)}
+  .pg-feats{list-style:none;margin-top:10px}
+  .pg-feats li{position:relative;padding:11px 0 11px 26px;font-size:15px;line-height:1.45;border-top:1px solid var(--border)}
+  .pg-feats li::before{content:'';position:absolute;left:2px;top:17px;width:10px;height:6px;border-left:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg)}
+  .pg-note{margin-top:22px;padding:14px 16px;font-size:14px;line-height:1.5;color:var(--fg-dim);background:rgba(var(--fg-rgb),.04);border-radius:var(--r)}
+
+  @media(max-width:1024px){.pg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:640px){
+    .pg-grid{grid-template-columns:1fr;gap:12px}
+    .pg-card{padding:20px;gap:16px;border-radius:14px}
+    .pg-icon{flex-basis:60px;width:60px;height:60px}
+    .pg-name{font-size:21px}
+    /* на телефоне окно выезжает листом снизу */
+    .pg-sheet{width:100%;max-height:92vh;max-height:92dvh;border-radius:20px 20px 0 0}
+    .pg-sheet-in{padding:24px 20px calc(28px + env(safe-area-inset-bottom))}
+    .pg-icon--big{flex-basis:76px;width:76px;height:76px}
+    .pg-head{gap:16px}
+    .pg-head .pg-name{font-size:26px}
+    .pg-gets--big .pg-get{flex:1 1 100%;justify-content:center}
+    .pg-facts{grid-template-columns:1fr 1fr}
+    .pg-fact:nth-child(odd){padding-left:0;border-left:0}
+    .pg-fact:nth-child(n+3){border-top:1px solid var(--border)}
+  }
+  @media(prefers-reduced-motion:reduce){.pg-icon--next i{animation:none}.pg-sheet,.pg-modal{transition-duration:.01s}}
+
+  /* ═══ FAQ: как работаю со студиями ═══ */
+  .faq-list{border-top:1px solid var(--border)}
+  .faq-item{border-bottom:1px solid var(--border)}
+  .faq-item.reveal{transition:border-color .45s cubic-bezier(.16,1,.3,1),opacity .7s,transform .7s}
+  .faq-item.is-open{border-bottom-color:var(--accent)}
+  @media(hover:hover){.faq-item:hover{border-bottom-color:var(--accent)}}
+  .faq-item summary{-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:26px 0;cursor:pointer;list-style:none}
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-q{font-family:var(--font-display);font-size:clamp(20px,2.2vw,30px);font-weight:600;letter-spacing:-.03em;line-height:1.15}
+  .faq-item i{position:relative;flex:0 0 32px;height:32px;border-radius:var(--r);background:var(--accent);transition:transform .6s cubic-bezier(.65,0,.25,1)}
+  /* плюс из двух уголков (как у «Více»): ┘ и ┌ с зазором в центре; при открытии зазор раскрывается, плюс поворачивается в крестик и зазор возвращается */
+  .faq-item i{color:var(--on-accent);--s:7px;--g:.65px}
+  .faq-item i::before,.faq-item i::after{content:'';position:absolute;left:50%;top:50%;width:var(--s);height:var(--s);border:1.5px solid currentColor;animation:fq0 .6s cubic-bezier(.65,0,.25,1)}
+  .faq-item i::before{margin:calc(var(--g) - var(--s)) 0 0 calc(var(--g) - var(--s));border-top:0;border-left:0;border-bottom-right-radius:4px}
+  .faq-item i::after{margin:calc(0px - var(--g)) 0 0 calc(0px - var(--g));border-bottom:0;border-right:0;border-top-left-radius:4px;animation-name:fq1}
+  .faq-item.is-open i::before{animation-name:fq2}
+  .faq-item.is-open i::after{animation-name:fq3}
+  @keyframes fq0{45%{transform:translate(-1.2px,-1.2px)}}@keyframes fq2{45%{transform:translate(-1.2px,-1.2px)}}
+  @keyframes fq1{45%{transform:translate(1.2px,1.2px)}}@keyframes fq3{45%{transform:translate(1.2px,1.2px)}}
+  @media(prefers-reduced-motion:reduce){.faq-item i::before,.faq-item i::after{animation:none}}
+  .faq-item.is-open i{transform:rotate(45deg)}
+  .faq-a{max-width:none;padding:0 0 28px;font-size:17px;line-height:1.6;color:var(--fg-dim)}
+  /* ответ: высота растёт с лёгким перелётом (как меню дока), текст проявляется чуть позже снизу */
+  .faq-body{overflow:hidden;height:0;transition:height .38s cubic-bezier(.4,0,.2,1)}
+  .faq-item.is-open .faq-body{transition:height .55s cubic-bezier(.16,1,.3,1)}
+  .faq-a{opacity:0;transform:translateY(10px);transition:opacity .2s,transform .3s cubic-bezier(.4,0,.2,1)}
+  .faq-item.is-open .faq-a{opacity:1;transform:none;transition:opacity .45s cubic-bezier(.16,1,.3,1) .1s,transform .6s cubic-bezier(.3,1.28,.5,1) .1s}
+  @media(prefers-reduced-motion:reduce){.faq-body,.faq-a{transition:none!important}}
+  @media(max-width:600px){.faq-item summary{padding:20px 0;gap:16px}.faq-item i{flex-basis:28px;height:28px}.faq-a{font-size:16px;padding-bottom:22px}}
+  .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+  /* ═══ EXPERIENCE: строки приходят из content/experience.json ═══ */
+  .xp-list{border-top:1px solid var(--border)}
+  .xp{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1.2fr) minmax(96px,auto);gap:10px 40px;align-items:baseline;padding:30px 0;border-bottom:1px solid var(--border)}
+  .xp.reveal{transition:border-color .45s cubic-bezier(.16,1,.3,1),opacity .7s,transform .7s}
+  .xp:hover{border-bottom-color:var(--accent)}
+  .xp-num{font-size:13px;font-weight:500;color:var(--fg-dim);font-variant-numeric:tabular-nums}
+  .xp-co{font-family:var(--font-display);font-size:clamp(24px,2.6vw,38px);font-weight:600;letter-spacing:-.034em;line-height:1.05;color:var(--fg);text-decoration:none;justify-self:start}
+  a.xp-co{display:inline-flex;align-items:baseline;gap:.22em}
+  a.xp-co svg{width:.5em;height:.5em;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.35;transition:opacity .25s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+  a.xp-co:hover svg{opacity:1;transform:translate(.08em,-.08em)}
+  .xp-role{font-size:15px;font-weight:600;letter-spacing:-.011em;line-height:1.35}
+  .xp-text{margin-top:8px;font-size:15px;line-height:1.55;color:var(--fg-dim);max-width:46ch}
+  .xp-when{font-size:13px;font-weight:500;color:var(--fg-dim);white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+  @media(max-width:900px){.xp{grid-template-columns:40px minmax(0,1fr) auto;gap:12px 20px;padding:26px 0}.xp-body{grid-column:2/-1}.xp-when{grid-column:3;grid-row:1}}
+  @media(max-width:600px){.xp{grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;padding:22px 0}.xp-num{display:none}.xp-body{grid-column:1/-1}.xp-when{grid-column:2}.xp-text{max-width:none}}
+
+  .showcase{padding:0 40px 120px;position:relative}
+  .showcase-title{font-family:var(--font-display);font-size:clamp(56px,10.5vw,150px);font-weight:600;line-height:1;letter-spacing:-.04em;display:flex;justify-content:space-between;overflow:hidden}
+  .showcase-title span{display:block;opacity:0;transform:translateY(100%);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .showcase-title.visible span{opacity:1;transform:translateY(0)}
+  .showcase-title span:nth-child(2){transition-delay:.1s}
+  .showcase-video{width:100%;aspect-ratio:16/9;object-fit:cover;margin-top:4px;display:block;border-radius:var(--r)}
+
+
+  .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  .contact-left h2{font-family:var(--font-display);font-size:clamp(40px,6vw,82px);font-weight:600;line-height:1.02;letter-spacing:-.035em;margin-bottom:24px}
+  .contact-left p{color:var(--fg-dim);font-size:16px;line-height:1.6;font-weight:400;max-width:400px}
+  .contact-email{margin-top:40px}
+  .contact-email-label{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:-.011em;color:var(--fg-dim);margin-bottom:8px}
+  .contact-email a{color:var(--fg);text-decoration:none;font-size:17px;font-weight:500;border-bottom:1px solid var(--border);padding-bottom:2px;transition:border-color .2s}
+  .contact-email a:hover{border-color:var(--accent)}
+  .contact-form{display:flex;flex-direction:column;gap:2px}
+  .form-field{border:1px solid var(--border);border-radius:var(--r);background:var(--surface);color:var(--fg);font-family:var(--font-body);font-size:15px;padding:15px 18px;outline:none;transition:border-color .2s;appearance:none;-webkit-appearance:none}
+  .form-field::placeholder{color:rgba(var(--fg-rgb),.4)}
+  .form-field:focus{border-color:var(--accent)}
+  select.form-field{cursor:pointer}
+  textarea.form-field{resize:vertical;min-height:110px}
+  .form-submit{background:var(--accent);color:var(--on-accent);border:none;border-radius:var(--r);font-family:var(--font-body);font-size:14px;font-weight:600;letter-spacing:-.011em;padding:15px 30px;cursor:pointer;transition:background .25s,color .25s;align-self:flex-start;margin-top:10px}
+  .form-submit:hover{background:var(--fg);color:var(--bg)}
+
+  /* кнопки при наведении чуть сжимаются, при нажатии сильнее (как док перед открытием) */
+  .btn-solid,.btn-ghost,.btn-outline,.form-submit{transition:background .25s,color .25s,border-color .25s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+  @media(hover:hover){.btn-solid:hover,.btn-ghost:hover,.btn-outline:hover,.form-submit:hover{transform:scale(.95)}}
+  .btn-solid:active,.btn-ghost:active,.btn-outline:active,.form-submit:active{transform:scale(.91);transition-duration:.25s,.25s,.25s,.12s}
+  @media(prefers-reduced-motion:reduce){.btn-solid,.btn-ghost,.btn-outline,.form-submit{transform:none!important}}
+
+  footer{border-top:1px solid var(--border);padding:44px 40px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:40px;position:relative}
+  .footer-name{font-family:var(--font-mono);font-size:13px;font-weight:600;letter-spacing:-.011em}
+  .footer-copy{font-family:var(--font-mono);font-size:13px;font-weight:400;color:var(--fg-dim);text-align:center}
+  .footer-links{display:flex;gap:24px}
+  .footer-links a{color:var(--fg-dim);text-decoration:none;font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:-.011em;transition:color .2s}
+  .footer-links a:hover{color:var(--fg)}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(var(--fg-rgb),.18)}
+
+  .gravity-section{position:relative;border-top:1px solid var(--border);overflow:hidden;cursor:grab;min-height:20vh;background-color:var(--bg);z-index:4}
+  .gravity-section::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(var(--fg-rgb),1) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--fg-rgb),1) 1px,transparent 1px);background-size:48px 48px;-webkit-mask-image:linear-gradient(115deg,rgba(0,0,0,.005) 0%,rgba(0,0,0,.005) 20%,rgba(0,0,0,.045) 38%,rgba(0,0,0,.08) 50%,rgba(0,0,0,.045) 62%,rgba(0,0,0,.005) 80%,rgba(0,0,0,.005) 100%);mask-image:linear-gradient(115deg,rgba(0,0,0,.005) 0%,rgba(0,0,0,.005) 20%,rgba(0,0,0,.045) 38%,rgba(0,0,0,.08) 50%,rgba(0,0,0,.045) 62%,rgba(0,0,0,.005) 80%,rgba(0,0,0,.005) 100%);-webkit-mask-size:300% 300%;mask-size:300% 300%;animation:gridLineSweep 6s linear infinite}
+  @keyframes gridLineSweep{0%{-webkit-mask-position:160% 160%;mask-position:160% 160%}100%{-webkit-mask-position:-60% -60%;mask-position:-60% -60%}}
+  .gravity-section:active{cursor:grabbing}
+  .gravity-header{position:absolute;top:28px;left:40px;z-index:3;pointer-events:none}
+  #gravityCanvas{display:block;max-width:100%;touch-action:none;position:relative;z-index:2;background:transparent}
+  @media(max-width:768px){.gravity-section::after{background-size:32px 32px}.gravity-header{top:20px;left:20px}}
+  @media(max-width:480px){.gravity-section::after{background-size:24px 24px}.gravity-header{top:16px;left:16px}}
+
+
+  @media(max-width:1024px){.hero{padding:0 28px 96px}.hero-title{font-size:clamp(72px,11.7vw,112px)}section{padding:90px 28px}.showcase{padding:0 28px 90px}.about-grid{grid-template-columns:1fr;gap:56px}.about-text p{max-width:100%}.about-photo-placeholder{margin-left:0}.contact-inner{grid-template-columns:1fr;gap:48px}footer{grid-template-columns:1fr 1fr;gap:20px}.footer-copy{grid-column:1/-1;order:3;text-align:left}}
+  @media(max-width:768px){section{padding:72px 20px}.showcase{padding:0 20px 72px}.hero{padding:0 20px 96px}.section-header{flex-wrap:wrap;gap:16px}.about-grid{grid-template-columns:1fr;gap:40px}.about-meta{grid-template-columns:1fr 1fr}.showcase-title{font-size:clamp(56px,16vw,100px)}.contact-inner{grid-template-columns:1fr;gap:40px}.contact-left h2{font-size:clamp(44px,12vw,72px)}.form-submit{width:100%;text-align:center;padding:18px}footer{grid-template-columns:1fr;gap:20px;padding:32px 20px}.footer-copy{text-align:left}.footer-links{flex-wrap:wrap;gap:16px}}
+  @media(max-width:600px){.hero-title{font-size:clamp(44px,15.4vw,88px)}.hero-content{gap:20px}}
+  @media(max-width:480px){.hero{padding:0 16px 92px}section{padding:56px 16px}.showcase{padding:0 16px 56px}.about-meta{grid-template-columns:1fr}footer{padding:28px 16px}.footer-links{gap:12px}}
+
+  /* ═══════════════════════════════════════════════════════════
+     РЕДИЗАЙН: чередование слоёв. Видео на весь экран → светлая
+     скруглённая панель → фото со стеклянными карточками → тёмная
+     панель → фото с крупной фразой → светлая панель с контактами.
+     Панели наезжают на медиа, медиа «стоят» на месте (sticky).
+     ═══════════════════════════════════════════════════════════ */
+  :root{
+    --font-display:'Switzer','Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+    --font-body:var(--font-display);--font-mono:var(--font-display);
+    --font-serif:'Hedvig Letters Serif',Georgia,'Times New Roman',serif;
+    --pn-light:#fff;--pn-dark:#151515;--card-dark:#1c1c1c;
+    --pr:40px;            /* скругление панелей */
+    --edge:40px;          /* поля */
+  }
+  body{background:var(--pn-light);font-size:16px;letter-spacing:-.01em}
+
+  /* ── прелоадер: тёмный, чтобы уйти прямо в видео ── */
+  .loader-bg{background:#0c0c0c}
+  .loader-logo{color:#fff}
+  .loader-text{color:#fff;font-weight:400;text-transform:none;letter-spacing:-.035em;line-height:.95;text-align:left}
+  #lt2{font-family:var(--font-serif);font-style:normal;letter-spacing:-.01em}
+
+  /* ── HERO: шоурил на весь экран ── */
+  /* hero чуть выше экрана: нижние углы первой панели лежат на видео, а не выглядывают на первом экране */
+  .hero{background:#0c0c0c;color:#fff;justify-content:flex-end;align-items:stretch;min-height:calc(100vh + var(--pr));min-height:calc(100svh + var(--pr));padding:0 var(--edge) calc(44px + var(--pr))}
+  .hero::after{background:#000}
+  .hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;transform:scale(1.04);transform-origin:50% 60%;will-change:transform}
+  .hero-video{width:100%;height:100%;object-fit:cover;display:block}
+  .hero-media::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 28%,rgba(0,0,0,.14) 50%,rgba(0,0,0,.74) 100%)}
+  .hero-content{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 40px;text-align:left}
+  .hero-title{font-weight:400;text-transform:none;font-size:clamp(64px,9.2vw,156px);line-height:.92;letter-spacing:-.045em;color:#fff}
+  .title-line{margin:0}
+  .title-line--accent{font-family:var(--font-serif);font-style:normal;font-weight:400;letter-spacing:-.015em;padding-right:.08em}
+  .hero-label{color:rgba(255,255,255,.82);text-transform:none;font-weight:500;font-size:15px;line-height:1.4;letter-spacing:-.01em;text-align:right;padding-bottom:.6em}
+
+  /* ── общее полотно: прозрачное, слои рисуют себя сами ── */
+  .page-body{background:none;clip-path:none}
+  .page-body::before{display:none}
+
+  /* панель */
+  .pn{position:relative;z-index:2;border-radius:var(--pr);clip-path:inset(0 round var(--pr));isolation:isolate}
+  .pn--light{background:var(--pn-light);color:#000;--fg:#000;--fg-rgb:0,0,0;--fg-dim:rgba(0,0,0,.5);--border:rgba(0,0,0,.1)}
+  .pn--dark{background:var(--pn-dark);color:#fff;--fg:#fff;--fg-rgb:255,255,255;--fg-dim:rgba(255,255,255,.5);--border:rgba(255,255,255,.1)}
+  .pn--first{margin-top:calc(var(--pr) * -1)}
+  .pn--last{border-radius:var(--pr) var(--pr) 0 0;clip-path:inset(0 round var(--pr) var(--pr) 0 0);padding-bottom:var(--edge)}
+  .pn section{padding:120px var(--edge)}
+
+  /* чип раздела, как маленькая плашка */
+  .chip.chip{display:inline-flex;align-items:center;align-self:flex-start;height:28px;padding:0 10px;border-radius:8px;font-family:var(--font-body);font-size:12px;font-weight:500;line-height:1;letter-spacing:-.005em;background:rgba(0,0,0,.06);color:rgba(0,0,0,.55);white-space:nowrap}
+  .chip--dark.chip--dark{background:rgba(255,255,255,.07);color:rgba(255,255,255,.55)}
+  .chip--glass.chip--glass{background:rgba(255,255,255,.12);color:#fff;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+
+  /* вступление раздела: чип слева, высказывание справа */
+  .pn-intro{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));column-gap:20px;align-items:start;margin-bottom:64px}
+  .pn-intro-side{grid-column:1/3;display:flex;flex-direction:column;gap:14px;align-items:flex-start;padding-top:4px}
+  .pn-say{grid-column:3/9;font-size:clamp(24px,2.5vw,36px);font-weight:500;line-height:1.18;letter-spacing:-.022em;max-width:21em;text-wrap:pretty}
+  .pn-say .section-title{font:inherit;letter-spacing:inherit;line-height:inherit}
+  .pn-dim{color:rgba(0,0,0,.42)}
+  .pn--dark .pn-dim{color:rgba(255,255,255,.42)}
+  .pn-pill{display:inline-block;padding:0 .3em;border-radius:.28em;background:rgba(0,0,0,.06);color:#000;text-decoration:none;transition:background .25s,color .25s}
+  .pn-pill:hover{background:#000;color:#fff}
+  .projects-count{font-size:12px;color:rgba(0,0,0,.4)}
+
+  /* «О мне» в тоне панели */
+  .pn .ab{padding-bottom:40px}
+  .ab-side{gap:30px}
+  .ab-label span{color:rgba(0,0,0,.4)}
+  .ab-statement{--fs:clamp(28px,3.1vw,46px)}
+  .ab-p{font-weight:500;letter-spacing:-.03em;line-height:1.1}
+  .ab-p--lead{font-weight:500;color:#000}
+  .ab-p:not(.ab-p--lead){color:rgba(0,0,0,.42)}
+  .ab-plus{color:rgba(0,0,0,.22)}
+  .ab-btn{background:rgba(0,0,0,.05)}
+
+  /* проекты: отдельная секция с крупным заголовком, без линий и повторов */
+  .pn .projects{padding-top:clamp(120px,14vw,200px)}
+  .wk-head{margin-bottom:clamp(44px,5vw,72px)}
+  .wk-title.section-title{font-size:clamp(52px,7.6vw,128px);font-weight:500;line-height:.92;letter-spacing:-.05em;color:#000;text-wrap:balance}
+  .wk-n{display:inline-block;vertical-align:top;margin:.35em 0 0 .4em;font-size:.2em;font-weight:500;line-height:1;letter-spacing:-.01em;color:rgba(0,0,0,.42);font-variant-numeric:tabular-nums}
+  .wk-say{margin-top:clamp(20px,2.4vw,32px);max-width:24em;font-size:clamp(18px,1.6vw,24px);font-weight:500;line-height:1.25;letter-spacing:-.02em;text-wrap:pretty}
+  @media(max-width:768px){.wk-title.section-title{font-size:13vw}.wk-n{font-size:.24em}}
+  /* проекты: две колонки вертикальных карточек, правая ниже; картинка с параллаксом,
+     на ховере размывается и в центре играет видео скролла сайта */
+  .projects-grid{--pj-shift:clamp(120px,16vw,280px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(16px,2.2vw,36px);row-gap:clamp(64px,7vw,120px);align-items:start;padding-bottom:var(--pj-shift)}
+  .pj:nth-child(even){margin:var(--pj-shift) 0 calc(var(--pj-shift) * -1)}
+  .pj{display:block;color:inherit;text-decoration:none;opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+  .pj.visible{opacity:1;transform:none}
+  .pj-img{position:relative;overflow:hidden;aspect-ratio:4/5;border-radius:20px;background:#ececec;isolation:isolate;cursor:pointer}
+  .pj-media{position:absolute;left:-6%;top:-6%;width:112%;max-width:none;height:112%;object-fit:cover;will-change:transform;transition:filter .6s cubic-bezier(.16,1,.3,1),scale .8s cubic-bezier(.16,1,.3,1)}
+  .pj-tag{position:absolute;right:14px;bottom:14px;z-index:3;padding:7px 11px;border-radius:9px;font-size:13px;font-weight:500;letter-spacing:-.01em;line-height:1;color:#fff;background:rgba(14,14,14,.62)}
+  .pj-pv{position:absolute;left:11%;right:11%;top:50%;z-index:2;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#111;box-shadow:0 30px 70px rgba(0,0,0,.35);opacity:0;transform:translateY(-50%) scale(.9);transition:opacity .45s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);pointer-events:none}
+  .pj-pv video{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+  /* мобильная версия сайта: окошко как экран телефона */
+  .pj-pv--tall{left:50%;right:auto;height:80%;aspect-ratio:804/1748;border-radius:24px;transform:translate(-50%,-50%) scale(.9)}
+  /* у курсора: оранжевый бокс, плюс из двух уголков (как в FAQ). Бокс выпрыгивает с поворотом, уголки съезжаются в плюс */
+  .pj-lb{position:absolute;left:0;top:0;z-index:4;pointer-events:none}
+  .pj-lb-t{display:block;transition:transform .45s cubic-bezier(.2,1.5,.4,1)}
+  .pj-lb-b{display:grid;place-items:center;width:56px;height:56px;border-radius:14px;background:var(--accent);color:#fff;box-shadow:0 12px 32px rgba(255,74,31,.32);opacity:0;transform:scale(.1) rotate(-40deg);transition:transform .75s cubic-bezier(.3,1.5,.45,1),opacity .2s}
+  .pj-lb-b i{position:relative;width:0;height:0;--s:11px;--g:1px}
+  .pj-lb-b i::before,.pj-lb-b i::after{content:'';position:absolute;left:0;top:0;width:var(--s);height:var(--s);border:2px solid currentColor;transition:transform .6s .1s cubic-bezier(.65,0,.25,1)}
+  .pj-lb-b i::before{margin:calc(var(--g) - var(--s)) 0 0 calc(var(--g) - var(--s));border-top:0;border-left:0;border-bottom-right-radius:5px;transform:translate(-11px,-11px) rotate(-90deg)}
+  .pj-lb-b i::after{margin:calc(0px - var(--g)) 0 0 calc(0px - var(--g));border-bottom:0;border-right:0;border-top-left-radius:5px;transform:translate(11px,11px) rotate(-90deg)}
+  /* ховер включает скрипт классом is-on (по координатам мыши, в том числе во время скролла) */
+  .pj-img.is-on .pj-media{filter:blur(16px) brightness(.85);scale:1.06}
+  .pj-img.is-on .pj-pv{opacity:1;transform:translateY(-50%) scale(1)}
+  .pj-img.is-on .pj-pv--tall{transform:translate(-50%,-50%) scale(1)}
+  .pj-img.is-on .pj-lb-b{opacity:1;transform:none}
+  .pj-img.is-on .pj-lb-b i::before,.pj-img.is-on .pj-lb-b i::after{transform:none}
+  @media(prefers-reduced-motion:reduce){.pj-lb-b,.pj-lb-b i::before,.pj-lb-b i::after,.pj-lb-t{transition:opacity .2s}}
+  .pj-img.is-on:has(.pj-pv) .pj-media{filter:blur(18px) brightness(.8)}
+  .pj-cap{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;column-gap:16px;margin-top:18px}
+  .pj-cap-name{font-size:clamp(26px,2.5vw,40px);font-weight:500;letter-spacing:-.04em;line-height:1.05}
+  .pj-cap-year{font-size:14px;font-weight:500;color:rgba(0,0,0,.5);font-variant-numeric:tabular-nums}
+  .pj-claim{grid-column:1/-1;margin-top:8px;font-size:clamp(15px,1.1vw,17px);line-height:1.4;letter-spacing:-.01em;color:rgba(0,0,0,.5)}
+  @media(max-width:768px){
+    .projects-grid{grid-template-columns:minmax(0,1fr);row-gap:56px;padding-bottom:0}
+    .pj:nth-child(even){margin:0}
+    .pj-img{border-radius:16px}
+    .pj-tag{right:10px;bottom:10px;font-size:12px;padding:6px 9px}
+    .pj-cap{margin-top:14px}
+  }
+  /* ── медиа-слой: картинка стоит на месте, контент едет поверх ── */
+  /* без padding: фон начинается с самого верха слоя и уходит под скруглённые углы соседних панелей */
+  .ph{position:relative;z-index:1;margin:calc(var(--pr) * -1) 0;padding:0;color:#fff;background:#111}
+  .ph-bg{position:sticky;top:0;height:100vh;height:100lvh;margin-bottom:-100vh;margin-bottom:-100lvh;overflow:hidden;z-index:0}
+  .ph-bg picture{display:contents}
+  .ph-bg img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(var(--phs,1.1));will-change:transform}
+  .ph-in{position:relative;z-index:1;padding:calc(160px + var(--pr)) var(--edge) calc(180px + var(--pr))}
+
+  /* стеклянные карточки playground */
+  .ph--glass .ph-head{position:sticky;top:120px;z-index:0;display:flex;flex-direction:column;align-items:flex-start;gap:18px;max-width:780px}
+  .ph-title.ph-title{font-size:clamp(36px,4.1vw,60px);font-weight:400;line-height:1;letter-spacing:-.035em;color:#fff}
+  .ph-sub{font-size:15px;line-height:1.45;color:rgba(255,255,255,.75);max-width:30em}
+  .ph--glass .pg-grid{position:relative;z-index:1;margin:42vh auto 0;max-width:1000px;grid-template-columns:1fr;gap:20px}
+  .ph .pg-card{min-height:320px;padding:36px;gap:22px;border-radius:24px;border:1px solid rgba(255,255,255,.1);background:rgba(18,18,18,.46);-webkit-backdrop-filter:blur(30px) saturate(1.15);backdrop-filter:blur(30px) saturate(1.15);color:#fff;--fg:#fff;--fg-rgb:255,255,255;--fg-dim:rgba(255,255,255,.6);--border:rgba(255,255,255,.14);--bg:#111;--bg-rgb:17,17,17}
+  @media(hover:hover){.ph .pg-card:not(.pg-card--next):hover{border-color:rgba(255,255,255,.22);box-shadow:0 30px 60px rgba(0,0,0,.25)}}
+  .ph .pg-icon{flex-basis:84px;width:84px;height:84px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .ph .pg-name{font-size:clamp(28px,2.6vw,38px);font-weight:500;letter-spacing:-.03em}
+  .ph .pg-sub{color:rgba(255,255,255,.6);font-size:15px}
+  .ph .pg-desc{color:rgba(255,255,255,.78);font-size:18px;line-height:1.5;text-wrap:pretty}
+  .ph .pg-card:not(.pg-card--next){cursor:pointer}
+  .ph .pg-more{background:rgba(255,255,255,.1);border-color:transparent;color:#fff}
+  .ph .pg-get{border-color:rgba(255,255,255,.2);color:#fff;background:transparent}
+  .ph .pg-get.is-main{background:#fff;border-color:#fff;color:#000}
+  .ph .pg-get.is-main em{color:rgba(0,0,0,.55)}
+  .ph .pg-card--next{background:rgba(18,18,18,.18);border-style:dashed;border-color:rgba(255,255,255,.25);min-height:0}
+  .ph .pg-icon--next{border-color:rgba(255,255,255,.35)}
+  /* десктоп: заголовок слева; карточка въезжает по центру (около 68% ширины)
+     и по мере скролла сужается и уезжает вправо в колонку. Наклон назад только на ховере. Описание сразу в финальной ширине: строки не прыгают */
+  .pg-row{display:block}
+  .ph .pg-card{transition:transform .6s cubic-bezier(.2,.8,.2,1),border-color .3s}
+  @media(hover:hover){
+    .ph .pg-card.pg-card:not(.pg-card--next):hover{transform:perspective(900px) translateY(-8px) rotateX(5deg);box-shadow:none}
+  }
+  @media(min-width:1025px){
+    .ph--glass .ph-in{--pgw:min(620px,44vw)}
+    .ph--glass .ph-head{max-width:calc(100% - var(--pgw) - 72px)}
+    .ph--glass .pg-grid{max-width:none;margin:42vh 0 0}
+    .pg-row{pointer-events:none}
+    .pg-row>.pg-card{pointer-events:auto;width:var(--pgw);margin-left:calc(100% - var(--pgw))}
+    .ph .pg-desc{max-width:calc(var(--pgw) - 74px)}
+  }
+  .ph .pg-icon--next i{background:rgba(255,255,255,.6)}
+  .ph .pg-card--next .pg-desc{color:rgba(255,255,255,.6)}
+
+  /* фото с крупной фразой: фраза справа сверху, услуги слева снизу */
+  .ph--photo .ph-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,.06) 45%,rgba(0,0,0,.34) 100%)}
+  .ph-split{min-height:110vh;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto 1fr auto;column-gap:40px}
+  .ph-say{grid-column:2;grid-row:1;display:flex;flex-direction:column;align-items:flex-end;text-align:right}
+  .ph-big{display:block;font-size:clamp(44px,5.6vw,88px);font-weight:500;line-height:.98;letter-spacing:-.04em;color:#fff}
+  .ph-big.section-title{font-size:clamp(44px,5.6vw,88px);font-weight:500;line-height:.98;letter-spacing:-.04em}
+  .ph-big--dim{color:rgba(255,255,255,.62)}
+  .ph-btn{display:inline-flex;align-items:center;height:44px;padding:0 18px;margin-top:30px;border-radius:10px;background:#fff;color:#000;font-size:15px;font-weight:500;letter-spacing:-.015em;text-decoration:none;transition:transform .35s cubic-bezier(.3,1.5,.5,1),background .25s,color .25s}
+  .ph-btn{--hx-tint:rgba(0,0,0,.08)}
+  .ph-chips{grid-column:1;grid-row:3;display:flex;flex-direction:column;gap:18px;max-width:460px}
+  .ph-chips-t{font-size:clamp(22px,2vw,30px);font-weight:500;line-height:1.15;letter-spacing:-.025em;color:#fff}
+  .ph-chip-row{display:flex;flex-wrap:wrap;gap:8px}
+  .ph-chip-row .chip{height:34px;padding:0 13px;font-size:13px;background:rgba(0,0,0,.22);color:#fff}
+
+  /* тёмная панель: опыт и навыки */
+  .dk-card{position:relative;background:var(--card-dark);border-radius:24px;padding:4px 32px;margin-top:16px}
+  .pn--dark .xp-list{border-top:0}
+  .pn--dark .xp{border-bottom-color:rgba(255,255,255,.08)}
+  .pn--dark .xp:last-child{border-bottom:0}
+  .pn--dark .xp:hover{border-bottom-color:rgba(255,255,255,.08)}
+  .pn--dark .xp-co{color:#fff;font-weight:500}
+  .dk-card--skills{padding:36px 32px}
+  .pn--dark .skills{margin-top:0;border-top:0;padding-top:0}
+  .pn--dark .sk-title{font-weight:500;color:#fff}
+  .pn--dark .sk-chip{background:rgba(255,255,255,.06);color:#fff}
+  .pn--dark .sk-chip:hover{background:rgba(255,255,255,.12)}
+  .pn--dark .sk-chip--invert .sk-logo{fill:#fff}
+  .pn--dark .skills-langs{border-top-color:rgba(255,255,255,.08)}
+
+  /* последняя панель: FAQ карточками, большое имя, тёмная карточка с контактами */
+  .pn--last .faq-list{border-top:0;display:flex;flex-direction:column;gap:10px;margin-left:calc(25% + 5px)}
+  .pn--last .faq-item{border:0;border-radius:16px;background:rgba(0,0,0,.05);padding:0 24px;transition:background .3s}
+  .pn--last .faq-item.is-open{background:rgba(0,0,0,.08)}
+  @media(hover:hover){.pn--last .faq-item:hover{background:rgba(0,0,0,.08)}}
+  .pn--last .faq-item summary{padding:22px 0}
+  .pn--last .faq-q{font-size:clamp(17px,1.4vw,20px);font-weight:500;letter-spacing:-.015em}
+  .pn--last .faq-item i{flex-basis:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.08)}
+  .pn--last .faq-item i{color:#000;--s:6.5px}
+  .pn--last .faq-a{font-size:16px;color:rgba(0,0,0,.55);padding-bottom:24px}
+
+  .big-word{display:flex;flex-direction:column;align-items:center;padding:40px var(--edge) 0;font-size:clamp(64px,13.4vw,232px);font-weight:500;line-height:.86;letter-spacing:-.055em;text-align:center;
+    background:linear-gradient(180deg,#4a4a4a 0%,#8a8a8a 52%,#c9c9c9 78%,var(--pn-light) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none}
+  .big-word span:last-child{font-family:var(--font-serif);font-style:normal;font-weight:400;letter-spacing:-.025em;padding-right:.06em}
+
+  .dk-card--contact{margin:-.6em var(--edge) 0;margin-top:clamp(-60px,-4vw,-24px);padding:0;color:#fff;--fg:#fff;--fg-rgb:255,255,255;--fg-dim:rgba(255,255,255,.55);--border:rgba(255,255,255,.12);--surface:rgba(255,255,255,.05);--bg:#1c1c1c;--bg-rgb:28,28,28}
+  .dk-card--contact #contact{padding:56px;border:0!important}
+  .dk-card--contact .contact-left h2{font-weight:500;font-size:clamp(40px,4.6vw,68px);letter-spacing:-.04em;line-height:1}
+  .dk-card--contact .contact-left p{color:rgba(255,255,255,.6)}
+  .dk-card--contact .form-field{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);color:#fff}
+  .dk-card--contact .form-field::placeholder{color:rgba(255,255,255,.4)}
+  .dk-card--contact select.form-field option{color:#000}
+  .dk-card--contact .form-submit{background:#fff;color:#0a0a0a}.dk-card--contact .form-submit:hover{background:#0a0a0a;color:#fff}
+  .dk-foot{border-top:1px solid rgba(255,255,255,.1);padding:26px 56px}
+  .dk-foot .footer-name{color:#fff}
+  .dk-foot .footer-copy,.dk-foot .footer-links a{color:rgba(255,255,255,.5)}
+  .dk-foot .footer-links a:hover{color:#fff}
+
+  @media(max-width:1024px){
+    :root{--pr:32px;--edge:28px}
+    .pn section{padding:96px var(--edge)}
+    .pn-intro{grid-template-columns:minmax(0,1fr);row-gap:20px;margin-bottom:44px}
+    .pn-intro-side,.pn-say{grid-column:1}
+    .pn--last .faq-list{margin-left:0}
+    .ph-in{padding:calc(130px + var(--pr)) var(--edge) calc(150px + var(--pr))}
+    .ph-split{grid-template-columns:minmax(0,1fr);min-height:100vh}
+    .ph-say{grid-column:1;align-items:flex-start;text-align:left}
+    .ph-chips{grid-column:1}
+    .dk-card--contact #contact{padding:40px}
+    .dk-foot{padding:24px 40px}
+  }
+  @media(max-width:768px){
+    :root{--pr:24px;--edge:20px}
+    .pn section{padding:72px var(--edge)}
+    .hero-content{grid-template-columns:minmax(0,1fr)}
+    .hero-label{text-align:left;padding-bottom:0}
+    .ph-in{padding:calc(110px + var(--pr)) var(--edge) calc(130px + var(--pr))}
+    .ph--glass .ph-head{top:96px}
+    .ph--glass .pg-grid{margin-top:34vh}
+    .ph .pg-card{padding:22px;min-height:0}
+    .ph .pg-icon{flex-basis:64px;width:64px;height:64px}
+    .ph .pg-desc{font-size:16px}
+    .dk-card{padding:2px 20px;border-radius:20px}
+    .dk-card--skills{padding:26px 20px}
+    .dk-card--contact{margin:-20px auto 0;border-radius:20px}
+    .dk-card--contact #contact{padding:28px 20px}
+    .dk-foot{padding:20px}
+    .big-word{font-size:17vw;padding-top:24px}
+  }
+
+  /* зернистый градиент вместо видео, фото и чёрного */
+  .grain{position:absolute;inset:0;overflow:hidden}
+  .hero-media.grain::after{background:radial-gradient(60% 55% at 100% 100%,rgba(0,0,0,.55),rgba(0,0,0,0) 70%),linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.22) 100%)}
+  .ph-bg .grain{position:absolute;inset:0}
+  .dk-card--contact{overflow:hidden;isolation:isolate;margin-left:auto!important;margin-right:auto!important;transform-origin:50% 0;width:95vw}
+  .dk-grain{z-index:-1}
+  .dk-card--contact #contact,.dk-card--contact .dk-foot{position:relative}
+  .dk-foot{border-top-color:rgba(255,255,255,.12)}
+  .hero-ascii{position:absolute;inset:0;z-index:1;pointer-events:none}
+  /* градиент чёрный → красный → оранжевый: текст в хиро белый, лоадер тёмный */
+  .loader-bg{background:#0a0a0a}
+  .ab-chip-m.ab-chip-m{display:none}
+  @media(max-width:1024px){.ab-side .chip{display:none}.ab-chip-m.ab-chip-m{display:inline-flex;margin-bottom:6px}}
+  @media(max-width:768px){.hero{padding-bottom:calc(108px + var(--pr))}.hero-label{color:rgba(255,255,255,.82)}}
+  @media(max-width:480px){:root{--pr:20px;--edge:16px}}
+  /* ── контакт: крупный заголовок с фото, форма в одну строку, соцсети и почта ── */
+  .ct{display:flex;flex-direction:column;container-type:inline-size}
+  .dk-card--contact{will-change:transform}
+  /* слабое железо (ступень 2): без размытия под стеклом и в появлении текста, остальное как есть */
+  html.perf-lite .ph .pg-card{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(18,18,18,.74)}
+  html.perf-lite .chip--glass.chip--glass{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(40,40,40,.62)}
+  html.perf-lite .rv-w,html.perf-lite .rv-soft.rv-soft,html.perf-lite .ct-line{filter:none!important}
+  .ct-top{display:grid;grid-template-columns:auto 1fr auto 1fr auto;align-items:center;font-family:var(--font-mono);font-size:13px;letter-spacing:-.01em;color:rgba(255,255,255,.7)}
+  .ct-top .ct-tag{justify-self:center}.ct-tag--a{color:#ff7a3d}
+  .ct-heart{width:14px;height:14px;fill:#ff4a1f}
+  .ct-big{margin:clamp(72px,11vw,180px) 0 0;font-family:var(--font-display);font-weight:500;font-size:9.6vw;font-size:10.8cqi;line-height:.92;letter-spacing:-.05em;color:#fff}
+  .ct-line{display:block;opacity:0;transform:translateY(.35em);filter:blur(10px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1),filter .9s}
+  .ct-line+.ct-line{transition-delay:.12s}
+  .ct.in .ct-line{opacity:1;transform:none;filter:none}
+  /* градиент через background-clip:text красится только внутри рамки строки: с плотным трекингом и низким
+     line-height края букв выходят за неё и срезаются. Расширяем рамку полями и тут же гасим их отрицательными отступами */
+  .ct-t{padding:.12em .1em .2em;margin:-.12em -.1em -.2em;--gx:-50em;--gy:0;background:radial-gradient(circle at var(--gx) var(--gy),#ff6a2b 0,#ff6a2b .45em,#fff 1.7em);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .ct-big{--o:0}
+  .ct-face{display:inline-block;height:.86em;width:.92em;object-fit:cover;border-radius:.1em;vertical-align:-.06em;margin-left:.1em;clip-path:inset(0 calc(50% - var(--o)*50%) round .1em);transform:scale(calc(.82 + var(--o)*.18));opacity:min(1,calc(var(--o)*4))}
+  .ct-face--m{display:none;margin:0 .14em 0 0}
+  html[data-lang=en] .ct-big{font-size:10vw;font-size:11.6cqi}
+  .ct-form{display:grid;grid-template-columns:1fr 1fr minmax(180px,.62fr);gap:6px;margin-top:clamp(48px,7vw,120px)}
+  /* поля и соцсети: белое матовое стекло без backdrop-filter. Размытие внутри карточки, которая зумится
+     на скролле, пересчитывалось каждый кадр и давало фризы и мигание; на мягком градиенте его и так почти не видно */
+  .ct-field{position:relative;display:block;height:clamp(64px,8vw,120px);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;transition:background .25s,border-color .25s;cursor:text}
+  .ct-field:hover{background:rgba(255,255,255,.1)}
+  .ct-field:focus-within{border-color:rgba(255,255,255,.45);background:rgba(255,255,255,.12)}
+  .ct-field.err{border-color:#ff4a1f}
+  .ct-field input{position:absolute;inset:0;width:100%;height:100%;padding:16px 18px clamp(16px,4vw,64px);background:none;border:0;outline:0;color:#fff;font:inherit;font-family:var(--font-body);font-size:clamp(16px,1.3vw,20px);letter-spacing:-.01em;border-radius:inherit}
+  .ct-field input::placeholder{color:rgba(255,255,255,.66)}
+  .ct-send{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 18px;height:clamp(64px,8vw,120px);background:#fff;color:#0a0a0a;border:0;border-radius:12px;font-family:var(--font-body);font-size:clamp(16px,1.3vw,20px);font-weight:500;letter-spacing:-.01em;cursor:pointer;transition:background .25s,color .25s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+  .ct-send svg{width:22px;height:22px;flex:none;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+  .ct-send{--hx-tint:rgba(0,0,0,.07)}
+  @media(hover:hover){.ct-send:hover svg{transform:translateX(-4px)}}
+  .ct-send:active{transform:scale(.97)}
+  .ct-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+  .ct-send.is-busy{opacity:.6;pointer-events:none}
+  .ct-note{grid-column:1/-1;margin:6px 0 0;min-height:1.4em;font-size:14px;color:rgba(255,255,255,.7)}
+  .ct-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px;align-items:end;margin-top:clamp(48px,7vw,120px)}
+  .ct-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+  .ct-col--mail{container-type:inline-size}
+  .ct-label{font-size:clamp(15px,1.2vw,18px);color:rgba(255,255,255,.78)}
+  .ct-soc{display:flex;gap:10px}
+  .ct-ico{display:grid;place-items:center;width:clamp(52px,4.6vw,72px);aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#fff;text-decoration:none;font-family:var(--font-display);font-size:clamp(17px,1.5vw,22px);letter-spacing:-.04em;transition:background .25s,color .25s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+  .ct-ico svg{width:42%;height:42%}
+  @media(hover:hover){.ct-ico:hover{background:#fff;color:#0a0a0a;transform:scale(.94)}}
+  .ct-mail{display:block;font-family:var(--font-display);font-weight:400;font-size:6vw;font-size:12cqi;line-height:1;letter-spacing:-.05em;color:#fff;text-decoration:none;white-space:nowrap;transition:opacity .25s}
+  /* ховер: поверх «ahoj» снизу вверх проявляется жирная копия (обводка глифов, ширина та же, строка не прыгает),
+     собака один раз делает полный оборот */
+  .ct-m1{position:relative;display:inline-block}
+  .ct-m1::after{content:attr(data-t);position:absolute;left:0;top:0;-webkit-text-stroke:.035em currentColor;clip-path:inset(110% -5% -25% -5%);transition:clip-path .55s cubic-bezier(.65,0,.25,1);pointer-events:none}
+  .ct-at{display:inline-block;transform-origin:50% 56%}
+  @media(hover:hover){
+    .ct-mail:hover{opacity:.75}
+    .ct-mail:hover .ct-m1::after{clip-path:inset(-15% -5% -25% -5%)}
+    .ct-mail:hover .ct-at{transform:rotate(360deg);transition:transform .8s cubic-bezier(.65,0,.25,1)}
+  }
+  .dk-card--contact .dk-foot{display:flex;justify-content:space-between;gap:16px}
+  @media(max-width:768px){
+    .ct-top{grid-template-columns:auto 1fr auto auto}.ct-top .ct-tag:not(.ct-tag--a){display:none}.ct-top .ct-heart{justify-self:end;margin-right:12px}
+    .ct-big{font-size:9.6vw;font-size:11.7cqi;line-height:.94}html[data-lang=en] .ct-big{font-size:11vw;font-size:13.6cqi}
+    .ct-face--d{display:none}.ct-face--m{display:inline-block}
+    .ct-form{grid-template-columns:1fr}
+    .ct-send{align-items:center}
+    .ct-bottom{grid-template-columns:1fr;gap:40px}
+    .ct-mail{font-size:11vw;font-size:12cqi}
+    .dk-card--contact .dk-foot{flex-direction:column;align-items:flex-start;gap:6px}.dk-card--contact .dk-foot .footer-copy{text-align:left}
+  }
+  @media(prefers-reduced-motion:reduce){.ct-line{opacity:1;transform:none;filter:none;transition:none}}
+  /* ── планшет и телефон: стекло карточек приложений плотнее. Safari иногда сбрасывает размытие
+     под фоном, и без него полупрозрачная карточка не читается поверх заголовка ── */
+  @media(max-width:1024px){
+    .ph .pg-card{background:rgba(20,18,17,.82)}
+    .ph .pg-card--next{background:rgba(20,18,17,.6)}
+  }
 </style>
 </head>
 <body>
 
-<header class="top">
-  <span class="status"><i></i><span data-cs="Web ve výstavbě" data-en="Under construction">Web ve výstavbě</span></span>
-  <div class="lang" role="group" aria-label="Jazyk / Language">
-    <button type="button" data-l="cs" class="on">CZ</button>
-    <button type="button" data-l="en">EN</button>
+<!-- LOADER -->
+<div class="loader-bg" id="loaderBg"></div>
+<div class="loader-text-wrap" id="loaderTextWrap">
+  <div class="loader-logo" id="loaderLogo"></div>
+  <div class="loader-text" id="loaderText">
+    <span class="loader-text-line" id="lt1"></span>
+    <span class="loader-text-line" id="lt2"></span>
   </div>
-</header>
+</div>
 
-<main>
-  <div class="logo" id="logo" role="img" aria-label="SHUSTER"></div>
-  <h1 data-cs="Nový web se právě staví" data-en="A new website is on its way">Nový web se právě staví</h1>
-  <p class="lede"
-     data-cs="Jsem Stepan, UX/UI a web designer z Prahy. Brzy tu najdete mé projekty. Pokud potřebujete něco už teď, napište mi."
-     data-en="I’m Stepan, a UX/UI and web designer based in Prague. My projects will be here soon. If you need something now, drop me a line.">Jsem Stepan, UX/UI a web designer z Prahy. Brzy tu najdete mé projekty. Pokud potřebujete něco už teď, napište mi.</p>
-  <div class="actions">
-    <a class="btn btn-solid" href="mailto:stepan@shuster.design">stepan@shuster.design
-      <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    <button class="btn btn-ghost btn-icon" type="button" id="copy" aria-label="Kopírovat e‑mail" data-tip="Kopírovat e‑mail"
-            data-tip-cs="Kopírovat e‑mail" data-tip-en="Copy email" data-done-cs="Zkopírováno" data-done-en="Copied">
-      <svg class="cp" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2.5"/><path d="M15 9V5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15H9"/></svg>
-      <svg class="ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-    </button>
+<section class="hero" id="home">
+  <div class="hero-media grain" aria-hidden="true" data-grain='{"light":"#fa9a4e","mid":"#e8290e","dark":"#0a0a0a","angle":0,"position":0.13,"curve":-0.15,"softness":0.16,"grain":0.3,"mouse":0.85,"seed":7,"m":{"angle":270,"position":0.12,"curve":0.0}}'></div>
+  <div class="hero-ascii" aria-hidden="true" data-ascii='{"src":"media/hero/stepan-cut.webp?v=3","depth":"media/hero/stepan-depth.png","turn":-16,"relief":0.5,"focus":[0.51,0.28],"at":[0.66,1.16],"height":0.98,"fontSize":6,"chars":" .`:-~=+*cxoO#%@","contrast":1.3,"brightnessBoost":1.08,"posterize":48,"floor":0.12,"colors":["#ffffff","#d6d6d6"],"flowStrength":3,"mouseStrength":16,"m":{"at":[0.56,0.86],"height":0.58,"fontSize":5}}'></div>
+  <div class="hero-content">
+    <h1 class="hero-title" id="heroTitle">
+      <span class="title-line">Stepan</span>
+      <span class="title-line title-line--accent">Shuster©</span>
+      <span class="sr-only" data-en=", UX/UI and product designer in Prague, open to full‑time roles" data-cs=", UX/UI a produktový designer z Prahy, hledá práci na plný úvazek">, UX/UI a produktový designer z Prahy, hledá práci na plný úvazek</span>
+    </h1>
+    <div class="hero-label" id="heroLabel">
+      <span data-en="UX/UI &amp; product designer" data-cs="UX/UI &amp; product designer">UX/UI &amp; product designer</span>
+      <span data-en="Prague, office or remote" data-cs="Praha, kancelář i remote">Praha, kancelář i remote</span>
+      <span data-en="Open to full‑time roles" data-cs="Hledám plný úvazek">Hledám plný úvazek</span>
+    </div>
   </div>
-  <nav class="links" aria-label="Profily">
-    <a href="https://www.linkedin.com/in/shusterdesign/" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-    <a href="https://www.behance.net/shusters" target="_blank" rel="noopener">Behance<svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-    <a href="https://www.instagram.com/stepamonstaxd/" target="_blank" rel="noopener">Instagram<svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-  </nav>
-</main>
+</section>
 
-<footer>
-  <span>Stepan Shuster · UX/UI &amp; Web Designer</span>
-  <span data-cs="Praha · 2026" data-en="Prague · 2026">Praha · 2026</span>
-</footer>
+<div class="page-body">
+<div class="pn pn--light pn--first">
+<section id="about" class="ab"><div class="ab-grid"><div class="ab-side"><span class="chip" data-en="About" data-cs="O mně">O mně</span><div class="ab-status" data-en="Open to full‑time roles" data-cs="Hledám plný úvazek">Hledám plný úvazek</div><div class="ab-lists"><div class="ab-group"><h3 class="ab-label"><span>01</span><span data-en="Work" data-cs="Práce">Práce</span></h3><ul><li><span data-en="Websites and e‑shops" data-cs="Weby a e‑shopy">Weby a e‑shopy</span></li><li><span data-en="Desktop and mobile apps" data-cs="Aplikace pro desktop i&nbsp;mobil">Aplikace pro desktop i&nbsp;mobil</span></li><li><span data-en="Dashboards and CRM systems" data-cs="Dashboardy a&nbsp;CRM systémy">Dashboardy a&nbsp;CRM systémy</span></li><li><span data-en="Design systems" data-cs="Design systémy">Design systémy</span></li><li><span data-en="A bit of branding" data-cs="Trochu brandingu">Trochu brandingu</span></li></ul></div><div class="ab-group"><h3 class="ab-label"><span>02</span><span data-en="Approach" data-cs="Přístup">Přístup</span></h3><ul><li><span data-en="Structure before pixels" data-cs="Struktura před pixely">Struktura před pixely</span></li><li><span data-en="Decisions backed by data" data-cs="Rozhodnutí podložená daty">Rozhodnutí podložená daty</span></li><li><span data-en="Design that can be built" data-cs="Design, který jde postavit">Design, který jde postavit</span></li></ul></div><div class="ab-group"><h3 class="ab-label"><span>03</span><span data-en="Interests" data-cs="Baví mě">Baví mě</span></h3><ul><li><span data-en="My own apps, Most and Accept" data-cs="Vlastní appky Most a Accept">Vlastní appky Most a Accept</span></li><li><span data-en="AI in everyday work" data-cs="AI v každodenní práci">AI v každodenní práci</span></li><li><span data-en="Motion and 3D" data-cs="Motion a 3D">Motion a 3D</span></li></ul></div><div class="ab-group"><h3 class="ab-label"><span>04</span><span data-en="Life" data-cs="Život">Život</span></h3><ul><li><span data-en="Time with my wife" data-cs="Čas s manželkou">Čas s manželkou</span></li><li><span data-en="Travelling" data-cs="Cestování">Cestování</span></li><li><span data-en="Sport and video games" data-cs="Sport a videohry">Sport a videohry</span></li></ul></div></div></div><div class="ab-statement"><span class="chip ab-chip-m" data-en="About" data-cs="O mně">O mně</span><h2 class="ab-p ab-p--lead" data-en="Hi, I'm Stepan, a UX/UI and product designer from Prague. I design websites, e‑shops and apps that people enjoy using.<span class=&quot;ab-o ab-o--gamepad rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/gamepad.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>" data-cs="Ahoj, jsem Stepan, UX/UI a produktový designer z Prahy. Navrhuji weby, e‑shopy a aplikace, které lidi baví používat.<span class=&quot;ab-o ab-o--gamepad rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/gamepad.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>">Ahoj, jsem Stepan, UX/UI a produktový designer z Prahy. Navrhuji weby, e‑shopy a aplikace, které lidi baví používat.<span class="ab-o ab-o--gamepad rv-keep" aria-hidden="true"><img src="media/about/gamepad.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></span></h2><span class="ab-plus" aria-hidden="true">+</span><p class="ab-p" data-en="<span class=&quot;ab-o ab-o--keycap rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/keycap.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>I start with the business, the people and the data, so every screen has a reason to be there.<span class=&quot;ab-o ab-o--football rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/football.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>" data-cs="<span class=&quot;ab-o ab-o--keycap rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/keycap.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>Začínám u byznysu, lidí a dat, aby každá obrazovka měla důvod tam být.<span class=&quot;ab-o ab-o--football rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/football.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>"><span class="ab-o ab-o--keycap rv-keep" aria-hidden="true"><img src="media/about/keycap.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></span>Začínám u byznysu, lidí a dat, aby každá obrazovka měla důvod tam být.<span class="ab-o ab-o--football rv-keep" aria-hidden="true"><img src="media/about/football.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></span></p><span class="ab-plus" aria-hidden="true">+</span><p class="ab-p" data-en="Then I polish the details until it works as well as it looks. And I keep my deadlines.<span class=&quot;ab-o ab-o--airplane rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/airplane.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>" data-cs="Pak ladím detaily, dokud to nefunguje stejně dobře, jak to vypadá. A termíny držím.<span class=&quot;ab-o ab-o--airplane rv-keep&quot; aria-hidden=&quot;true&quot;><img src=&quot;media/about/airplane.webp&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;></span>">Pak ladím detaily, dokud to nefunguje stejně dobře, jak to vypadá. A termíny držím.<span class="ab-o ab-o--airplane rv-keep" aria-hidden="true"><img src="media/about/airplane.webp" alt="" width="640" height="640" loading="lazy" decoding="async"></span></p><div class="ab-cta"><a class="ab-btn" href="#contact"><span data-en="Get in touch" data-cs="Ozvěte se">Ozvěte se</span></a><a class="ab-btn" href="#experience"><span data-en="Experience" data-cs="Zkušenosti">Zkušenosti</span></a></div></div></div></section>
+<section class="projects" id="works"><div class="wk-head"><h2 class="wk-title section-title"><span data-en="Selected work" data-cs="Vybrané projekty">Vybrané projekty</span><sup class="wk-n">06</sup></h2><p class="wk-say"><span data-en="For studios and their clients." data-cs="Pro studia a jejich klienty.">Pro studia a jejich klienty.</span> <span class="pn-dim" data-en="Real estate, e‑commerce and brands, from structure to the last pixel." data-cs="Developeři, e‑shopy a značky, od struktury po poslední pixel.">Developeři, e‑shopy a značky, od struktury po poslední pixel.</span></p></div><div class="projects-grid"></div></section>
+</div>
+<section class="ph ph--glass" id="playground"><div class="ph-bg" aria-hidden="true"><div class="grain" data-grain='{"light":"#fa9a4e","mid":"#e8290e","dark":"#0a0a0a","angle":200,"position":0.05,"curve":0.48,"softness":0.16,"grain":0.3,"mouse":0.8,"seed":23}'></div></div><div class="ph-in"><div class="ph-head"><span class="chip chip--glass" data-en="Playground" data-cs="Playground">Playground</span><h2 class="ph-title section-title" data-en="Little apps I built for myself with AI" data-cs="Malé appky, které jsem si napsal s pomocí AI">Malé appky, které jsem si napsal s pomocí AI</h2><p class="ph-sub" data-en="Tools for my own work and games. Try them, they are free." data-cs="Nástroje pro vlastní práci i hraní. Vyzkoušejte je, jsou zdarma.">Nástroje pro vlastní práci i hraní. Vyzkoušejte je, jsou zdarma.</p></div><div class="pg-grid" id="pgGrid"></div></div></section>
+<div class="pn pn--dark"><section id="experience"><div class="pn-intro"><div class="pn-intro-side"><span class="chip chip--dark" data-en="Experience" data-cs="Zkušenosti">Zkušenosti</span></div><p class="pn-say"><span class="section-title" data-en="Studios and teams I have worked with." data-cs="Studia a týmy, se kterými jsem pracoval.">Studia a týmy, se kterými jsem pracoval.</span> <span class="pn-dim"><span data-en="I have been designing websites, e‑shops and apps since 2022." data-cs="Od roku 2022 navrhuji weby, e‑shopy a aplikace.">Od roku 2022 navrhuji weby, e‑shopy a aplikace.</span></span></p></div><div class="dk-card"><div class="xp-list" id="xpList"></div></div><div class="dk-card dk-card--skills"><div class="skills" id="skills"></div></div></section></div>
+<section class="ph ph--photo" id="hire"><div class="ph-bg" aria-hidden="true"><picture><source media="(max-width:768px)" srcset="media/hero/bg-lake-m.webp"><img src="media/hero/bg-lake.webp" alt="" loading="lazy" decoding="async"></picture></div><div class="ph-in ph-split"><div class="ph-say"><span class="ph-big section-title" data-en="Need a designer" data-cs="Hledáte designera">Hledáte designera</span> <span class="ph-big ph-big--dim"><span data-en="on your team?" data-cs="do týmu?">do týmu?</span></span><a class="ph-btn" href="#contact"><span data-en="Get in touch" data-cs="Napsat mi">Napsat mi</span></a></div><div class="ph-chips"><p class="ph-chips-t" data-en="What I bring to your team" data-cs="Co přinesu do vašeho týmu">Co přinesu do vašeho týmu</p><div class="ph-chip-row"><span class="chip chip--glass" data-en="UX/UI design" data-cs="UX/UI design">UX/UI design</span><span class="chip chip--glass" data-en="Websites" data-cs="Weby">Weby</span><span class="chip chip--glass" data-en="E‑shops" data-cs="E‑shopy">E‑shopy</span><span class="chip chip--glass" data-en="Design systems" data-cs="Design systémy">Design systémy</span><span class="chip chip--glass" data-en="Product design" data-cs="Produktový design">Produktový design</span><span class="chip chip--glass" data-en="Prototypes" data-cs="Prototypy">Prototypy</span><span class="chip chip--glass" data-en="Mobile apps" data-cs="Mobilní aplikace">Mobilní aplikace</span></div></div></div></section>
+<div class="pn pn--light pn--last"><section id="faq"><div class="pn-intro"><div class="pn-intro-side"><span class="chip" data-en="FAQ" data-cs="FAQ">FAQ</span></div><p class="pn-say"><span class="section-title" data-en="What you should know about me." data-cs="Co byste o mně měli vědět.">Co byste o mně měli vědět.</span> <span class="pn-dim"><span data-en="Didn't find the answer? Write to" data-cs="Nenašli jste odpověď? Napište mi na">Nenašli jste odpověď? Napište mi na</span> <a class="pn-pill" href="mailto:ahoj@shuster.design">e‑mail</a> <span data-en="any time." data-cs="kdykoliv.">kdykoliv.</span></span></p></div><div class="faq-list"><details class="faq-item reveal"><summary><span class="faq-q" data-en="What role am I looking for?" data-cs="Jakou práci hledám?">Jakou práci hledám?</span><i aria-hidden="true"></i></summary><p class="faq-a" data-en="A full‑time UX/UI or product designer role in a design studio, an agency or a product team. In the office in Prague, hybrid or remote. Start date by agreement." data-cs="Plný úvazek jako UX/UI nebo produktový designer v designovém studiu, agentuře nebo produktovém týmu. V kanceláři v Praze, hybridně i na dálku. Nastoupit můžu po domluvě.">Plný úvazek jako UX/UI nebo produktový designer v designovém studiu, agentuře nebo produktovém týmu. V kanceláři v Praze, hybridně i na dálku. Nastoupit můžu po domluvě.</p></details><details class="faq-item reveal"><summary><span class="faq-q" data-en="What do I design most often?" data-cs="Co navrhuji nejčastěji?">Co navrhuji nejčastěji?</span><i aria-hidden="true"></i></summary><p class="faq-a" data-en="Websites for real estate developers and housing projects, e‑shops, company websites and landing pages, desktop and mobile apps, dashboards and CRM systems. I have worked side by side with graphic designers, so I can handle some branding too. You can see a few of these in the projects above." data-cs="Weby pro developery a rezidenční projekty, e‑shopy, firemní weby a landing pages, aplikace pro desktop i mobil, dashboardy a CRM systémy. Pracoval jsem bok po boku s grafiky, takže zvládnu i kus brandingu. Pár z toho najdete v projektech výše.">Weby pro developery a rezidenční projekty, e‑shopy, firemní weby a landing pages, aplikace pro desktop i mobil, dashboardy a CRM systémy. Pracoval jsem bok po boku s grafiky, takže zvládnu i kus brandingu. Pár z toho najdete v projektech výše.</p></details><details class="faq-item reveal"><summary><span class="faq-q" data-en="How do I work with developers?" data-cs="Jak pracuji s vývojáři?">Jak pracuji s vývojáři?</span><i aria-hidden="true"></i></summary><p class="faq-a" data-en="A tidy Figma file with components, variants, Auto Layout and tokens, every state and breakpoint for desktop, tablet and mobile, and notes where the behaviour isn't obvious. I talk through technical limits with developers early, so I design what can really be built." data-cs="Uklizený Figma soubor s komponentami, variantami, Auto Layoutem a tokeny, všechny stavy a breakpointy pro desktop, tablet i mobil a poznámky tam, kde chování není jasné na první pohled. Technické možnosti řeším s vývojáři předem, takže navrhuji to, co jde opravdu postavit.">Uklizený Figma soubor s komponentami, variantami, Auto Layoutem a tokeny, všechny stavy a breakpointy pro desktop, tablet i mobil a poznámky tam, kde chování není jasné na první pohled. Technické možnosti řeším s vývojáři předem, takže navrhuji to, co jde opravdu postavit.</p></details><details class="faq-item reveal"><summary><span class="faq-q" data-en="Which languages do I speak?" data-cs="Jakými jazyky mluvím?">Jakými jazyky mluvím?</span><i aria-hidden="true"></i></summary><p class="faq-a" data-en="Czech, English and Russian, so I am comfortable in Czech and international teams and with clients from abroad." data-cs="Česky, anglicky a rusky. Zvládnu tedy český i mezinárodní tým a zahraniční klienty.">Česky, anglicky a rusky. Zvládnu tedy český i mezinárodní tým a zahraniční klienty.</p></details><details class="faq-item reveal"><summary><span class="faq-q" data-en="How will I fit into your team?" data-cs="Jak zapadnu do týmu?">Jak zapadnu do týmu?</span><i aria-hidden="true"></i></summary><p class="faq-a" data-en="I have worked in studios and agencies since 2022, so I know how to work with an art director, a project manager and developers. I follow the shared Figma file, the agreed process and naming, I can defend a solution in front of a client and I take feedback as part of the job." data-cs="Od roku 2022 pracuji ve studiích a agenturách, takže znám spolupráci s art directorem, projektovým manažerem i vývojem. Držím se sdíleného Figma souboru, zavedených procesů a pojmenování, umím řešení obhájit před klientem a zpětnou vazbu beru jako součást práce.">Od roku 2022 pracuji ve studiích a agenturách, takže znám spolupráci s art directorem, projektovým manažerem i vývojem. Držím se sdíleného Figma souboru, zavedených procesů a pojmenování, umím řešení obhájit před klientem a zpětnou vazbu beru jako součást práce.</p></details></div></section>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "cs", "mainEntity": [{"@type": "Question", "name": "Jakou práci hledám?", "acceptedAnswer": {"@type": "Answer", "text": "Plný úvazek jako UX/UI nebo produktový designer v designovém studiu, agentuře nebo produktovém týmu. V kanceláři v Praze, hybridně i na dálku. Nastoupit můžu po domluvě."}}, {"@type": "Question", "name": "Co navrhuji nejčastěji?", "acceptedAnswer": {"@type": "Answer", "text": "Weby pro developery a rezidenční projekty, e‑shopy, firemní weby a landing pages, aplikace pro desktop i mobil, dashboardy a CRM systémy. Pracoval jsem bok po boku s grafiky, takže zvládnu i kus brandingu. Pár z toho najdete v projektech výše."}}, {"@type": "Question", "name": "Jak pracuji s vývojáři?", "acceptedAnswer": {"@type": "Answer", "text": "Uklizený Figma soubor s komponentami, variantami, Auto Layoutem a tokeny, všechny stavy a breakpointy pro desktop, tablet i mobil a poznámky tam, kde chování není jasné na první pohled. Technické možnosti řeším s vývojáři předem, takže navrhuji to, co jde opravdu postavit."}}, {"@type": "Question", "name": "Jakými jazyky mluvím?", "acceptedAnswer": {"@type": "Answer", "text": "Česky, anglicky a rusky. Zvládnu tedy český i mezinárodní tým a zahraniční klienty."}}, {"@type": "Question", "name": "Jak zapadnu do týmu?", "acceptedAnswer": {"@type": "Answer", "text": "Od roku 2022 pracuji ve studiích a agenturách, takže znám spolupráci s art directorem, projektovým manažerem i vývojem. Držím se sdíleného Figma souboru, zavedených procesů a pojmenování, umím řešení obhájit před klientem a zpětnou vazbu beru jako součást práce."}}]}</script>
+<div class="big-word" aria-hidden="true"><span>Stepan</span><span>Shuster©</span></div><div class="dk-card dk-card--contact"><div class="grain dk-grain" aria-hidden="true" data-grain='{"light":"#fa9a4e","mid":"#e8290e","dark":"#0a0a0a","angle":200,"position":0.1,"curve":0.48,"softness":0.2,"grain":0.28,"mouse":0.7,"seed":41}'></div><section id="contact" class="ct"><div class="ct-top" aria-hidden="true"><span>{</span><span class="ct-tag ct-tag--a" data-en="Let&#39;s talk" data-cs="Napište mi">Napište mi</span><svg class="ct-heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C1 8.6 3 5 6.6 5c2.1 0 3.6 1.2 5.4 3.2C13.8 6.2 15.3 5 17.4 5 21 5 23 8.6 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg><span class="ct-tag" data-en="Let&#39;s talk" data-cs="Napište mi">Napište mi</span><span>}</span></div><h2 class="ct-big"><span class="ct-line"><span class="ct-t" data-en="Hiring a designer?" data-cs="Hledáte designera?">Hledáte designera?</span> <img class="ct-face ct-face--d" src="media/contact/stepan-face.webp" alt="" width="480" height="448" loading="lazy" decoding="async"></span><span class="ct-line"><img class="ct-face ct-face--m" src="media/contact/stepan-face.webp" alt="" width="480" height="448" loading="lazy" decoding="async"><span class="ct-t" data-en="Let&#39;s meet" data-cs="Pojďme se poznat">Pojďme se poznat</span></span></h2><form class="ct-form" novalidate><label class="ct-field"><span class="sr-only" data-en="Name" data-cs="Jméno">Jméno</span><input name="name" type="text" autocomplete="name" required placeholder="Jméno" data-ph-en="Name" data-ph-cs="Jméno"></label><label class="ct-field"><span class="sr-only">E‑mail</span><input name="email" type="email" autocomplete="email" required placeholder="E‑mail" data-ph-en="Email" data-ph-cs="E‑mail"></label><button class="ct-send" type="submit"><span class="ct-send-t" data-en="Send" data-cs="Odeslat">Odeslat</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 5v7a3 3 0 0 1-3 3H5"/><path d="m9 11-4 4 4 4"/></svg></button><input type="checkbox" name="botcheck" class="ct-hp" tabindex="-1" autocomplete="off" aria-hidden="true"><p class="ct-note" aria-live="polite"></p></form><div class="ct-bottom"><div class="ct-col"><span class="ct-label" data-en="Follow" data-cs="Sledujte">Sledujte</span><div class="ct-soc"><a class="ct-ico" href="https://www.behance.net/shusters" target="_blank" rel="noopener" aria-label="Behance"><b>Bē</b></a><a class="ct-ico" href="https://www.instagram.com/stepamonstaxd/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></a><a class="ct-ico" href="https://www.linkedin.com/in/shusterdesign/" target="_blank" rel="noopener" aria-label="LinkedIn"><b>in</b></a></div></div><div class="ct-col ct-col--mail"><span class="ct-label" data-en="Write" data-cs="Napište">Napište</span><a class="ct-mail" href="mailto:ahoj@shuster.design" aria-label="ahoj@shuster.design"><span class="ct-m1" data-t="ahoj">ahoj</span><span class="ct-at">@</span>shuster.design</a></div></div></section><footer class="dk-foot"><div class="footer-name">Stepan Shuster</div><div class="footer-copy" id="footerCopy">© 2026 · Všechna práva vyhrazena</div></footer></div></div>
+</div><!-- /.page-body -->
 
-<script src="logo.js"></script>
 <script>
-(function(){
-  // логотип: буквы по одной меняют шрифт, как в навбаре и прелоадере сайта
-  var el = document.getElementById('logo');
-  var calm = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  if (window.ShusterLogo) calm ? ShusterLogo.mount(el) : ShusterLogo.spin(el, 150);
+// ═══ LOADER ═══
+(function() {
+  var loaderBg   = document.getElementById('loaderBg');
+  var textWrap   = document.getElementById('loaderTextWrap');
+  var textEl     = document.getElementById('loaderText');
+  var lt1        = document.getElementById('lt1');
+  var lt2        = document.getElementById('lt2');
+  var heroTitle  = document.getElementById('heroTitle');
 
-  // фавиконка: белая S в чёрном скруглённом квадрате, шрифт S меняется по кругу
-  var fav = document.getElementById('favicon');
-  if (window.ShusterLogo && fav && !calm) {
-    var S = ShusterLogo.glyphs('S'), CAP = ShusterLogo.CAP, k = 0;
-    var BOX = 100, H = 58;                        // высота буквы в квадрате 100×100
-    var icons = S.map(function(g){
-      var sc = H / CAP, w = g[0] * sc;
-      if (w > 72) { sc = 72 / g[0]; w = 72; }     // широкие начертания ужимаем по ширине
-      var h = CAP * sc, x = (BOX - w) / 2, y = (BOX - h) / 2;
-      var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>"
-        + "<rect width='100' height='100' rx='24' fill='#0c0c0c'/>"
-        + "<path fill='#fff' transform='translate(" + x.toFixed(2) + "," + y.toFixed(2) + ") scale(" + sc.toFixed(4) + ")' d='" + g[1] + "'/></svg>";
-      return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  var logoEl     = document.getElementById('loaderLogo');
+  var SCRAMBLE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
+  var SWAP_MS  = 85;     // как часто меняется шрифт одной буквы
+  var SPIN_MS  = 1900;   // сколько логотип крутится, пока не улетит в заголовок
+
+  // Пришли переходом с другой страницы — загрузку второй раз не показываем
+  if (document.documentElement.classList.contains('pt-in')) {
+    loaderBg.style.display = 'none';
+    textWrap.style.display = 'none';
+    document.getElementById('heroLabel').classList.add('show');
+    return;
+  }
+
+  // пока идёт загрузка, страница не скроллится (колесо, клавиши, тач)
+  var root = document.documentElement;
+  root.classList.add('is-loading');
+  function block(e){ if (root.classList.contains('is-loading')) e.preventDefault(); }
+  addEventListener('touchmove', block, { passive: false });
+  function unlock(){ root.classList.remove('is-loading'); removeEventListener('touchmove', block); }
+  setTimeout(unlock, 9000);   // страховка, если что-то пошло не так
+
+  // logo.js подключён в конце страницы, поэтому стартуем, когда он уже есть
+  var spin = null, asm = null;
+  // запасной вариант: логотип крутится, потом набирается заголовок
+  function startLogo() {
+    if (!window.ShusterLogo) { setTimeout(startMorph, 400); return; }
+    spin = window.ShusterLogo.spin(logoEl, SWAP_MS);
+    requestAnimationFrame(function(){ logoEl.classList.add('on'); });
+    setTimeout(startMorph, SPIN_MS);
+  }
+  // основной: знаки слетаются со всего экрана и собирают силуэт ровно там,
+  // где потом стоит фото из символов в hero; затем набирается имя
+  function start() {
+    var asc = document.querySelector('.hero-ascii'), done = false;
+    function fallback() { if (done) return; done = true; startLogo(); }
+    if (!asc || matchMedia('(prefers-reduced-motion:reduce)').matches) return fallback();
+    var to = setTimeout(fallback, 1800);
+    (function wait() { if (asc._ascii && window.AsciiAssemble) asc._ascii.ready(go); else if (!done) setTimeout(wait, 40); })();
+    function go() {
+      if (done) return;
+      var d = asc._ascii.cells();
+      if (!d || !d.list.length) return fallback();
+      var cv = document.createElement('canvas'); cv.className = 'loader-ascii'; cv.setAttribute('aria-hidden', 'true');
+      textWrap.insertBefore(cv, textWrap.firstChild);
+      root.classList.add('ld-hold', 'ld-veil');
+      loaderBg.classList.add('gone');   // под заливкой тот же тёмный hero: прячем её сразу, градиент проявится сам
+      asm = window.AsciiAssemble(cv, d, { at: [1.25, startMorph] });
+      if (!asm) { cv.remove(); root.classList.remove('ld-hold', 'ld-veil'); return fallback(); }
+      done = true; clearTimeout(to);
+      setTimeout(function () { root.classList.remove('ld-veil'); }, 1300);
+    }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+
+  function startMorph() {
+    var rect   = heroTitle.getBoundingClientRect();
+    var heroFS = parseFloat(getComputedStyle(heroTitle).fontSize);
+    var tl     = heroTitle.querySelectorAll('.title-line');
+
+    // Логотип летит на слово SHUSTER во второй строке: высота прописных и
+    // середина слова совпадают, по дороге он растворяется
+    var tn = tl[1] && tl[1].firstChild;
+    if (spin && tn && tn.nodeType === 3) {
+      var R = document.createRange(); R.setStart(tn, 0); R.setEnd(tn, 7);
+      var w = R.getBoundingClientRect(), lr = logoEl.getBoundingClientRect();
+      var capH = heroFS * .727;                 // высота прописной в Inter Tight
+      var base = w.top + heroFS * .969;         // базовая линия строки
+      var dx = (w.left + w.right) / 2 - (lr.left + lr.right) / 2;
+      var dy = (base - capH / 2) - (lr.top + lr.bottom) / 2;
+      logoEl.classList.add('fly');
+      logoEl.style.transform = 'translate(-50%,-50%) translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px) scale(' + (capH / lr.height).toFixed(4) + ')';
+      logoEl.style.opacity = '0';
+      setTimeout(function(){ spin.stop(); }, 900);
+    } else if (spin) { spin.stop(); logoEl.style.opacity = '0'; }
+
+    // заголовок набирается буквами ровно на своём месте
+    textEl.style.top = rect.top + 'px';
+    textEl.style.left = rect.left + 'px';
+    textEl.style.width = rect.width + 'px';
+    textEl.style.fontSize = heroFS + 'px';
+    setTimeout(function() {
+      scrambleLine(lt1, 'Stepan', 0, tl[0]);
+      scrambleLine(lt2, 'Shuster©', 120, tl[1]);
+      setTimeout(exitLoader, 1200);
+    }, 420);
+  }
+
+  function scrambleLine(el, target, delay, src) {
+    el.innerHTML = '';
+    target.split('').forEach(function(ch, i) {
+      var span = document.createElement('span');
+      span.className = 'loader-text-letter';
+      span.textContent = ch;
+      el.appendChild(span);
     });
-    fav.href = icons[0];
-    setInterval(function(){
-      k = (k + 1) % icons.length; fav.href = icons[k];   // во фоновой вкладке браузер сам замедлит до раза в секунду
-    }, 600);
+    // Каждой букве даём ровно то место, которое она занимает в настоящем
+    // заголовке (с кернингом): строка не дёргается, пока буквы перебираются,
+    // и в конце совпадает с заголовком точка в точку
+    var tn = src && src.firstChild, xs = [], R = document.createRange();
+    if (tn && tn.nodeType === 3 && tn.length === target.length) {
+      for (var k = 0; k < target.length; k++) { R.setStart(tn, k); R.setEnd(tn, k + 1); xs.push(R.getBoundingClientRect().left); }
+      xs.push(src.getBoundingClientRect().right);
+    }
+    [].forEach.call(el.children, function(span, k) {
+      span.style.width = (xs.length ? xs[k + 1] - xs[k] : span.getBoundingClientRect().width) + 'px';
+    });
+    target.split('').forEach(function(ch, i) {
+      var span = el.children[i];
+      span.textContent = SCRAMBLE[Math.floor(Math.random() * SCRAMBLE.length)];
+      var st = performance.now() + delay + i * 55, dur = 300;
+      (function anim(now) {
+        if (now < st) { requestAnimationFrame(anim); return; }
+        span.classList.add('vis');
+        if (now - st < dur) {
+          span.textContent = SCRAMBLE[Math.floor(Math.random() * SCRAMBLE.length)];
+          requestAnimationFrame(anim);
+        } else { span.textContent = ch; }
+      })(performance.now());
+    });
   }
 
-  // язык: чешский главный, английский по кнопке; выбор запоминается
-  var btns = document.querySelectorAll('.lang button'), copyBtn = document.getElementById('copy');
-  function setLang(l){
-    document.documentElement.lang = l;
-    document.querySelectorAll('[data-cs]').forEach(function(n){ n.textContent = n.getAttribute('data-' + l); });
-    btns.forEach(function(b){ b.classList.toggle('on', b.dataset.l === l); });
-    copyBtn.setAttribute('aria-label', copyBtn.getAttribute('data-tip-' + l));
-    if (!copyBtn.classList.contains('done')) copyBtn.setAttribute('data-tip', copyBtn.getAttribute('data-tip-' + l));
-    try { localStorage.setItem('lang', l); } catch(e){}
+  function exitLoader() {
+    unlock();
+    root.classList.remove('ld-hold', 'ld-veil');
+    loaderBg.classList.add('exit');
+    textWrap.classList.add('exit');
+    document.getElementById('heroLabel').classList.add('show');
+    setTimeout(function() {
+      loaderBg.style.display = 'none';
+      textWrap.style.display = 'none';
+      if (asm) asm.stop();
+    }, 1000);
   }
-  btns.forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.l); }); });
-  var saved = null; try { saved = localStorage.getItem('lang'); } catch(e){}
-  if (saved === 'en') setLang('en');
+})();
 
-  // скопировать почту
-  copyBtn.addEventListener('click', function(){
-    var mail = 'stepan@shuster.design', l = document.documentElement.lang;
-    function done(){
-      copyBtn.setAttribute('data-tip', copyBtn.getAttribute('data-done-' + l));
-      copyBtn.classList.add('done');
-      clearTimeout(copyBtn._t);
-      copyBtn._t = setTimeout(function(){
-        copyBtn.classList.remove('done');
-        copyBtn.setAttribute('data-tip', copyBtn.getAttribute('data-tip-' + document.documentElement.lang));
-      }, 1800);
+// CLOCK
+// часы жили в старом верхнем навбаре — блок удалён
+
+
+// ═══ EXPERIENCE: места работы из content/experience.json (правится в админке) ═══
+(function(){
+  var sec = document.getElementById('experience'), box = document.getElementById('xpList');
+  if (!sec || !box) return;
+  function esc(t){ return String(t == null ? '' : t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  // текст на двух языках: если чешского нет, показываем английский
+  function two(tag, cls, en, cs){ en = esc(en); cs = esc(cs) || en; return en ? '<'+tag+' class="'+cls+'" data-en="'+en+'" data-cs="'+cs+'">'+en+'</'+tag+'>' : ''; }
+  fetch('content/experience.json').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    var items = d && d.items ? d.items.filter(function(i){ return i && i.company; }) : [];
+    if (!items.length) { sec.style.display = 'none'; return; }
+    box.innerHTML = items.map(function(it, i){
+      var co = it.link
+        ? '<a class="xp-co" href="'+esc(it.link)+'" target="_blank" rel="noopener">'+esc(it.company)+'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>'
+        : '<div class="xp-co">'+esc(it.company)+'</div>';
+      return '<div class="xp reveal" style="transition-delay:0s,'+(i*0.07).toFixed(2)+'s,'+(i*0.07).toFixed(2)+'s">'
+        + '<span class="xp-num">'+(i < 9 ? '0' : '')+(i+1)+'</span>' + co
+        + '<div class="xp-body">'+two('div','xp-role',it.role,it.role_cs)+two('p','xp-text',it.text,it.text_cs)+'</div>'
+        + (two('span','xp-when',it.period,it.period_cs) || '<span class="xp-when"></span>')+'</div>';
+    }).join('');
+    var cur = document.documentElement.getAttribute('data-lang');
+    if (cur && cur !== 'en') box.querySelectorAll('[data-en]').forEach(function(el){ var t = el.getAttribute('data-'+cur); if (t) el.innerHTML = t; });
+    if (window.obs) box.querySelectorAll('.reveal').forEach(function(el){ obs.observe(el); });
+    else box.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('visible'); });
+    // высота страницы изменилась: синхронизируем плавный скролл
+    if (window._syncScrollTarget) window._syncScrollTarget();
+  }).catch(function(){ sec.style.display = 'none'; });
+})();
+
+// ═══ SKILLS ═══
+(function(){
+  var box = document.getElementById('skills');
+  if (!box) return;
+
+  // Официальные SVG брендов, набор Iconify «logos» (CC0)
+  var LOGO = {
+    'figma': "<svg class=\"sk-logo\" viewBox=\"0 0 256 384\" aria-hidden=\"true\"><path fill=\"#0acf83\" d=\"M64 384c35.328 0 64-28.672 64-64v-64H64c-35.328 0-64 28.672-64 64s28.672 64 64 64\"/><path fill=\"#a259ff\" d=\"M0 192c0-35.328 28.672-64 64-64h64v128H64c-35.328 0-64-28.672-64-64\"/><path fill=\"#f24e1e\" d=\"M0 64C0 28.672 28.672 0 64 0h64v128H64C28.672 128 0 99.328 0 64\"/><path fill=\"#ff7262\" d=\"M128 0h64c35.328 0 64 28.672 64 64s-28.672 64-64 64h-64z\"/><path fill=\"#1abcfe\" d=\"M256 192c0 35.328-28.672 64-64 64s-64-28.672-64-64s28.672-64 64-64s64 28.672 64 64\"/></svg>",
+    'framer': "<svg class=\"sk-logo\" viewBox=\"0 0 256 384\" aria-hidden=\"true\"><path d=\"M0 0h256v128H128zm0 128h128l128 128H128v128L0 256z\"/></svg>",
+    'claude': "<svg class=\"sk-logo\" viewBox=\"0 0 256 257\" aria-hidden=\"true\"><path fill=\"#d97757\" d=\"m50.228 170.321l50.357-28.257l.843-2.463l-.843-1.361h-2.462l-8.426-.518l-28.775-.778l-24.952-1.037l-24.175-1.296l-6.092-1.297L0 125.796l.583-3.759l5.12-3.434l7.324.648l16.202 1.101l24.304 1.685l17.629 1.037l26.118 2.722h4.148l.583-1.685l-1.426-1.037l-1.101-1.037l-25.147-17.045l-27.22-18.017l-14.258-10.37l-7.713-5.25l-3.888-4.925l-1.685-10.758l7-7.713l9.397.649l2.398.648l9.527 7.323l20.35 15.75L94.817 91.9l3.889 3.24l1.555-1.102l.195-.777l-1.75-2.917l-14.453-26.118l-15.425-26.572l-6.87-11.018l-1.814-6.61c-.648-2.723-1.102-4.991-1.102-7.778l7.972-10.823L71.42 0l10.63 1.426l4.472 3.888l6.61 15.101l10.694 23.786l16.591 32.34l4.861 9.592l2.592 8.879l.973 2.722h1.685v-1.556l1.36-18.211l2.528-22.36l2.463-28.776l.843-8.1l4.018-9.722l7.971-5.25l6.222 2.981l5.12 7.324l-.713 4.73l-3.046 19.768l-5.962 30.98l-3.889 20.739h2.268l2.593-2.593l10.499-13.934l17.628-22.036l7.778-8.749l9.073-9.657l5.833-4.601h11.018l8.1 12.055l-3.628 12.443l-11.342 14.388l-9.398 12.184l-13.48 18.147l-8.426 14.518l.778 1.166l2.01-.194l30.46-6.481l16.462-2.982l19.637-3.37l8.88 4.148l.971 4.213l-3.5 8.62l-20.998 5.184l-24.628 4.926l-36.682 8.685l-.454.324l.519.648l16.526 1.555l7.065.389h17.304l32.21 2.398l8.426 5.574l5.055 6.805l-.843 5.184l-12.962 6.611l-17.498-4.148l-40.83-9.721l-14-3.5h-1.944v1.167l11.666 11.406l21.387 19.314l26.767 24.887l1.36 6.157l-3.434 4.86l-3.63-.518l-23.526-17.693l-9.073-7.972l-20.545-17.304h-1.36v1.814l4.73 6.935l25.017 37.59l1.296 11.536l-1.814 3.76l-6.481 2.268l-7.13-1.297l-14.647-20.544l-15.1-23.138l-12.185-20.739l-1.49.843l-7.194 77.448l-3.37 3.953l-7.778 2.981l-6.48-4.925l-3.436-7.972l3.435-15.749l4.148-20.544l3.37-16.333l3.046-20.285l1.815-6.74l-.13-.454l-1.49.194l-15.295 20.999l-23.267 31.433l-18.406 19.702l-4.407 1.75l-7.648-3.954l.713-7.064l4.277-6.286l25.47-32.405l15.36-20.092l9.917-11.6l-.065-1.686h-.583L44.07 198.125l-12.055 1.555l-5.185-4.86l.648-7.972l2.463-2.593l20.35-13.999z\"/></svg>",
+    'chatgpt': "<svg class=\"sk-logo\" viewBox=\"0 0 256 260\" aria-hidden=\"true\"><path d=\"M239.184 106.203a64.72 64.72 0 0 0-5.576-53.103C219.452 28.459 191 15.784 163.213 21.74A65.586 65.586 0 0 0 52.096 45.22a64.72 64.72 0 0 0-43.23 31.36c-14.31 24.602-11.061 55.634 8.033 76.74a64.67 64.67 0 0 0 5.525 53.102c14.174 24.65 42.644 37.324 70.446 31.36a64.72 64.72 0 0 0 48.754 21.744c28.481.025 53.714-18.361 62.414-45.481a64.77 64.77 0 0 0 43.229-31.36c14.137-24.558 10.875-55.423-8.083-76.483m-97.56 136.338a48.4 48.4 0 0 1-31.105-11.255l1.535-.87l51.67-29.825a8.6 8.6 0 0 0 4.247-7.367v-72.85l21.845 12.636c.218.111.37.32.409.563v60.367c-.056 26.818-21.783 48.545-48.601 48.601M37.158 197.93a48.35 48.35 0 0 1-5.781-32.589l1.534.921l51.722 29.826a8.34 8.34 0 0 0 8.441 0l63.181-36.425v25.221a.87.87 0 0 1-.358.665l-52.335 30.184c-23.257 13.398-52.97 5.431-66.404-17.803M23.549 85.38a48.5 48.5 0 0 1 25.58-21.333v61.39a8.29 8.29 0 0 0 4.195 7.316l62.874 36.272l-21.845 12.636a.82.82 0 0 1-.767 0L41.353 151.53c-23.211-13.454-31.171-43.144-17.804-66.405zm179.466 41.695l-63.08-36.63L161.73 77.86a.82.82 0 0 1 .768 0l52.233 30.184a48.6 48.6 0 0 1-7.316 87.635v-61.391a8.54 8.54 0 0 0-4.4-7.213m21.742-32.69l-1.535-.922l-51.619-30.081a8.39 8.39 0 0 0-8.492 0L99.98 99.808V74.587a.72.72 0 0 1 .307-.665l52.233-30.133a48.652 48.652 0 0 1 72.236 50.391zM88.061 139.097l-21.845-12.585a.87.87 0 0 1-.41-.614V65.685a48.652 48.652 0 0 1 79.757-37.346l-1.535.87l-51.67 29.825a8.6 8.6 0 0 0-4.246 7.367zm11.868-25.58L128.067 97.3l28.188 16.218v32.434l-28.086 16.218l-28.188-16.218z\"/></svg>",
+    'slack': "<svg class=\"sk-logo\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><path fill=\"#e01e5a\" d=\"M53.841 161.32c0 14.832-11.987 26.82-26.819 26.82S.203 176.152.203 161.32c0-14.831 11.987-26.818 26.82-26.818H53.84zm13.41 0c0-14.831 11.987-26.818 26.819-26.818s26.819 11.987 26.819 26.819v67.047c0 14.832-11.987 26.82-26.82 26.82c-14.83 0-26.818-11.988-26.818-26.82z\"/><path fill=\"#36c5f0\" d=\"M94.07 53.638c-14.832 0-26.82-11.987-26.82-26.819S79.239 0 94.07 0s26.819 11.987 26.819 26.819v26.82zm0 13.613c14.832 0 26.819 11.987 26.819 26.819s-11.987 26.819-26.82 26.819H26.82C11.987 120.889 0 108.902 0 94.069c0-14.83 11.987-26.818 26.819-26.818z\"/><path fill=\"#2eb67d\" d=\"M201.55 94.07c0-14.832 11.987-26.82 26.818-26.82s26.82 11.988 26.82 26.82s-11.988 26.819-26.82 26.819H201.55zm-13.41 0c0 14.832-11.988 26.819-26.82 26.819c-14.831 0-26.818-11.987-26.818-26.82V26.82C134.502 11.987 146.489 0 161.32 0s26.819 11.987 26.819 26.819z\"/><path fill=\"#ecb22e\" d=\"M161.32 201.55c14.832 0 26.82 11.987 26.82 26.818s-11.988 26.82-26.82 26.82c-14.831 0-26.818-11.988-26.818-26.82V201.55zm0-13.41c-14.831 0-26.818-11.988-26.818-26.82c0-14.831 11.987-26.818 26.819-26.818h67.25c14.832 0 26.82 11.987 26.82 26.819s-11.988 26.819-26.82 26.819z\"/></svg>",
+    'jira': "<svg class=\"sk-logo\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><defs><linearGradient id=\"SVGSBI7obaC\" x1=\"98.031%\" x2=\"58.888%\" y1=\".161%\" y2=\"40.766%\"><stop offset=\"18%\" stop-color=\"#0052cc\"/><stop offset=\"100%\" stop-color=\"#2684ff\"/></linearGradient><linearGradient id=\"SVGHifZlbzE\" x1=\"100.665%\" x2=\"55.402%\" y1=\".455%\" y2=\"44.727%\"><stop offset=\"18%\" stop-color=\"#0052cc\"/><stop offset=\"100%\" stop-color=\"#2684ff\"/></linearGradient></defs><path fill=\"#2684ff\" d=\"M244.658 0H121.707a55.5 55.5 0 0 0 55.502 55.502h22.649V77.37c.02 30.625 24.841 55.447 55.466 55.467V10.666C255.324 4.777 250.55 0 244.658 0\"/><path fill=\"url(#SVGSBI7obaC)\" d=\"M183.822 61.262H60.872c.019 30.625 24.84 55.447 55.466 55.467h22.649v21.938c.039 30.625 24.877 55.43 55.502 55.43V71.93c0-5.891-4.776-10.667-10.667-10.667\"/><path fill=\"url(#SVGHifZlbzE)\" d=\"M122.951 122.489H0c0 30.653 24.85 55.502 55.502 55.502h22.72v21.867c.02 30.597 24.798 55.408 55.396 55.466V133.156c0-5.891-4.776-10.667-10.667-10.667\"/></svg>",
+    'spline': "<img class=\"sk-logo\" src=\"media/common/spline-icon.png\" alt=\"\" width=\"18\" height=\"18\" style=\"border-radius:50%\">",
+    'miro': "<svg class=\"sk-logo\" viewBox=\"0 0 256 256\" aria-hidden=\"true\"><path fill=\"#fd3\" d=\"M0 64C0 28.654 28.654 0 64 0h128c35.346 0 64 28.654 64 64v128c0 35.346-28.654 64-64 64H64c-35.346 0-64-28.654-64-64z\"/><path d=\"M170.195 48.8h-23.239l19.366 34.026L123.717 48.8h-23.239l21.303 41.588L77.239 48.8H54l23.239 52.937L54 207.6h23.239l44.542-113.426L100.478 207.6h23.239l42.605-120.988L146.956 207.6h23.239L212.8 75.263z\"/></svg>",
+  };
+
+  // [EN, CZ] — подпись на двух языках. Третий элемент: монограмма и её цвет
+  var GROUPS = [
+    { title:['Design skills','Designové dovednosti'], items:[
+      ['UX','UX'],['UI','UI'],
+      ['Prototyping','Prototypování'],
+      ['Interactive prototypes','Interaktivní prototypy'],
+      ['Auto Layout','Auto Layout'],
+      ['Variants','Varianty'],
+      ['Components','Komponenty'],
+      ['Design systems','Design systémy'],
+      ['Design tokens','Design tokeny'],
+      ['Wireframing','Wireframy'],
+      ['Information architecture','Informační architektura'],
+      ['User flows','User flows'],
+      ['CJM','CJM'],
+      ['User research','Uživatelský výzkum'],
+      ['A/B testing','A/B testování'],
+      ['Benchmarking','Benchmarking'],
+      ['Responsive design','Responzivní design'],
+      ['Web design','Webdesign'],
+      ['Landing pages','Landing pages'],
+      ['Mobile design','Mobilní design'],
+      ['Typography','Typografie'],
+      ['Motion & micro-interactions','Motion a mikrointerakce']
+    ]},
+    { title:['Technical skills','Technické dovednosti'], items:[
+      ['Figma','Figma','figma'],
+      ['FigJam','FigJam','F','#A259FF'],
+      ['Framer','Framer','framer','invert'],
+      ['Spline','Spline','spline'],
+      ['Vibe coding','Vibe coding'],
+      ['Claude','Claude','claude'],
+      ['ChatGPT','ChatGPT','chatgpt','invert'],
+      ['AI workflows','AI workflow'],
+      ['Slack','Slack','slack'],
+      ['Jira','Jira','jira'],
+      ['Miro','Miro','miro']
+    ]},
+    { title:['Soft skills','Soft skills'], items:[
+      ['Cross-functional teamwork','Spolupráce napříč týmy'],
+      ['Problem solving','Řešení problémů'],
+      ['Empathy','Empatie'],
+      ['Agile / Scrum','Agile / Scrum'],
+      ['Attention to detail','Důraz na detail'],
+      ['Data-driven thinking','Rozhodování podle dat'],
+      ['Helicopter view','Nadhled'],
+      ['Ownership','Odpovědnost za výsledek'],
+      ['Lifelong learning','Neustálé učení'],
+      ['Working with feedback','Práce se zpětnou vazbou'],
+      ['Self-management','Samostatnost']
+    ]}
+  ];
+
+  var LANGS = {
+    title:['Languages','Jazyky'],
+    items:[
+      ['🇷🇺','Русский','Native','Rodilý mluvčí'],
+      ['🇬🇧','English','B2','B2'],
+      ['🇨🇿','Čeština','C1','C1']
+    ]
+  };
+
+  function esc(t){ return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+
+  function chip(en, cs, mark, color){
+    var icon = '', cls = 'sk-chip';
+    if (mark && LOGO[mark]) {                                        // настоящий логотип
+      icon = LOGO[mark];
+      if (color === 'invert') cls += ' sk-chip--invert';             // одноцветный знак, красится в цвет текста
+    } else if (mark) {
+      icon = '<span class="sk-mark" style="background:'+esc(color)+'">'+esc(mark)+'</span>';
     }
-    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(mail).then(done, fallback); else fallback();
-    function fallback(){
-      var t = document.createElement('textarea'); t.value = mail; t.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch(e){} t.remove();
+    return '<span class="'+cls+'">'
+      + icon
+      + '<span data-en="'+esc(en)+'" data-cs="'+esc(cs)+'">'+esc(en)+'</span>'
+      + '</span>';
+  }
+
+  var h = '<div class="skills-cols">';
+  GROUPS.forEach(function(g, i){
+    h += '<div class="skills-col reveal" style="transition-delay:'+(i*0.08).toFixed(2)+'s">'
+      +  '<div class="sk-title" data-en="'+esc(g.title[0])+'" data-cs="'+esc(g.title[1])+'">'+esc(g.title[0])+'</div>'
+      +  '<div class="sk-chips">'
+      +  g.items.map(function(it){ return chip(it[0], it[1], it[2], it[3]); }).join('')
+      +  '</div></div>';
+  });
+  h += '</div>';
+
+  h += '<div class="skills-langs reveal">'
+    +  '<div class="sk-title" data-en="'+esc(LANGS.title[0])+'" data-cs="'+esc(LANGS.title[1])+'">'+esc(LANGS.title[0])+'</div>'
+    +  '<div class="sk-chips">'
+    +  LANGS.items.map(function(l){
+         return '<span class="sk-chip"><span class="sk-flag">'+l[0]+'</span>'+esc(l[1])
+           + ' <span class="sk-lv" data-en="'+esc(l[2])+'" data-cs="'+esc(l[3])+'">'+esc(l[2])+'</span></span>';
+       }).join('')
+    +  '</div></div>';
+
+  box.innerHTML = h;
+
+  // Кнопка CV берёт файл из админки: «Контакты в навбаре» → CV
+  fetch('content/contacts.json', { cache: 'no-cache' }).then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(c){
+      var b = document.getElementById('cvBtn');
+      if (b && c && c.cv) { b.href = c.cv; b.style.display = ''; }
+    }).catch(function(){});
+
+
+  // если страница уже переключена на чешский — подставляем сразу
+  var cur = document.documentElement.getAttribute('data-lang');
+  if (cur && cur !== 'en'){
+    box.querySelectorAll('[data-en]').forEach(function(el){
+      var t = el.getAttribute('data-'+cur); if (t) el.innerHTML = t;
+    });
+  }
+})();
+
+// SCROLL REVEAL
+var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
+
+
+
+
+// ═══ HERO BLUR + SCALE ON SCROLL ═══
+(function(){
+  var hero = document.querySelector('.hero');
+  var projects = document.querySelector('.pn--first');
+  if (!hero || !projects) return;
+  var maxBlur = 18, ticking = false, media = hero.querySelector('.hero-media'), ascii = hero.querySelector('.hero-ascii'), hidden = false;
+  function update() {
+    var pRect = projects.getBoundingClientRect(), wh = window.innerHeight;
+    var progress = Math.max(0, Math.min(1, 1 - pRect.top / wh));
+    var blur = progress * progress * maxBlur * .5;
+    var scale = 1.04 + progress * 0.14;
+    var overlay = Math.pow(progress, 1.5) * 0.7;
+    // фон hero приближается и размывается, сам hero на месте: края не отходят от экрана
+    if (ascii && ascii._ascii) {
+      ascii._ascii.setScale(1 + progress * progress * 1.4);   // фото заметно приближается
+      ascii._ascii.setTurn(progress * progress * (3 - 2 * progress));   // и плавно поворачивается в профиль, на весь скролл hero
     }
+    // hero целиком закрыт панелью: градиент и символы под ней не считаем
+    var covered = pRect.top <= 0;
+    if (covered !== hidden) {
+      hidden = covered;
+      if (media && media._grain) media._grain.pause(covered);
+      if (ascii && ascii._ascii) ascii._ascii.pause(covered);
+    }
+    if (media) {
+      // размытие считает сам шейдер градиента (раньше был CSS blur на весь экран каждый кадр)
+      if (media._grain && media._grain.setBlur) media._grain.setBlur(blur / 9);
+      else media.style.filter = blur > 0.1 ? 'blur(' + blur.toFixed(1) + 'px)' : 'none';
+      media.style.transform = 'scale(' + scale.toFixed(4) + ')';
+    }
+    hero.style.setProperty('--hero-overlay', overlay.toFixed(3));
+    ticking = false;
+  }
+  var style = document.createElement('style');
+  style.textContent = '.hero::after{opacity:var(--hero-overlay,0)!important}';
+  document.head.appendChild(style);
+  window.addEventListener('scroll', function() {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, {passive: true});
+  update();
+})();
+
+// MAGNETIC hero title — мягкое отталкивание, без дрожания
+(function(){
+  var lines = [].slice.call(document.querySelectorAll('.title-line'));
+  if (!lines.length) return;
+  if (window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  if (window.matchMedia('(hover:none)').matches) return;   // на тач-экранах не нужно
+
+  var R = 260, MAX = 15;                       // радиус влияния и предел сдвига
+  var st = lines.map(function(){ return {x:0,y:0,tx:0,ty:0}; });
+  var mx = -99999, my = -99999;
+
+  function reset(){ mx = my = -99999; kick(); }
+  // цикл крутится, только пока мышь двигается рядом или строки возвращаются на место
+  var raf = 0;
+  function kick(){ if (!raf) raf = requestAnimationFrame(loop); }
+  window.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; if (window.scrollY < innerHeight) kick(); }, {passive:true});
+  window.addEventListener('blur', reset);
+  document.addEventListener('mouseleave', reset);
+
+  function loop(){
+    raf = 0; var busy = false;
+    for (var i = 0; i < lines.length; i++){
+      var el = lines[i], s = st[i], r = el.getBoundingClientRect();
+      // центр в покое: вычитаем текущий сдвиг, иначе строка убегает сама от себя
+      var dx = mx - (r.left + r.width / 2 - s.x);
+      var dy = my - (r.top + r.height / 2 - s.y);
+      var d  = Math.sqrt(dx*dx + dy*dy);
+      var f  = d < R ? (1 - d / R) : 0;
+      f *= f;                                   // мягкий спад к краю радиуса
+      s.tx = Math.max(-MAX, Math.min(MAX, -dx * f * 0.42));
+      s.ty = Math.max(-MAX, Math.min(MAX, -dy * f * 0.42));
+      s.x += (s.tx - s.x) * 0.085;
+      s.y += (s.ty - s.y) * 0.085;
+      if (Math.abs(s.x) < 0.04 && Math.abs(s.y) < 0.04){ s.x = 0; s.y = 0; }
+      el.style.transform = (s.x || s.y)
+        ? 'translate3d(' + s.x.toFixed(2) + 'px,' + s.y.toFixed(2) + 'px,0)'
+        : '';
+      if (Math.abs(s.tx - s.x) > .03 || Math.abs(s.ty - s.y) > .03) busy = true;
+    }
+    if (busy) kick();
+  }
+})();
+
+
+// LANGUAGE
+function setLang(lang){
+  document.documentElement.setAttribute('data-lang',lang);
+  try{localStorage.setItem('lang',lang);}catch(e){}
+  try{var _u=new URL(location.href);if(_u.searchParams.has('lang')&&_u.searchParams.get('lang')!==lang){_u.searchParams.set('lang',lang);history.replaceState(history.state,'',_u);}}catch(e){}
+  var be=document.getElementById('btnEN'),bc=document.getElementById('btnCS');
+  if(be)be.classList.toggle('active',lang==='en');
+  if(bc)bc.classList.toggle('active',lang==='cs');
+  document.querySelectorAll('[data-en]').forEach(function(el){var t=el.getAttribute('data-'+lang);if(t)el.innerHTML=t;});
+  var y=new Date().getFullYear();
+  document.getElementById('footerCopy').textContent=lang==='cs'?'© '+y+' · Všechna práva vyhrazena':'© '+y+' · All rights reserved';
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-ph-en]').forEach(function(el){el.placeholder=el.getAttribute('data-ph-'+lang)||el.placeholder;});
+  if(window.SEO&&SEO[lang]){document.title=SEO[lang].t;var md=document.querySelector('meta[name=description]');if(md)md.content=SEO[lang].d;}
+}
+// при загрузке: язык, который выставил скрипт в head (сохранённый или чешский)
+setLang(document.documentElement.getAttribute('data-lang')==='en'?'en':'cs');
+
+// ═══ SMOOTH SCROLL ═══
+// Страница едет к цели с лёгкой инерцией. Тачпад и быстрая прокрутка колесом
+// отдают столько, сколько прислала система. Одиночный щелчок колеса система
+// может прислать совсем маленьким (на macOS это около 4 px), поэтому его
+// дотягиваем до нормального шага, иначе мышью листается очень медленно.
+(function(){
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
+  var NOTCH = 100;   // шаг одного щелчка колеса, px (столько же даёт Windows)
+  var TAU   = 110;   // плавность, мс: меньше значит резче, больше значит тягучее
+  var QUIET = 45;    // тишина до события, после которой оно считается началом, мс
+  var HOLD  = 28;    // если за это время ничего больше не пришло, это был одиночный щелчок, мс
+
+  var current = window.scrollY, target = current, lastWheel = 0, topUp = null, lastFrame = 0;
+
+  function maxScroll(){ return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
+  // кадры крутятся, только пока страница едет; в покое цикла нет
+  var running = false;
+  function sync(){ if (!running) current = target = window.scrollY; }
+  function start(){ if (!running) { running = true; lastFrame = 0; requestAnimationFrame(tick); } }
+  function push(d){ sync(); target = Math.max(0, Math.min(target + d, maxScroll())); start(); }
+
+  // под курсором блок со своей прокруткой (поле сообщения, меню дока): не вмешиваемся
+  function hasOwnScroll(el){
+    for (; el && el !== document.body && el !== document.documentElement; el = el.parentElement) {
+      if (el.scrollHeight > el.clientHeight + 1) {
+        var o = getComputedStyle(el).overflowY;
+        if (o === 'auto' || o === 'scroll') return true;
+      }
+    }
+    return false;
+  }
+
+  window.addEventListener('wheel', function(e) {
+    if (e.ctrlKey) return;                                    // масштаб щипком
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;      // жест вбок
+    if (hasOwnScroll(e.target)) return;
+    if (document.documentElement.classList.contains('pg-lock')) { if (!e.target.closest('.pg-sheet')) e.preventDefault(); return; }   // открыто окно Playground: страница стоит
+    e.preventDefault();
+    if (document.documentElement.classList.contains('is-loading')) return;   // идёт загрузка
+
+    var d = e.deltaY;
+    if (e.deltaMode === 1) d *= 40;                           // строки (Firefox)
+    else if (e.deltaMode === 2) d *= window.innerHeight * .9; // страницы
+    var cap = window.innerHeight * 1.2;
+    d = Math.max(-cap, Math.min(cap, d));
+
+    var now = performance.now(), gap = now - lastWheel;
+    lastWheel = now;
+    clearTimeout(topUp); topUp = null;                        // пришло продолжение: это поток, а не щелчок
+    push(d);
+
+    // Событие после паузы и меньше обычного шага: возможно, это щелчок колеса.
+    // Если следом ничего не придёт, дотягиваем его до NOTCH. У тачпада следом
+    // сразу идёт поток событий, и добавка отменяется.
+    var a = Math.abs(d);
+    if (gap > QUIET && a >= 2.5 && a < NOTCH) {
+      var extra = (d < 0 ? -1 : 1) * (NOTCH - a);
+      topUp = setTimeout(function(){ topUp = null; push(extra); }, HOLD);
+    }
+  }, { passive: false });
+
+  window.addEventListener('keydown', function(e) {
+    if (e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    if (document.documentElement.classList.contains('pg-lock')) return;   // клавиши листают открытый лист, а не страницу
+    if (document.documentElement.classList.contains('is-loading')) { if (/^(Arrow|Page|Home|End| )/.test(e.key)) e.preventDefault(); return; }
+    var amount = 0;
+    switch(e.key) {
+      case 'ArrowDown': amount = 80; break;
+      case 'ArrowUp': amount = -80; break;
+      case 'PageDown': amount = window.innerHeight * 0.8; break;
+      case 'PageUp': amount = -window.innerHeight * 0.8; break;
+      case 'Home': sync(); target = 0; start(); return;
+      case 'End': sync(); target = maxScroll(); start(); return;
+      case ' ': amount = e.shiftKey ? -window.innerHeight*0.8 : window.innerHeight*0.8; e.preventDefault(); break;
+      default: return;
+    }
+    push(amount);
+  });
+
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    var id = link.getAttribute('href');
+    if (id === '#') { sync(); target = 0; start(); e.preventDefault(); return; }
+    var el = document.querySelector(id);
+    if (el) {
+      e.preventDefault();
+      sync(); target = Math.max(0, Math.min(window.scrollY + el.getBoundingClientRect().top, maxScroll())); start();
+    }
+  });
+
+  window.addEventListener('resize', function() { target = Math.min(target, maxScroll()); });
+
+  // сетка проектов подгружается асинхронно — держим цель в актуальных границах
+  window._syncScrollTarget = function(){ if (!running) current = target = window.scrollY; };
+
+  function tick(now) {
+    var dt = Math.min(64, lastFrame ? now - lastFrame : 16.7);
+    lastFrame = now;
+    var diff = target - current;
+    if (Math.abs(diff) > 0.5) {
+      // шаг зависит от времени кадра, поэтому на 60 и на 120 Гц едет одинаково
+      current += diff * (1 - Math.exp(-dt / TAU));
+      window.scrollTo(0, current);
+    } else {
+      if (Math.round(current) !== Math.round(target)) window.scrollTo(0, target);
+      current = target;
+      if (!topUp) { running = false; return; }   // доехали: цикл засыпает до следующего жеста
+    }
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
+
+<!-- Сетка проектов из CMS -->
+<script>
+(()=>{const b=document.getElementById('aboutSlides');if(!b)return;const im=[...b.querySelectorAll('img')],c=b.querySelector('.about-slides-count'),n=im.length,rm=matchMedia('(prefers-reduced-motion: reduce)'),pad=x=>String(x).padStart(2,'0');let i=0,t=null,vis=false,ready=false;
+const tick=()=>{const k=(i+1)%n;im[i].classList.remove('is-on');im[k].classList.add('is-on');i=k;c.textContent=pad(i+1)+' / '+pad(n)};
+const upd=()=>{const on=ready&&vis&&!document.hidden&&!rm.matches;if(on&&!t)t=setInterval(tick,200);else if(!on&&t){clearInterval(t);t=null}};
+Promise.all(im.map(x=>x.decode().catch(()=>{}))).then(()=>{ready=true;upd()});
+new IntersectionObserver(e=>{vis=e[0].isIntersecting;upd()}).observe(b);
+document.addEventListener('visibilitychange',upd);})();
+</script>
+<script src="assets/ascii.js?v=20261030a"></script>
+<script src="assets/grain.js?v=20261029a"></script>
+<script src="assets/playground.js?v=20261031e"></script>
+<script src="assets/projects-grid.js?v=20261026a"></script>
+<script src="assets/logo.js?v=20261025a"></script>
+<script src="assets/navbar.js?v=20261031d"></script>
+<script>
+/* О мне: объекты плывут на скролле и слегка тянутся за мышью.
+   Каждый со своей «глубиной»: дальние двигаются меньше. Рядом с курсором
+   объект чуть отталкивается и наклоняется. Всё с инерцией. */
+(function(){
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  // [скролл px, скролл °, глубина мыши px, наклон °]
+  var K = { airplane:[-26,10,16,7], gamepad:[-18,-12,11,-6], keycap:[-14,16,8,9], football:[-30,40,13,-10] };
+  var fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var mx = innerWidth / 2, my = innerHeight / 2, has = false, raf = 0, S = new WeakMap();
+  function key(im){ return (im.parentNode.className.match(/ab-o--(\w+)/) || [])[1]; }
+  function frame(){
+    raf = 0;
+    var vh = innerHeight, vw = innerWidth, busy = false, wide = vw > 1024;
+    document.querySelectorAll('.ab-o img').forEach(function(im){
+      var r = im.parentNode.getBoundingClientRect();
+      if (r.top > vh * 1.5 || r.bottom < -vh * .5) return;
+      var k = K[key(im)] || [-20,10,10,6];
+      var p = (r.top - vh / 2) / vh;
+      var s = S.get(im) || { x:0, y:0, r:0 };
+      var tx = 0, ty = 0, tr = 0;
+      if (fine && has) {
+        var b = im.getBoundingClientRect(), cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+        var dx = (mx - cx) / vw, dy = (my - cy) / vh;
+        tx = dx * k[2] * 2; ty = dy * k[2] * 2; tr = dx * k[3] * 2;          // тянется за курсором
+        var ddx = cx - mx, ddy = cy - my, d = Math.hypot(ddx, ddy), R = Math.max(b.width, 120) * 1.3;
+        if (d < R) { var f = (1 - d / R) * (1 - d / R) * k[2] * 1.6; tx += ddx / (d || 1) * f; ty += ddy / (d || 1) * f; tr += k[3] * (1 - d / R); }   // рядом: отталкивается
+      }
+      s.x += (tx - s.x) * .08; s.y += (ty - s.y) * .08; s.r += (tr - s.r) * .08;
+      if (Math.abs(tx - s.x) + Math.abs(ty - s.y) + Math.abs(tr - s.r) > .05) busy = true;
+      S.set(im, s);
+      im.style.setProperty('--py', (wide ? p * k[0] : 0).toFixed(1) + 'px');
+      im.style.setProperty('--pr', (p * k[1]).toFixed(1) + 'deg');
+      im.style.setProperty('--mx', s.x.toFixed(2) + 'px');
+      im.style.setProperty('--my', s.y.toFixed(2) + 'px');
+      im.style.setProperty('--mr', s.r.toFixed(2) + 'deg');
+    });
+    if (busy) tick();
+  }
+  function tick(){ if (!raf) raf = requestAnimationFrame(frame); }
+  addEventListener('scroll', tick, { passive:true });
+  addEventListener('resize', tick);
+  if (fine) addEventListener('pointermove', function(e){ if (e.pointerType === 'touch') return; mx = e.clientX; my = e.clientY; has = true; tick(); }, { passive:true });
+  tick();
+})();
+</script>
+<script>
+/* Медиа-слои: картинка под контентом слегка «приближается» к месту, пока слой проезжает экран */
+(function(){
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var ims = [].slice.call(document.querySelectorAll('.ph-bg img')), wait = false;
+  function upd(){
+    wait = false; var vh = innerHeight;
+    ims.forEach(function(im){
+      var r = im.closest('.ph').getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (r.height + vh)));   // 0 въезжает, 1 уехал
+      im.style.setProperty('--phs', (1.14 - p * .14).toFixed(4));
+    });
+  }
+  addEventListener('scroll', function(){ if (!wait) { wait = true; requestAnimationFrame(upd); } }, { passive:true });
+  addEventListener('resize', upd); upd();
+})();
+</script>
+<script>
+/* FAQ: открытие и закрытие анимируются высотой, без мгновенного скачка <details> */
+(function(){
+  [].forEach.call(document.querySelectorAll('.faq-item'),function(d){
+    var s=d.querySelector('summary'), a=d.querySelector('.faq-a'); if(!s||!a) return;
+    var body=document.createElement('div'); body.className='faq-body'; a.parentNode.insertBefore(body,a); body.appendChild(a);
+    if(d.open){d.classList.add('is-open');body.style.height='auto';}
+    function done(e){ if(e&&e.propertyName!=='height') return;
+      if(d.classList.contains('is-open')) body.style.height='auto'; else d.open=false;
+      if(window._syncScrollTarget) window._syncScrollTarget(); }
+    body.addEventListener('transitionend',done);
+    s.addEventListener('click',function(e){
+      e.preventDefault();
+      if(d.classList.contains('is-open')){            // закрыть: от текущей высоты к нулю
+        body.style.height=a.offsetHeight+'px'; void body.offsetHeight;
+        d.classList.remove('is-open'); body.style.height='0px';
+      }else{                                          // открыть: от нуля к высоте ответа
+        d.open=true; body.style.height='0px'; void body.offsetHeight;
+        // высоту берём по вёрстке ответа: scrollHeight учитывает его сдвиг translateY и в конце давал рывок
+        d.classList.add('is-open'); body.style.height=a.offsetHeight+'px';
+      }
+    });
   });
 })();
 </script>
+<script src="assets/hx.js?v=20261031b"></script>
+<script src="assets/reveal.js?v=20261025a"></script>
+<script src="assets/transition.js?v=20261102c"></script>
+<script src="assets/cursor.js?v=20261025a"></script>
+<script>
+/* контакт: появление заголовка, оранжевый свет в буквах за курсором (без мыши медленно гуляет), отправка через почтовый клиент */
+(function(){
+  var ct=document.querySelector('.ct'); if(!ct) return;
+  var big=ct.querySelector('.ct-big'), ts=[].slice.call(ct.querySelectorAll('.ct-t'));
+  var RM=matchMedia('(prefers-reduced-motion:reduce)').matches, FINE=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var card=ct.closest('.dk-card--contact')||ct;
+  var x=0,y=0,tx=0,ty=0,ptr=false,vis=false,raf=0,t0=performance.now(),init=false,o=0,sc=1;
+  addEventListener('scroll',function(){go();},{passive:true});
+  new IntersectionObserver(function(e){ vis=e[0].isIntersecting; go(); }).observe(card);
+  new IntersectionObserver(function(e){ if(e[0].isIntersecting)ct.classList.add('in'); },{threshold:.15}).observe(big);
+  if(FINE) addEventListener('pointermove',function(e){
+    var r=ct.getBoundingClientRect(); ptr=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;
+    if(ptr){tx=e.clientX;ty=e.clientY;go();}
+  },{passive:true});
+  var odd=false;
+  function frame(now){
+    raf=0; if(!vis) return;
+    if(window.PERF) PERF.tick(now);
+    odd=!odd;
+    var vh=innerHeight, cTop=card.getBoundingClientRect().top;   // origin сверху: верх карточки от зума не двигается
+    // пока футер въезжает снизу, карточка приближается до 90% ширины, а фото раскрывается; обратно всё сжимается
+    var ot=Math.max(0,Math.min(1,(vh-cTop)/(vh*.72))); ot=ot*ot*(3-2*ot);
+    o+=RM?ot-o:(ot-o)*.16; if(Math.abs(ot-o)<.001)o=ot;
+    big.style.setProperty('--o',o.toFixed(3));
+    sc=.9+.1*o; card.style.transform=o===1?'':'scale('+sc.toFixed(4)+')';
+    var b=big.getBoundingClientRect();
+    if(!ptr){ var k=RM?0:(now-t0)/1000; tx=b.left+b.width*(.32+.26*Math.sin(k*.45)); ty=b.top+b.height*(.5+.42*Math.sin(k*.31+1)); }
+    if(!init){x=tx;y=ty;init=true;}
+    x+=(tx-x)*.08; y+=(ty-y)*.08;
+    // свет в буквах перерисовывает крупный текст: без мыши (медленный дрейф) и на слабом железе хватает 30 кадров
+    if(!odd||(ptr&&!(window.PERF&&PERF.level)))
+    ts.forEach(function(s){var r=s.getBoundingClientRect(); s.style.setProperty('--gx',((x-r.left)/sc).toFixed(1)+'px'); s.style.setProperty('--gy',((y-r.top)/sc).toFixed(1)+'px');});
+    if(!RM||Math.abs(tx-x)+Math.abs(ty-y)>.5||o!==ot) go();
+  }
+  function go(){ if(!raf&&vis) raf=requestAnimationFrame(frame); }
+
+  var f=ct.querySelector('.ct-form'), note=ct.querySelector('.ct-note');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var cs=document.documentElement.getAttribute('data-lang')!=='en', bad=null;
+    [].forEach.call(f.querySelectorAll('input'),function(i){var ok=i.value.trim()&&i.checkValidity(); i.parentNode.classList.toggle('err',!ok); if(!ok&&!bad)bad=i;});
+    if(bad){bad.focus(); note.textContent=cs?'Vyplňte prosím jméno a platný e‑mail.':'Please add your name and a valid email.'; return;}
+    var E=f.elements; if(E.namedItem('botcheck').checked) return;
+    var n=E.namedItem('name').value.trim(), m=E.namedItem('email').value.trim(), sub=(cs?'Kontakt z portfolia: ':'Portfolio contact: ')+n, btn=f.querySelector('.ct-send');
+    function viaMail(){   // запасной путь: письмо в почтовом клиенте посетителя
+      if(window.track) track('form-send',{via:'mail-app'});
+      location.href='mailto:ahoj@shuster.design?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent((cs?'Jméno: ':'Name: ')+n+'\nE‑mail: '+m+'\n\n');
+      note.textContent=cs?'Otevřel se váš e‑mail, zprávu už jen odešlete.':'Your mail app is open, just hit send.';
+    }
+    // ключ Web3Forms лежит в content/contacts.json (form_key), правится в админке
+    fetch('content/contacts.json',{cache:'no-cache'}).then(function(r){return r.ok?r.json():{};}).catch(function(){return {};}).then(function(c){
+      if(!c.form_key) return viaMail();
+      btn.classList.add('is-busy'); note.textContent=cs?'Odesílám…':'Sending…';
+      return fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+        body:JSON.stringify({access_key:c.form_key,subject:sub,from_name:'shuster.design',name:n,email:m,replyto:m,botcheck:false})})
+      .then(function(r){return r.json();}).then(function(d){
+        if(!d||!d.success) throw 0;
+        f.reset(); if(window.track) track('form-send',{via:'web3forms'}); note.textContent=cs?'Díky! Ozvu se vám do druhého dne.':'Thanks! I will get back to you within a day.';
+      }).catch(function(){ note.textContent=cs?'Nepodařilo se odeslat, zkuste to prosím znovu nebo napište na ahoj@shuster.design.':'Could not send, please try again or write to ahoj@shuster.design.'; })
+      .then(function(){btn.classList.remove('is-busy');});
+    });
+  });
+  f.addEventListener('input',function(e){e.target.parentNode.classList.remove('err');});
+})();
+</script>
+<script src="assets/analytics.js?v=20261025a"></script>
 </body>
 </html>

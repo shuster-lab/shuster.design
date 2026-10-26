@@ -1,0 +1,22 @@
+/* ═══════════════════════════════════════════════════════════
+   Переход между страницами: экран по квадратам заливается чёрным
+   снизу вверх, а на новой странице, когда она готова, квадраты
+   так же снизу вверх рассыпаются и открывают её.
+   Сами квадраты рисует assets/transition.js на canvas.
+
+   Подключение: <link rel="stylesheet" href="assets/transition.css">
+   плюс короткий скрипт в <head> и assets/transition.js перед </body>
+   ═══════════════════════════════════════════════════════════ */
+
+/* новая страница с первого кадра под чёрным, пока скрипт не поставит квадраты */
+html.pt-in::before{
+  content:'';position:fixed;inset:0;z-index:2147483000;pointer-events:none;
+  background:#0a0a0a;
+}
+html.pt-in.pt-open::before{display:none}
+
+.pt-pix{position:fixed;inset:0;width:100%;height:100%;z-index:2147483000;pointer-events:none}   /* поверх всего, включая док */
+
+@media(prefers-reduced-motion:reduce){
+  html.pt-in::before,.pt-pix{display:none}
+}

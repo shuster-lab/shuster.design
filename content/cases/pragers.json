@@ -1,0 +1,211 @@
+{
+  "title": "Prager's",
+  "client": "Prager's",
+  "year": "2026",
+  "role": "Structure, UX, UI",
+  "role_cs": "Struktura, UX, UI",
+  "category": "Beverage brand · UX/UI & web design",
+  "category_cs": "Nápojová značka · UX/UI a web design",
+  "niche": "E‑commerce",
+  "niche_cs": "E‑commerce",
+  "claim": "Culture that doesn't end in a can",
+  "claim_cs": "Kultura, která nekončí v plechovce",
+  "card_desc": "Redesign for a Czech drinks brand: the shop, events and a store map on one site",
+  "card_desc_cs": "Redesign webu české nápojové značky: e‑shop, eventy a mapa prodejních míst na jednom místě",
+  "cover": "/media/pragers/cover.webp",
+  "cover_sm": "/media/pragers/cover-sm.webp",
+  "thumb": "/media/pragers/thumb.webp?v=3",
+  "thumb_sm": "/media/pragers/thumb-sm.webp?v=3",
+  "preview_video": "/media/pragers/scroll.mp4",
+  "cover_video": "/media/pragers/reel.mp4",
+  "cover_video_m": "/media/pragers/reel-m.mp4",
+  "tagline": "A fermented drinks brand with a strong story and a hidden shop. The redesign kept the culture and put the cans one tap away.",
+  "tagline_cs": "Značka fermentovaných drinků se silným příběhem a schovaným e‑shopem. Redesign kulturu zachoval a plechovky dal na dosah jednoho kliknutí.",
+  "fact": "",
+  "fact_cs": "",
+  "timeline": "",
+  "timeline_cs": "",
+  "team": "Freelance",
+  "team_note": "My own client, design and structure",
+  "team_note_cs": "Můj vlastní klient, design a struktura",
+  "platform": "",
+  "texts": "menu",
+  "services": [
+    "Information architecture",
+    "UX",
+    "UI design",
+    "E-shop"
+  ],
+  "services_cs": [
+    "Informační architektura",
+    "UX",
+    "UI design",
+    "E‑shop"
+  ],
+  "external": "",
+  "link": "https://pragers.cz",
+  "chapters": [
+    {
+      "kind": "context",
+      "label": "Context",
+      "label_cs": "Kontext",
+      "title": "A manifesto with the shop somewhere behind it.",
+      "title_cs": "Manifest a e‑shop někde vzadu.",
+      "text": "Prager's makes cider, kombucha and a fermented coconut soda, and runs its own events. The previous site opened with long brand prose about fermentation and living culture. Products sat on separate pages and the shop was one more item in the menu.\n\nIt told the story well and sold poorly. Someone who wanted a box of kombucha had to read the manifesto first.",
+      "text_cs": "Prager's vyrábí cider, kombuchu a fermentovanou kokosovou sodu a pořádá vlastní eventy. Původní web začínal dlouhým textem o fermentaci a živé kultuře. Produkty ležely na samostatných stránkách a e‑shop byl jen další položkou v menu.\n\nPříběh vyprávěl dobře, prodával špatně. Kdo chtěl karton kombuchy, musel nejdřív přečíst manifest.",
+      "media": []
+    },
+    {
+      "kind": "final",
+      "label": "Final",
+      "label_cs": "Hotový web",
+      "title": "Culture up front, cans one tap away.",
+      "title_cs": "Kultura v popředí, plechovky na jedno kliknutí.",
+      "text": "",
+      "text_cs": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/pragers/mockup-combo.webp",
+          "caption": "Homepage on a MacBook, the kombucha shelf on a phone",
+          "caption_cs": "Homepage na MacBooku, kombuchy v telefonu",
+          "size": "wide"
+        }
+      ]
+    },
+    {
+      "kind": "decision",
+      "label": "Shop",
+      "label_cs": "E‑shop",
+      "title": "Bestsellers with a price and a cart button, right on the homepage.",
+      "title_cs": "Bestsellery s cenou a tlačítkem do košíku přímo na homepage.",
+      "text": "Most visitors already know the drinks from a shelf or an event and come back to reorder. The shortest path to a box of kombucha now starts on the homepage. The story still opens the page, it just no longer stands between the visitor and the cart.",
+      "text_cs": "Většina návštěvníků drinky zná z regálu nebo z eventu a vrací se pro další. Nejkratší cesta ke kartonu kombuchy teď začíná na homepage. Příběh stránku pořád otevírá, jen už nestojí mezi návštěvníkem a košíkem.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/pragers/mockup-ch2.webp",
+          "caption": "Bestsellers with price and cart on desktop and mobile",
+          "caption_cs": "Bestsellery s cenou a košíkem na desktopu i v mobilu",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/pragers/mockup-pdp-mac.webp",
+          "caption": "Product page with pack size, price and cart on desktop and mobile",
+          "caption_cs": "Detail produktu s balením, cenou a košíkem na desktopu i v mobilu",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "The homepage told the story. Buying meant finding the shop in the menu and starting over.",
+      "before_cs": "Homepage vyprávěla příběh. Nákup znamenal najít e‑shop v menu a začít znovu.",
+      "after": "Bestsellers with flavour, pack size, stock, price and Add to cart in the first scrolls.",
+      "after_cs": "Bestsellery s příchutí, balením, dostupností, cenou a tlačítkem Přidat do košíku hned v prvních scrollech."
+    },
+    {
+      "kind": "decision",
+      "label": "Range",
+      "label_cs": "Sortiment",
+      "title": "Three drinks, three equal doors.",
+      "title_cs": "Tři drinky, tři rovnocenné vstupy.",
+      "text": "The range grew faster than the site. Giving every drink the same format turns a new product line into a content task instead of a redesign, and lets people pick by taste rather than by brand history.",
+      "text_cs": "Sortiment rostl rychleji než web. Když má každý drink stejný formát, nová řada je úkol pro obsah, ne pro redesign, a lidé vybírají podle chuti, ne podle historie značky.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/pragers/mockup-ch3.webp",
+          "caption": "Cider, Kombucha and Soda as three equal worlds",
+          "caption_cs": "Cider, Kombucha a Soda jako tři rovnocenné světy",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "Cider and kombucha as two links, with no place reserved for anything new.",
+      "before_cs": "Cider a kombucha jako dva odkazy, bez místa pro cokoli nového.",
+      "after": "Cider, Kombucha and Soda as three equal worlds, each with one line on taste and a Choose flavour button.",
+      "after_cs": "Cider, Kombucha a Soda jako tři rovnocenné světy, každý s jednou větou o chuti a tlačítkem Vyber si příchuť."
+    },
+    {
+      "kind": "decision",
+      "label": "Culture",
+      "label_cs": "Komunita",
+      "title": "Living Culture became dates, venues and press.",
+      "title_cs": "Z hesla Living Culture se staly termíny, místa a články.",
+      "text": "A slogan asks you to believe it. An evening at a gallery next month, a list of articles and a store locator show it.\n\nThe store locator also serves a second audience: people who would rather grab a can on the way than order a box.",
+      "text_cs": "Slogan chce, abyste mu věřili. Večer v galerii příští měsíc, seznam článků a mapa prodejních míst to dokazují.\n\nMapa navíc obslouží druhou skupinu: lidi, kteří si plechovku radši koupí cestou, než aby objednávali karton.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/pragers/mockup-ch4.webp",
+          "caption": "Events with dates and venues, and press coverage",
+          "caption_cs": "Eventy s datem a místem a články o značce",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "Living Culture as a slogan.",
+      "before_cs": "Living Culture jako slogan.",
+      "after": "Events with date and venue, press coverage, and a map of every shop and café that stocks the drinks.",
+      "after_cs": "Eventy s datem a místem, články v médiích a mapa všech obchodů a kaváren, kde drinky koupíte."
+    },
+    {
+      "kind": "impact",
+      "label": "Impact",
+      "label_cs": "Dopad",
+      "title": "One site for fans, buyers and retail partners.",
+      "title_cs": "Jeden web pro fanoušky, zákazníky i obchodní partnery.",
+      "text": "The brand story, the shop, the events and the retail network now share one structure, so each new drink, event or shop slots into a place that already exists.",
+      "text_cs": "Příběh značky, e‑shop, eventy i síť prodejních míst teď sdílí jednu strukturu. Každý nový drink, event nebo obchod zapadne na místo, které už existuje.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/pragers/mockup-pdp.webp",
+          "caption": "Shelf, product page and cart on a phone",
+          "caption_cs": "Nabídka, detail produktu a košík v telefonu",
+          "size": "wide"
+        }
+      ],
+      "stats": [],
+      "quote": "",
+      "quote_cs": "",
+      "quote_author": ""
+    },
+    {
+      "kind": "takeaway",
+      "label": "Takeaway",
+      "label_cs": "Závěr",
+      "title": "A lifestyle brand doesn't have to choose between mood and checkout.",
+      "title_cs": "Lifestylová značka si nemusí vybírat mezi atmosférou a košíkem.",
+      "text": "It has to decide what comes first for someone who already loves the product. For a returning customer the mood is already there. They need the cart.",
+      "text_cs": "Musí se rozhodnout, co je první pro člověka, který produkt už miluje. Vracející se zákazník atmosféru zná. Potřebuje košík.",
+      "media": [
+        {
+          "type": "video",
+          "src": "/media/pragers/mockup-scroll-mac.mp4",
+          "poster": "/media/pragers/mockup-scroll-mac.webp",
+          "caption": "The live site scrolled in Safari on a MacBook",
+          "caption_cs": "Živý web při scrollu v Safari na MacBooku",
+          "size": "wide"
+        },
+        {
+          "type": "video",
+          "src": "/media/pragers/mockup-scroll-phone.mp4",
+          "poster": "/media/pragers/mockup-scroll-phone.webp",
+          "caption": "The same page scrolled on a phone",
+          "caption_cs": "Stejná stránka při scrollu v telefonu",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/pragers/mockup-shop-event.webp",
+          "caption": "Product with the cart next to an event page on a phone",
+          "caption_cs": "Produkt s košíkem vedle stránky eventu v telefonu",
+          "size": "half"
+        }
+      ]
+    }
+  ],
+  "thumb_video": "/media/pragers/thumb.mp4",
+  "thumb_video_m": "/media/pragers/thumb-m.mp4"
+}

@@ -1,0 +1,45 @@
+# Stepan Shuster
+
+> UX/UI and product designer based in Prague, Czech Republic, open to full‑time roles in design studios, agencies and product teams (office in Prague, hybrid or remote; start date by agreement). Designs websites, e‑shops and apps in Figma. Works in Czech, English and Russian.
+
+UX/UI a produktový designer z Prahy. Hledá práci na plný úvazek ve studiu, agentuře nebo produktovém týmu. Navrhuje weby, e‑shopy a aplikace ve Figmě.
+
+## Skills
+
+- UX/UI design of websites, landing pages and company sites
+- E‑shop design
+- Desktop and mobile apps, dashboards and CRM systems
+- Some branding, from working side by side with graphic designers
+- Websites for real estate developers and housing projects
+- Information architecture, wireframes and interactive prototypes
+- Design systems in Figma (components, variants, Auto Layout, tokens) and developer handoff
+- Working inside studio and agency teams with art directors, project managers and developers
+
+## Experience
+
+- Freelance UX/UI designer, Prague, since 2022
+- HOX.red, Prague design studio, UX/UI designer, since 2023
+- YAS Agency, UX/UI designer, part time, since 2025
+- AfterGo, UI designer, 2023 to 2024
+- TAMADA DESIGN, UX/UI designer, 2022 to 2023
+
+## Case studies
+
+- [Prager's](https://shuster.design/case.html?slug=pragers) (own freelance client): A fermented drinks brand with a strong story and a hidden shop. The redesign kept the culture and put the cans one tap away.
+- [Smart Ek](https://www.behance.net/gallery/227935139/Smart-Ek-Digital-Healthcare-Platform-(UXUI)) (own freelance client): healthcare platform for the Georgian market, UX/UI design.
+- [Neibo](https://shuster.design/case.html?slug=neibo) (at HOX.red): A Czech eyewear brand whose customers arrive on their phones, stuck on a template made for desktop catalogues. The redesign built the shop for the thumb.
+- [Nure](https://shuster.design/case.html?slug=nure) (at HOX.red): A new developer with no track record, two opposite audiences and one site that has to win both.
+- [Alterna](https://shuster.design/case.html?slug=alterna) (at HOX.red): 54 family houses near Prague, sold before they exist. The site makes availability, progress and running costs tangible.
+- [Carhunt](https://shuster.design/case.html?slug=carhunt) (at HOX.red): Operating lease offers are hard to compare. The redesign made every car readable at a glance and every request arrive sorted.
+
+## Side projects
+
+- Most: One keyboard and mouse for a Mac and a PC. Push the cursor past the edge of the screen and it lands on the other computer. The keyboard and the clipboard follow.
+- Accept: Accept a Dota 2 match from your phone. Match found while you're in the kitchen? Tap Accept on your phone and pick your hero before you're back at the desk.
+
+## Contact
+
+- Website: https://shuster.design/
+- Email: ahoj@shuster.design
+- LinkedIn: https://www.linkedin.com/in/shusterdesign/
+- Behance: https://www.behance.net/shusters

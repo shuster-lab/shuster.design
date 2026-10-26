@@ -1,0 +1,236 @@
+{
+  "title": "Carhunt",
+  "client": "Carhunt",
+  "year": "2024",
+  "role": "Structure, UX, UI",
+  "role_cs": "Struktura, UX, UI",
+  "category": "Automotive · UX/UI & web design",
+  "category_cs": "Automotive · UX/UI a web design",
+  "niche": "Car configurator",
+  "niche_cs": "Autokonfigurátor",
+  "claim": "Fast filters and a car configurator",
+  "claim_cs": "Rychlé filtry a konfigurátor vozů",
+  "card_desc": "Car leasing website where every offer is easy to compare and every enquiry arrives sorted",
+  "card_desc_cs": "Web operativního leasingu, kde se nabídky snadno porovnávají a poptávky chodí roztříděné",
+  "cover": "/media/carhunt/cover.webp",
+  "cover_sm": "/media/carhunt/cover-sm.webp",
+  "thumb": "/media/carhunt/thumb.webp?v=2",
+  "thumb_sm": "/media/carhunt/thumb-sm.webp?v=2",
+  "preview_video": "/media/carhunt/scroll.mp4",
+  "cover_video": "",
+  "tagline": "Operating lease offers are hard to compare. The redesign made every car readable at a glance and every request arrive sorted.",
+  "tagline_cs": "Nabídky operativního leasingu se špatně porovnávají. Redesign udělal každé auto čitelné na první pohled a každou poptávku roztříděnou předem.",
+  "fact": "",
+  "fact_cs": "",
+  "timeline": "",
+  "timeline_cs": "",
+  "team": "HOX.red",
+  "team_note": "Studio team: PM, development",
+  "team_note_cs": "Tým studia: PM, vývoj",
+  "platform": "",
+  "texts": "menu",
+  "services": [
+    "UX audit",
+    "Information architecture",
+    "UI design",
+    "Lead forms"
+  ],
+  "services_cs": [
+    "UX audit",
+    "Informační architektura",
+    "UI design",
+    "Poptávkové formuláře"
+  ],
+  "external": "",
+  "link": "https://carhunt.cz",
+  "chapters": [
+    {
+      "kind": "context",
+      "label": "Context",
+      "label_cs": "Kontext",
+      "title": "A one person broker growing into a team.",
+      "title_cs": "Osobní značka jednoho makléře roste v tým.",
+      "text": "Carhunt finds operating lease offers that are actually worth it and arranges them for free, because the dealer pays the fee. It started as CarHunter, the personal brand of one broker, with an About me page and a single phone number.\n\nAs the offer and the team grew, the old cards stopped working. Each car was a title, a price and one dense line of what the lease includes: service, insurance, GAP. Comparing two cars meant reading two sentences side by side.",
+      "text_cs": "Carhunt hledá nabídky operativního leasingu, které se opravdu vyplatí, a zprostředkuje je zdarma, protože poplatek platí prodejce. Začínal jako CarHunter, osobní značka jednoho makléře se stránkou O mně a jedním telefonem.\n\nS rostoucí nabídkou a týmem přestaly fungovat staré karty. Každé auto mělo název, cenu a jeden hustý řádek o tom, co leasing obsahuje: servis, pojištění, GAP. Porovnat dvě auta znamenalo číst dvě věty vedle sebe.",
+      "media": []
+    },
+    {
+      "kind": "final",
+      "label": "Final",
+      "label_cs": "Hotový web",
+      "title": "Every car readable at a glance.",
+      "title_cs": "Každé auto čitelné na první pohled.",
+      "text": "",
+      "text_cs": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-front.webp",
+          "caption": "Homepage after the rebrand",
+          "caption_cs": "Homepage po rebrandu",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-trio.webp",
+          "caption": "Offer, homepage and car detail on a phone",
+          "caption_cs": "Nabídka, homepage a detail vozu v telefonu",
+          "size": "wide"
+        }
+      ]
+    },
+    {
+      "kind": "decision",
+      "label": "Cards",
+      "label_cs": "Karty",
+      "title": "Same facts in the same place on every card.",
+      "title_cs": "Stejná fakta na stejném místě na každé kartě.",
+      "text": "People compare leases the way they compare phone plans, line by line. A fixed order lets the eye jump between cards and spot that one includes winter tyres and the other doesn't, without reading a word.",
+      "text_cs": "Leasingy se porovnávají jako tarify, řádek po řádku. Pevné pořadí nechá oko přeskakovat mezi kartami a bez čtení vidět, že jedno auto má zimní pneu v ceně a druhé ne.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-cards.webp",
+          "caption": "Tags, included services and price in the same order on every card",
+          "caption_cs": "Štítky, služby a cena ve stejném pořadí na každé kartě",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "Fuel type and one long line of included services, written differently from car to car.",
+      "before_cs": "Palivo a jeden dlouhý řádek služeb, u každého auta napsaný jinak.",
+      "after": "Fuel, drive and gearbox as tags, included services as a list in fixed order, availability on top.",
+      "after_cs": "Palivo, pohon a převodovka jako štítky, služby v ceně jako seznam v pevném pořadí, dostupnost nahoře."
+    },
+    {
+      "kind": "decision",
+      "label": "Configurator",
+      "label_cs": "Konfigurátor",
+      "title": "Filters for your year, a configurator on every car.",
+      "title_cs": "Filtry podle vašeho roku a konfigurátor u každého auta.",
+      "text": "A lease price depends on two things: how far you drive and how long you keep the car. The offer page filters by brand and annual mileage and sorts the results, so people only see cars that fit their year.\n\nOn the car detail the same choices become a configurator: annual mileage, lease length and optional services such as servicing, GAP, glass insurance or tyres. The monthly price updates with every change, the setup is saved in the link, and the request goes out with the configuration already filled in.",
+      "text_cs": "Cena leasingu závisí na dvou věcech: kolik najezdíte a jak dlouho auto budete mít. Nabídka vozů proto filtruje podle značky a ročního nájezdu a umí výsledky seřadit, takže lidé vidí jen auta, která sedí na jejich rok.\n\nV detailu vozu se z těch samých voleb stává konfigurátor: roční nájezd, doba pronájmu a volitelné služby jako servis, GAP, pojištění skel nebo pneumatiky. Měsíční cena se přepočítá s každou změnou, nastavení se uloží do odkazu a poptávka odchází s už vyplněnou konfigurací.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-filters.webp",
+          "caption": "Brand and annual mileage filters on the offer page",
+          "caption_cs": "Filtry podle značky a ročního nájezdu v nabídce vozů",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-config.webp",
+          "caption": "The configurator on the car detail",
+          "caption_cs": "Konfigurátor v detailu vozu",
+          "size": "half"
+        }
+      ],
+      "pair": "ba",
+      "after": "Filters by brand and mileage in the offer, and a configurator on every car with mileage, lease length, services and a live monthly price.",
+      "after_cs": "Filtry podle značky a nájezdu v nabídce a u každého auta konfigurátor s nájezdem, dobou pronájmu, službami a živou měsíční cenou."
+    },
+    {
+      "kind": "decision",
+      "label": "Price",
+      "label_cs": "Cena",
+      "title": "Prices without VAT by default, one switch for private buyers.",
+      "title_cs": "Ceny bez DPH jako výchozí, jeden přepínač pro soukromé zájemce.",
+      "text": "For companies and sole traders, operating lease is a business cost and they think in prices without VAT. Private buyers flip one switch and every price on the site updates, so nobody has to do the math or guess which number they are looking at.",
+      "text_cs": "Firmy a živnostníci berou operativní leasing jako náklad a přemýšlejí v cenách bez DPH. Soukromý zájemce přepne jeden přepínač a změní se všechny ceny na webu, takže nikdo nemusí počítat ani hádat, na jaké číslo se dívá.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/carhunt/04-hero.webp",
+          "caption": "The With VAT switch in the header, next to the rebrand note",
+          "caption_cs": "Přepínač Ceny s DPH v hlavičce vedle zprávy o rebrandu",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "One monthly price with no word on VAT.",
+      "before_cs": "Jedna měsíční cena bez zmínky o DPH.",
+      "after": "A starting price without VAT on every card and one With VAT switch for the whole offer.",
+      "after_cs": "Cena „od“ bez DPH na každé kartě a jeden přepínač Ceny s DPH pro celou nabídku."
+    },
+    {
+      "kind": "decision",
+      "label": "Request",
+      "label_cs": "Poptávka",
+      "title": "A form that sorts leads before anyone reads them.",
+      "title_cs": "Formulář, který poptávky roztřídí dřív, než je někdo přečte.",
+      "text": "Not every visitor is ready to pick a car. The topic picker lets undecided people ask without committing, and tells the team who to call back first.",
+      "text_cs": "Ne každý návštěvník je připravený vybrat auto. Výběr tématu umožní nerozhodnutým zeptat se bez závazku a týmu řekne, komu volat jako prvnímu.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-ch4.webp",
+          "caption": "Contact form with a topic picker",
+          "caption_cs": "Kontaktní formulář s výběrem tématu",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "A phone number and an email in the footer.",
+      "before_cs": "Telefon a e‑mail v patičce.",
+      "after": "A short form with a topic picker: a specific car, a question about services, or something else.",
+      "after_cs": "Krátký formulář s výběrem tématu: konkrétní vůz, dotaz ke službám, nebo něco jiného."
+    },
+    {
+      "kind": "impact",
+      "label": "Impact",
+      "label_cs": "Dopad",
+      "title": "A rebrand that kept its returning clients.",
+      "title_cs": "Rebrand, který si udržel vracející se klienty.",
+      "text": "The site launched together with the rename from CarHunter to Carhunt. A clear “New name, same team” message and the same personal tone carried over the trust the one person brand had built, while the offer finally reads like a catalogue.",
+      "text_cs": "Web vyšel spolu s přejmenováním z CarHunter na Carhunt. Jasné sdělení „Nový název, stejný tým“ a stejně osobní tón přenesly důvěru, kterou si vybudovala osobní značka, a nabídka se konečně čte jako katalog.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-ch5.webp",
+          "caption": "The rebrand letter to clients and partners",
+          "caption_cs": "Dopis o rebrandu pro klienty a partnery",
+          "size": "wide"
+        }
+      ],
+      "stats": [],
+      "quote": "",
+      "quote_cs": "",
+      "quote_author": ""
+    },
+    {
+      "kind": "takeaway",
+      "label": "Takeaway",
+      "label_cs": "Závěr",
+      "title": "When people compare, the layout is the argument.",
+      "title_cs": "Když lidé porovnávají, argumentem je layout.",
+      "text": "If two offers don't line up, people don't compare them. They leave.",
+      "text_cs": "Když dvě nabídky nelícují, lidé je neporovnávají. Odejdou.",
+      "media": [
+        {
+          "type": "video",
+          "src": "/media/carhunt/mockup-scroll-mac.mp4",
+          "poster": "/media/carhunt/mockup-scroll-mac.webp",
+          "caption": "The live site scrolled in Safari on a MacBook",
+          "caption_cs": "Živý web při scrollu v Safari na MacBooku",
+          "size": "wide"
+        },
+        {
+          "type": "video",
+          "src": "/media/carhunt/mockup-scroll-phone.mp4",
+          "poster": "/media/carhunt/mockup-scroll-phone.webp",
+          "caption": "The same page scrolled on a phone",
+          "caption_cs": "Stejná stránka při scrollu v telefonu",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/carhunt/mockup-front1.webp",
+          "caption": "Car listings with filters on a phone",
+          "caption_cs": "Nabídka vozů s filtry v telefonu",
+          "size": "half"
+        }
+      ]
+    }
+  ]
+}

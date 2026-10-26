@@ -1,0 +1,215 @@
+{
+  "title": "Alterna",
+  "client": "Alterna",
+  "year": "2025",
+  "role": "Structure, UX, UI",
+  "role_cs": "Struktura, UX, UI",
+  "category": "Real estate · UX/UI & web design",
+  "category_cs": "Nemovitosti · UX/UI a web design",
+  "niche": "Real estate",
+  "niche_cs": "Nemovitosti",
+  "claim": "Nominated for Real Estate Project of the Year 2025",
+  "claim_cs": "Nominace na Realitní projekt roku 2025",
+  "card_desc": "Website from scratch for 54 low energy family houses near Prague, with an interactive site plan",
+  "card_desc_cs": "Web od nuly pro 54 nízkoenergetických domů u Prahy s interaktivní mapou projektu",
+  "cover": "/media/alterna/cover.webp",
+  "cover_sm": "/media/alterna/cover-sm.webp",
+  "thumb": "/media/alterna/thumb.webp?v=2",
+  "thumb_sm": "/media/alterna/thumb-sm.webp?v=2",
+  "preview_video": "/media/alterna/scroll.mp4",
+  "cover_video": "",
+  "tagline": "54 family houses near Prague, sold before they exist. The site makes availability, progress and running costs tangible.",
+  "tagline_cs": "54 rodinných domů u Prahy, prodávaných dřív, než stojí. Web dělá dostupnost, postup stavby i provozní náklady hmatatelnými.",
+  "fact": "",
+  "fact_cs": "",
+  "timeline": "",
+  "timeline_cs": "",
+  "team": "HOX.red",
+  "team_note": "Studio team: PM, development",
+  "team_note_cs": "Tým studia: PM, vývoj",
+  "platform": "",
+  "texts": "menu",
+  "services": [
+    "Information architecture",
+    "Interactive site plan",
+    "UI design",
+    "Design system"
+  ],
+  "services_cs": [
+    "Informační architektura",
+    "Interaktivní mapa projektu",
+    "UI design",
+    "Design systém"
+  ],
+  "external": "",
+  "link": "https://alternaslustice.cz",
+  "chapters": [
+    {
+      "kind": "context",
+      "label": "Context",
+      "label_cs": "Kontext",
+      "title": "Selling houses that are still a construction site.",
+      "title_cs": "Prodávat domy, které jsou zatím staveniště.",
+      "text": "Alterna is a development of 54 low energy family houses in Sluštice, between Říčany and Úvaly, just outside Prague. Sales started while the first phase was still being built, so buyers were committing to a house they could only imagine.\n\nThe site had to answer three questions every family asks before buying off plan: which house is still free, will it really be finished, and what will it cost to live in.",
+      "text_cs": "Alterna je projekt 54 nízkoenergetických rodinných domů ve Slušticích mezi Říčany a Úvaly, kousek za Prahou. Prodej začal, když se první etapa teprve stavěla, takže kupující se rozhodovali o domě, který si mohli jen představit.\n\nWeb musel odpovědět na tři otázky, které si klade každá rodina před koupí ve výstavbě: který dům je ještě volný, jestli se opravdu dostaví a kolik bude stát v něm bydlet.",
+      "media": []
+    },
+    {
+      "kind": "final",
+      "label": "Final",
+      "label_cs": "Hotový web",
+      "title": "From first visit to handover on one site.",
+      "title_cs": "Od první návštěvy po předání na jednom webu.",
+      "text": "",
+      "text_cs": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/alterna/mockup-combo.webp",
+          "caption": "Homepage on a MacBook and a phone",
+          "caption_cs": "Homepage na MacBooku a v telefonu",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/alterna/02-brand.webp",
+          "caption": "Alterna brand with a render of the houses",
+          "caption_cs": "Značka Alterna s vizualizací domů",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/alterna/mockup-tablet1.webp",
+          "caption": "Homepage on an iPad",
+          "caption_cs": "Homepage na iPadu",
+          "size": "half"
+        }
+      ]
+    },
+    {
+      "kind": "decision",
+      "label": "Site plan",
+      "label_cs": "Situace",
+      "title": "The site plan is the catalogue.",
+      "title_cs": "Situace je katalog.",
+      "text": "Families choose a spot in the street before they choose a floor plan: the corner, the garden facing south, the neighbours. The plan answers that at once and shows what is already sold, which also creates a healthy sense of urgency.",
+      "text_cs": "Rodiny si vybírají místo v ulici dřív než dispozici: roh, zahradu na jih, sousedy. Plán na to odpoví okamžitě a ukáže, co už je prodané, což vytváří i zdravý pocit, že není na co čekat.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/alterna/04-house-plan.webp",
+          "caption": "House detail next to its place on the plan",
+          "caption_cs": "Detail domu vedle jeho místa v situaci",
+          "size": "wide"
+        }
+      ],
+      "pair": "ex",
+      "before": "A table of units sorted by number.",
+      "before_cs": "Tabulka jednotek seřazená podle čísel.",
+      "after": "An interactive plan of the whole development: tap a house to see its type, size, status and price.",
+      "after_cs": "Interaktivní plán celého projektu: klikněte na dům a uvidíte typ, rozlohu, stav a cenu."
+    },
+    {
+      "kind": "decision",
+      "label": "Progress",
+      "label_cs": "Postup",
+      "title": "Progress you can check, not promises.",
+      "title_cs": "Postup, který si můžete ověřit, ne sliby.",
+      "text": "Buying off plan is a leap of faith. Every milestone with its date, the current phase as a number and fresh reports from the site turn the wait into something buyers can follow, and give them a reason to come back.",
+      "text_cs": "Koupě ve výstavbě je skok důvěry. Každý milník s datem, aktuální etapa jako číslo a čerstvé zprávy ze stavby mění čekání v něco, co kupující může sledovat, a dávají mu důvod se vracet.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/alterna/mockup-ch3.webp",
+          "caption": "Construction progress and the newsletter",
+          "caption_cs": "Postup stavby a odběr novinek",
+          "size": "wide"
+        }
+      ],
+      "pair": "ex",
+      "before": "Completion dates mentioned somewhere in the text.",
+      "before_cs": "Termíny dokončení zmíněné někde v textu.",
+      "after": "A timeline from building permit to handover, a live percentage for the current phase and construction news with a newsletter.",
+      "after_cs": "Časová osa od stavebního povolení po předání, živé procento aktuální etapy a novinky ze stavby s newsletterem."
+    },
+    {
+      "kind": "decision",
+      "label": "Energy",
+      "label_cs": "Energie",
+      "title": "An energy label translated into a monthly bill.",
+      "title_cs": "Energetický štítek přeložený do měsíční platby.",
+      "text": "Class A means little to most families. The monthly cost of a whole house compared to a one room flat means a lot. The heat pump, heat recovery and solar preparation then follow as the explanation, not the headline.",
+      "text_cs": "Třída A většině rodin nic neřekne. Měsíční náklady celého domu srovnané s garsonkou řeknou hodně. Tepelné čerpadlo, rekuperace a příprava na fotovoltaiku pak přijdou jako vysvětlení, ne jako titulek.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/alterna/mockup-ch4.webp",
+          "caption": "Running costs compared to a studio flat",
+          "caption_cs": "Náklady na provoz v porovnání s 1kk",
+          "size": "wide"
+        }
+      ],
+      "pair": "ex",
+      "before": "PENB class A as a technical badge.",
+      "before_cs": "PENB třídy A jako technický odznak.",
+      "after": "Live in a house, pay like for a studio flat: running costs compared to a 1kk, with the technology behind it.",
+      "after_cs": "Žijte v domě, plaťte jako za 1kk: provozní náklady srovnané s malým bytem a technologie, které za tím stojí."
+    },
+    {
+      "kind": "impact",
+      "label": "Impact",
+      "label_cs": "Dopad",
+      "title": "One site through every stage of the project.",
+      "title_cs": "Jeden web přes všechny fáze projektu.",
+      "text": "The site carried Alterna from the start of sales through construction to handover. The first phase is now in its owners' hands, and the second is being sold through the same plan, timeline and news feed.",
+      "text_cs": "Web provedl Alternu od spuštění prodeje přes stavbu až k předání. První etapa už patří novým majitelům a druhá se prodává přes stejný plán, časovou osu i novinky ze stavby.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/alterna/mockup-ch5.webp",
+          "caption": "Construction news and the current phase on a phone",
+          "caption_cs": "Novinky ze stavby a aktuální etapa v telefonu",
+          "size": "wide"
+        }
+      ],
+      "stats": [],
+      "quote": "",
+      "quote_cs": "",
+      "quote_author": ""
+    },
+    {
+      "kind": "takeaway",
+      "label": "Takeaway",
+      "label_cs": "Závěr",
+      "title": "Off plan, trust is the product.",
+      "title_cs": "Ve výstavbě je produktem důvěra.",
+      "text": "Every element that shows real progress sells more than another render.",
+      "text_cs": "Každý prvek, který ukazuje skutečný postup, prodává víc než další vizualizace.",
+      "media": [
+        {
+          "type": "video",
+          "src": "/media/alterna/mockup-scroll-mac.mp4",
+          "poster": "/media/alterna/mockup-scroll-mac.webp",
+          "caption": "The live site scrolled in Safari on a MacBook",
+          "caption_cs": "Živý web při scrollu v Safari na MacBooku",
+          "size": "wide"
+        },
+        {
+          "type": "video",
+          "src": "/media/alterna/mockup-scroll-phone.mp4",
+          "poster": "/media/alterna/mockup-scroll-phone.webp",
+          "caption": "The same page scrolled on a phone",
+          "caption_cs": "Stejná stránka při scrollu v telefonu",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/alterna/mockup-front1.webp",
+          "caption": "House listings on a phone",
+          "caption_cs": "Nabídka domů v telefonu",
+          "size": "half"
+        }
+      ]
+    }
+  ]
+}

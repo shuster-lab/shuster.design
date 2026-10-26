@@ -1,0 +1,54 @@
+{
+  "items": [
+    {
+      "company": "YAS Agency",
+      "link": "",
+      "period": "2025 → Now",
+      "period_cs": "2025 → dosud",
+      "role": "UX/UI Designer",
+      "role_cs": "UX/UI designer",
+      "text": "Part-time · Remote",
+      "text_cs": "Částečný úvazek · Na dálku"
+    },
+    {
+      "company": "HOX.red",
+      "link": "",
+      "period": "2023 → Now",
+      "period_cs": "2023 → dosud",
+      "role": "UX/UI Designer",
+      "role_cs": "UX/UI designer",
+      "text": "Full-time · Prague",
+      "text_cs": "Plný úvazek · Praha"
+    },
+    {
+      "company": "Freelance",
+      "link": "",
+      "period": "2022 → Now",
+      "period_cs": "2022 → dosud",
+      "role": "UX/UI Designer",
+      "role_cs": "UX/UI designer",
+      "text": "Prague",
+      "text_cs": "Praha"
+    },
+    {
+      "company": "AfterGo",
+      "link": "",
+      "period": "2023 → 2024",
+      "period_cs": "2023 → 2024",
+      "role": "UI Designer",
+      "role_cs": "UI designer",
+      "text": "Part-time · Hybrid, Prague",
+      "text_cs": "Částečný úvazek · Hybridně, Praha"
+    },
+    {
+      "company": "TAMADA DESIGN",
+      "link": "",
+      "period": "2022 → 2023",
+      "period_cs": "2022 → 2023",
+      "role": "UX/UI Designer",
+      "role_cs": "UX/UI designer",
+      "text": "Full-time · Prague",
+      "text_cs": "Plný úvazek · Praha"
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "title": "Nure",
+  "client": "Nure",
+  "year": "2026",
+  "role": "Structure, prototype, UI",
+  "role_cs": "Struktura, prototyp, UI",
+  "category": "Real estate · UX/UI & web design",
+  "category_cs": "Nemovitosti · UX/UI a web design",
+  "niche": "Real estate",
+  "niche_cs": "Nemovitosti",
+  "claim": "Renovated flats and buyouts on one site",
+  "claim_cs": "Byty po rekonstrukci i výkup na jednom webu",
+  "card_desc": "Website from scratch for a Prague developer that renovates flats, sells them and buys yours",
+  "card_desc_cs": "Web od nuly pro pražského developera, který rekonstruuje byty, prodává je a vykupuje ty vaše",
+  "cover": "/media/nure/cover.webp",
+  "cover_sm": "/media/nure/cover-sm.webp",
+  "thumb": "/media/nure/thumb.webp?v=2",
+  "thumb_sm": "/media/nure/thumb-sm.webp?v=2",
+  "preview_video": "/media/nure/scroll.mp4",
+  "cover_video": "/media/nure/showreel.mp4",
+  "cover_video_m": "/media/nure/showreel-m.mp4",
+  "tagline": "A new developer with no track record, two opposite audiences and one site that has to win both.",
+  "tagline_cs": "Nový developer bez historie, dvě protichůdné cílové skupiny a jeden web, který musí přesvědčit obě.",
+  "fact": "",
+  "fact_cs": "",
+  "timeline": "",
+  "timeline_cs": "",
+  "team": "HOX.red",
+  "team_note": "Studio team: PM, development",
+  "team_note_cs": "Tým studia: PM, vývoj",
+  "platform": "",
+  "texts": "menu",
+  "services": [
+    "Information architecture",
+    "Wireframes",
+    "Prototype",
+    "UI design",
+    "Design system"
+  ],
+  "services_cs": [
+    "Informační architektura",
+    "Wireframy",
+    "Prototyp",
+    "UI design",
+    "Design systém"
+  ],
+  "external": "",
+  "link": "https://nure.cz",
+  "chapters": [
+    {
+      "kind": "context",
+      "label": "Context",
+      "label_cs": "Kontext",
+      "title": "No site, no history, two businesses.",
+      "title_cs": "Žádný web, žádná historie, dva byznysy.",
+      "text": "Nure is a small Prague developer. It buys flats and tenement houses, renovates them to a standard most new builds don't reach for the price, and sells them. It also buys property directly from owners.\n\nThere was no website and no track record to point at. Buyers needed a reason to trust a name they had never heard of, and owners needed to feel safe selling to it. One site had to serve both without either side feeling like an afterthought.",
+      "text_cs": "Nure je malý pražský developer. Vykupuje byty a činžovní domy, rekonstruuje je na úroveň, kterou novostavba za stejnou cenu nenabídne, a prodává je. Zároveň vykupuje nemovitosti přímo od majitelů.\n\nNeexistoval web ani reference, o které by se šlo opřít. Kupující potřebovali důvod věřit jménu, které nikdy neslyšeli, a majitelé jistotu, že mu mohou prodat. Jeden web musel obsloužit obě strany tak, aby se žádná necítila odsunutá.",
+      "media": []
+    },
+    {
+      "kind": "final",
+      "label": "Final",
+      "label_cs": "Hotový web",
+      "title": "One brand, three doors, proof behind every claim.",
+      "title_cs": "Jedna značka, tři vstupy a ke každému tvrzení důkaz.",
+      "text": "",
+      "text_cs": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-laptop.webp",
+          "caption": "Homepage in Safari on a MacBook",
+          "caption_cs": "Homepage v Safari na MacBooku",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-detail.webp",
+          "caption": "Flat detail in Safari on a MacBook",
+          "caption_cs": "Detail bytu v Safari na MacBooku",
+          "size": "wide"
+        }
+      ]
+    },
+    {
+      "kind": "decision",
+      "label": "Split",
+      "label_cs": "Rozcestí",
+      "title": "We split the audience right under the hero, not in the menu.",
+      "title_cs": "Publikum se dělí hned pod úvodem, ne až v menu.",
+      "text": "Owners selling a flat are the more anxious visitor and the more valuable lead. Tucked into the menu, the buyout would look like a side business. Equal doors say Nure does both on purpose, and each audience finds its path before the first scroll ends.\n\nThe buyout got its own page with a short form, so owners never wade through listings meant for buyers.",
+      "text_cs": "Majitel, který prodává byt, je nejnervóznější návštěvník a zároveň nejcennější poptávka. Schovaný v menu by výkup vypadal jako vedlejší činnost. Rovnocenné vstupy říkají, že Nure dělá obojí záměrně, a každá skupina najde svou cestu ještě v prvním scrollu.\n\nVýkup dostal vlastní stránku s krátkým formulářem, takže se majitelé nemusí prokousávat nabídkou určenou kupujícím.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-trio.webp",
+          "caption": "Flats, the homepage and buyout on a phone",
+          "caption_cs": "Byty, homepage a výkup v telefonu",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-split.webp",
+          "caption": "Three doors right under the hero",
+          "caption_cs": "Tři vstupy hned pod úvodem",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-vykup-tab.webp",
+          "caption": "Buyout page for owners on an iPad",
+          "caption_cs": "Stránka výkupu pro majitele na iPadu",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-jak.webp",
+          "caption": "How we renovate, step by step",
+          "caption_cs": "Jak rekonstruujeme, krok za krokem",
+          "size": "half"
+        }
+      ],
+      "pair": "ex",
+      "before": "Buyout as one more menu item, or a separate microsite for owners.",
+      "before_cs": "Výkup jako další položka v menu, nebo samostatný microsite pro majitele.",
+      "after": "Three equal doors in the first scroll: how we renovate, flats for sale, we buy yours.",
+      "after_cs": "Tři rovnocenné vstupy hned v prvním scrollu: jak rekonstruujeme, byty na prodej, vykoupíme ten váš."
+    },
+    {
+      "kind": "decision",
+      "label": "Proof",
+      "label_cs": "Důkazy",
+      "title": "A brand without history can't ask for trust, so the page compares.",
+      "title_cs": "Značka bez historie nemůže chtít důvěru, a tak stránka srovnává.",
+      "text": "Every developer claims quality. A comparison is harder to argue with: wall thickness, ceiling height, wiring, warranty and commission sit in one table next to the two alternatives a buyer is actually weighing.\n\nBefore and after photos of finished flats do the rest. The proof sits on the homepage, not three clicks deep.",
+      "text_cs": "Kvalitu slibuje každý developer. Se srovnáním se hůř polemizuje: tloušťka zdí, výška stropů, rozvody, záruka a provize stojí v jedné tabulce vedle dvou alternativ, které kupující skutečně zvažuje.\n\nZbytek obstarají fotky dokončených bytů před a po. Důkazy jsou přímo na homepage, ne tři kliky hluboko.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-compare.webp",
+          "caption": "New build, cheap renovation or Nure",
+          "caption_cs": "Novostavba, levná rekonstrukce, nebo Nure",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-ba.webp",
+          "caption": "Before and after, with a drag slider",
+          "caption_cs": "Před a po s posuvníkem",
+          "size": "wide"
+        }
+      ],
+      "pair": "ex",
+      "before": "A grid of generic benefits: quality, experience, fair prices.",
+      "before_cs": "Mřížka obecných výhod: kvalita, zkušenosti, férové ceny.",
+      "after": "A side by side table against a new build and a cheap renovation, plus real before and after photos.",
+      "after_cs": "Tabulka vedle novostavby a levné rekonstrukce a k tomu skutečné fotky před a po."
+    },
+    {
+      "kind": "decision",
+      "label": "Inside",
+      "label_cs": "Uvnitř",
+      "title": "Buyers fear what's behind the walls, so the page opens them.",
+      "title_cs": "Kupující se bojí toho, co je za zdí. Stránka ji proto otevírá.",
+      "text": "The biggest worry with a renovated flat is a cosmetic job hiding old pipes. So the homepage gives a whole section to what is inside the walls, and every fact carries a tag with the proof: 52 cm load bearing walls, a three year warranty, only established Prague neighbourhoods, an individual layout.\n\nA separate page then walks through the renovation from stripping to handover for those who want every detail.",
+      "text_cs": "Největší obava u zrekonstruovaného bytu je kosmetika, pod kterou zůstaly staré trubky. Homepage proto věnuje celou sekci tomu, co je uvnitř zdí, a každé tvrzení nese štítek s důkazem: 52 cm nosné zdi, tři roky záruky, jen zavedené pražské čtvrti, individuální projekt.\n\nSamostatná stránka pak provede rekonstrukcí od bourání po předání každého, kdo chce znát detaily.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-proof.webp",
+          "caption": "Why a flat from Nure",
+          "caption_cs": "Proč byt od Nure",
+          "size": "wide"
+        }
+      ],
+      "pair": "ex",
+      "before": "A gallery of finished interiors.",
+      "before_cs": "Galerie hotových interiérů.",
+      "after": "Four facts a photo can't show: brick walls, new wiring, a good neighbourhood, an architect's layout.",
+      "after_cs": "Čtyři fakta, která fotka neukáže: cihlové zdi, nové rozvody, dobrá čtvrť a dispozice od architektky."
+    },
+    {
+      "kind": "impact",
+      "label": "Impact",
+      "label_cs": "Dopad",
+      "title": "Both businesses now run through one site.",
+      "title_cs": "Oba byznysy teď běží přes jeden web.",
+      "text": "Nure launched in 2026 with listings, buyout requests and finished projects in one system built from the same components. Whether you are buying or selling, it looks and speaks like the same company.",
+      "text_cs": "Nure spustilo web v roce 2026. Nabídka bytů, výkup i realizace stojí v jednom systému ze stejných komponent, takže ať kupujete, nebo prodáváte, mluví na vás stejná firma.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-ch5.webp",
+          "caption": "Buyout on desktop, finished projects on a phone",
+          "caption_cs": "Výkup na desktopu, realizace v telefonu",
+          "size": "wide"
+        }
+      ],
+      "stats": [],
+      "quote": "",
+      "quote_cs": "",
+      "quote_author": ""
+    },
+    {
+      "kind": "takeaway",
+      "label": "Takeaway",
+      "label_cs": "Závěr",
+      "title": "When a brand has nothing to show yet, the structure has to do the persuading.",
+      "title_cs": "Když značka ještě nemá co ukázat, musí přesvědčovat struktura.",
+      "text": "Next time I would put the buyout form in front of real owners earlier. It has the fewest fields on the site and the most nervous visitors, so every field there matters more than anywhere else.",
+      "text_cs": "Příště bych formulář výkupu dal skutečným majitelům vyzkoušet dřív. Má nejméně polí na celém webu a chodí na něj nejnervóznější návštěvníci, takže tam každé pole váží víc než kdekoli jinde.",
+      "media": [
+        {
+          "type": "video",
+          "src": "/media/nure/mockup-scroll-mac.mp4",
+          "poster": "/media/nure/mockup-scroll-mac.webp",
+          "caption": "The live site scrolled in Safari on a MacBook",
+          "caption_cs": "Živý web při scrollu v Safari na MacBooku",
+          "size": "wide"
+        },
+        {
+          "type": "video",
+          "src": "/media/nure/mockup-scroll-phone.mp4",
+          "poster": "/media/nure/mockup-scroll-phone.webp",
+          "caption": "The same page scrolled on a phone",
+          "caption_cs": "Stejná stránka při scrollu v telefonu",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/nure/mockup-nabidka-tab.webp",
+          "caption": "Flats for sale on an iPad",
+          "caption_cs": "Nabídka bytů na iPadu",
+          "size": "half"
+        }
+      ]
+    }
+  ]
+}

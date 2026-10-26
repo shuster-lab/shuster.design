@@ -1,0 +1,212 @@
+{
+  "title": "Neibo",
+  "client": "Neibo",
+  "year": "2026",
+  "role": "UX, UI, mobile first",
+  "role_cs": "UX, UI, mobile first",
+  "category": "E-commerce · UX/UI & web design",
+  "category_cs": "E-commerce · UX/UI a web design",
+  "niche": "E‑commerce",
+  "niche_cs": "E‑commerce",
+  "claim": "E‑shop for a Czech eyewear brand",
+  "claim_cs": "E‑shop české značky brýlí",
+  "card_desc": "Mobile first redesign of a Czech eyewear e‑shop on Shoptet",
+  "card_desc_cs": "Mobile first redesign českého e‑shopu s brýlemi na Shoptetu",
+  "cover": "/media/neibo/cover.webp",
+  "cover_sm": "/media/neibo/cover-sm.webp",
+  "thumb": "/media/neibo/thumb.webp?v=3",
+  "thumb_sm": "/media/neibo/thumb-sm.webp?v=3",
+  "preview_video": "/media/neibo/scroll-m.mp4",
+  "cover_video": "/media/neibo/reel.mp4",
+  "cover_video_m": "/media/neibo/reel-m.mp4",
+  "tagline": "A Czech eyewear brand whose customers arrive on their phones, stuck on a template made for desktop catalogues. The redesign built the shop for the thumb.",
+  "tagline_cs": "Česká značka brýlí, jejíž zákazníci chodí z mobilu, uvízla na šabloně pro desktopové katalogy. Redesign postavil e‑shop pro palec.",
+  "fact": "",
+  "fact_cs": "",
+  "timeline": "",
+  "timeline_cs": "",
+  "team": "HOX.red",
+  "team_note": "Studio team: PM, development",
+  "team_note_cs": "Tým studia: PM, vývoj",
+  "platform": "Shoptet",
+  "texts": "menu",
+  "services": [
+    "UX audit",
+    "Mobile first UI",
+    "Catalogue structure",
+    "Shoptet template"
+  ],
+  "services_cs": [
+    "UX audit",
+    "Mobile first UI",
+    "Struktura katalogu",
+    "Šablona pro Shoptet"
+  ],
+  "external": "",
+  "link": "https://www.neibo.cz",
+  "chapters": [
+    {
+      "kind": "context",
+      "label": "Context",
+      "label_cs": "Kontext",
+      "title": "A good product buried in a generic template.",
+      "title_cs": "Dobrý produkt zahrabaný v obecné šabloně.",
+      "text": "Neibo makes sport, lifestyle and ski glasses at fair prices. The shop ran on a stock Shoptet template, while most visitors arrive on a phone.\n\nEvery colour was listed as a separate product, so the homepage was a long wall of near identical cards: Ivory matte black/blue, Ivory matte black/pink, Ivory matte black/green. The menu listed model names, which only helps people who already know the collection.",
+      "text_cs": "Neibo dělá sportovní, lifestylové a lyžařské brýle za férové ceny. E‑shop běžel na běžné šabloně Shoptetu, přitom většina návštěvníků chodí z mobilu.\n\nKaždá barva byla samostatný produkt, takže homepage byla dlouhá stěna skoro stejných karet: Ivory matte black/blue, Ivory matte black/pink, Ivory matte black/green. Menu obsahovalo názvy modelů, což pomůže jen tomu, kdo kolekci už zná.",
+      "media": []
+    },
+    {
+      "kind": "final",
+      "label": "Final",
+      "label_cs": "Hotový web",
+      "title": "A shop built for one hand and a small screen.",
+      "title_cs": "E‑shop pro jednu ruku a malý displej.",
+      "text": "",
+      "text_cs": "",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/neibo/mockup-trio.webp",
+          "caption": "Falcon, the homepage and Ivory on a phone",
+          "caption_cs": "Falcon, homepage a Ivory v telefonu",
+          "size": "wide"
+        },
+        {
+          "type": "image",
+          "src": "/media/neibo/02-catalogue.webp",
+          "caption": "Lifestyle catalogue on desktop and the filters on a phone",
+          "caption_cs": "Katalog Lifestyle na desktopu a filtry na mobilu",
+          "size": "wide"
+        }
+      ]
+    },
+    {
+      "kind": "decision",
+      "label": "Navigation",
+      "label_cs": "Navigace",
+      "title": "Shop by what you do, not by model name.",
+      "title_cs": "Nákup podle činnosti, ne podle názvu modelu.",
+      "text": "A new visitor doesn't know what a Falcon is. They know they run, ride or just want sunglasses for the city. Starting from the activity shortens the path to the right shelf, and on a phone each entry fills the screen as one clear tap target.",
+      "text_cs": "Nový návštěvník neví, co je Falcon. Ví, že běhá, jezdí na kole nebo chce brýle do města. Začít od činnosti zkracuje cestu ke správnému regálu a na mobilu je každý vstup jedním jasným místem pro palec.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/neibo/mockup-entry.webp",
+          "caption": "Entry points by activity on desktop and on a phone",
+          "caption_cs": "Vstupy podle aktivity na desktopu i v telefonu",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "A menu of model names: Ivory, Origin, Roat, Diversion, Reed, Empire.",
+      "before_cs": "Menu z názvů modelů: Ivory, Origin, Roat, Diversion, Reed, Empire.",
+      "after": "Sport and Lifestyle as two doors at the top of the homepage, then a grid by discipline: snowboard and ski, cycling, running, city and outdoor.",
+      "after_cs": "Sport a Lifestyle jako dva vstupy hned nahoře na homepage a pod nimi výběr podle disciplíny: snowboard a lyže, cyklistika, běh, město a outdoor."
+    },
+    {
+      "kind": "decision",
+      "label": "Catalogue",
+      "label_cs": "Katalog",
+      "title": "One model, one card. Colours live inside.",
+      "title_cs": "Jeden model, jedna karta. Barvy jsou uvnitř.",
+      "text": "On a phone, eight identical cards are eight screens of scrolling. Grouping colours cut the catalogue down to the number of models and let every card say something useful about fit and use instead of repeating the name.",
+      "text_cs": "Na mobilu je osm stejných karet osm obrazovek scrollování. Seskupení barev zkrátilo katalog na počet modelů a každá karta teď říká něco užitečného o střihu a použití místo opakování názvu.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/neibo/mockup-ch3.webp",
+          "caption": "One card per model, colours on the product page",
+          "caption_cs": "Jedna karta na model, barvy až na produktu",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "Every colour as its own product, eight Ivory cards in a row.",
+      "before_cs": "Každá barva jako samostatný produkt, osm karet Ivory za sebou.",
+      "after": "One card per model with a starting price and a short description, colours picked on the product page.",
+      "after_cs": "Jedna karta na model s cenou „od“ a krátkým popisem, barva se vybírá v detailu produktu."
+    },
+    {
+      "kind": "decision",
+      "label": "Lenses",
+      "label_cs": "Skla",
+      "title": "Swap the lenses, not the glasses.",
+      "title_cs": "Vyměnit skla, ne brýle.",
+      "text": "Sport glasses get scratched. Selling a lens instead of a new pair keeps customers with the brand and gives the shop a cheap repeat purchase that needs no persuasion.",
+      "text_cs": "Sportovní brýle se poškrábou. Prodat sklo místo nových brýlí udrží zákazníka u značky a e‑shopu přinese levný opakovaný nákup, který nepotřebuje přesvědčování.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/neibo/mockup-ch4.webp",
+          "caption": "Replacement lenses with their own block",
+          "caption_cs": "Náhradní skla s vlastním blokem",
+          "size": "wide"
+        }
+      ],
+      "pair": "ba",
+      "before": "Spare lenses lost among accessories.",
+      "before_cs": "Náhradní skla ztracená mezi doplňky.",
+      "after": "Their own block on the homepage: replacement lenses and goggle visors under one clear promise.",
+      "after_cs": "Vlastní blok na homepage: náhradní skla a zorníky pod jedním jasným slibem."
+    },
+    {
+      "kind": "impact",
+      "label": "Impact",
+      "label_cs": "Dopad",
+      "title": "The same platform, a different shop.",
+      "title_cs": "Stejná platforma, jiný e‑shop.",
+      "text": "Neibo stayed on Shoptet, so orders, stock and payments work as before. The storefront is now built for a phone: free shipping up front, prices in CZK and EUR, short product cards and a catalogue that ends before the thumb gets tired.",
+      "text_cs": "Neibo zůstalo na Shoptetu, takže objednávky, sklad i platby fungují jako dřív. Výloha je ale postavená pro mobil: doprava zdarma hned na očích, ceny v CZK i EUR, krátké karty produktů a katalog, který skončí dřív, než se palec unaví.",
+      "media": [
+        {
+          "type": "image",
+          "src": "/media/neibo/mockup-ch5.webp",
+          "caption": "Reviews and accessories on the mobile homepage",
+          "caption_cs": "Hodnocení a doplňky na mobilní homepage",
+          "size": "wide"
+        }
+      ],
+      "stats": [],
+      "quote": "",
+      "quote_cs": "",
+      "quote_author": ""
+    },
+    {
+      "kind": "takeaway",
+      "label": "Takeaway",
+      "label_cs": "Závěr",
+      "title": "Mobile first is not a smaller desktop.",
+      "title_cs": "Mobile first není zmenšený desktop.",
+      "text": "It is deciding what deserves the thumb's attention and cutting the rest.",
+      "text_cs": "Je to rozhodnutí, co si zaslouží pozornost palce, a odvaha zbytek škrtnout.",
+      "media": [
+        {
+          "type": "video",
+          "src": "/media/neibo/mockup-scroll-mac.mp4",
+          "poster": "/media/neibo/mockup-scroll-mac.webp",
+          "caption": "The live site scrolled in Safari on a MacBook",
+          "caption_cs": "Živý web při scrollu v Safari na MacBooku",
+          "size": "wide"
+        },
+        {
+          "type": "video",
+          "src": "/media/neibo/mockup-scroll-phone.mp4",
+          "poster": "/media/neibo/mockup-scroll-phone.webp",
+          "caption": "The same page scrolled on a phone",
+          "caption_cs": "Stejná stránka při scrollu v telefonu",
+          "size": "half"
+        },
+        {
+          "type": "image",
+          "src": "/media/neibo/mockup-phone.webp",
+          "caption": "Lifestyle catalogue on a phone",
+          "caption_cs": "Katalog Lifestyle v telefonu",
+          "size": "half"
+        }
+      ]
+    }
+  ],
+  "thumb_video": "/media/neibo/thumb.mp4",
+  "thumb_video_m": "/media/neibo/thumb-m.mp4",
+  "preview_tall": true
+}

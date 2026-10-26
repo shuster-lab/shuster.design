@@ -1,0 +1,185 @@
+/* ═══════════════════════════════════════════════════════════
+   Плавающий док-навбар. Общий для index.html и case.html.
+   Подключение: <link rel="stylesheet" href="assets/navbar.css">
+                <script src="assets/navbar.js"></script>
+   Содержимое контактов — content/contacts.json (правится в админке)
+
+   Закрыт: полоска с логотипом и бургером.
+   Открыт: над полоской вверх вырастает меню (разделы, контакты, язык).
+   Перед открытием док на мгновение сжимается, потом раскрывается.
+   ═══════════════════════════════════════════════════════════ */
+
+.dock-wrap{
+  position:fixed;left:50%;bottom:28px;z-index:9999;
+  transform:translateX(-50%) translateY(24px);
+  opacity:0;pointer-events:none;
+  transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);
+  display:flex;flex-direction:column;align-items:center;
+  max-width:calc(100vw - 24px);
+  /* Палитра дока. Он тёмный на светлой странице: так его видно поверх
+     любого контента. Светлый док: поменять местами эти две тройки
+     и значения --fg / --bg. */
+  --dock-fg:240,237,232;--dock-bg:14,14,14;
+  --fg:#f0ede8;--bg:#0e0e0e;
+  /* пружина для раскрытия и спокойная кривая для закрытия */
+  --dock-spring:cubic-bezier(.3,1.28,.5,1);
+  --dock-calm:cubic-bezier(.4,0,.2,1);
+}
+body.nav-ready .dock-wrap{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+
+nav.dock{
+  position:relative;box-sizing:border-box;
+  display:flex;flex-direction:column;align-items:stretch;
+  max-width:100%;overflow:hidden;
+  border-radius:16px;          /* внутри кнопки по 8px и отступ 8px, поэтому снаружи 16 */
+  /* сплошной фон без backdrop-filter: на телефоне
+     пересчёт размытия на каждом кадре раскрытия и давал рывки */
+  background:rgb(var(--dock-bg));
+  border:1px solid rgba(var(--dock-fg),.12);
+  box-shadow:0 12px 36px rgba(0,0,0,.2);
+  transform-origin:50% 100%;
+  /* закрытие: спокойно и быстро */
+  transition:width .38s var(--dock-calm),transform .38s var(--dock-calm);
+  will-change:transform;
+  contain:layout style;        /* перерасчёт вёрстки при раскрытии не выходит за пределы дока */
+}
+/* шаг 1: короткое сжатие перед открытием */
+nav.dock.squish{transform:scale(.93);transition:transform .15s cubic-bezier(.4,0,.6,1)}
+/* шаг 2: раскрытие с лёгким перелётом */
+nav.dock.open{transition:width .6s var(--dock-spring),transform .6s var(--dock-spring)}
+nav.dock.no-anim,nav.dock.no-anim .dock-menu{transition:none!important}
+
+/* ═══ Меню: высота растёт от нуля, содержимое прижато к полоске ═══ */
+.dock-menu{
+  position:relative;height:0;overflow:hidden;visibility:hidden;
+  transition:height .38s var(--dock-calm),visibility 0s linear .38s;
+}
+.dock.open .dock-menu{visibility:visible;transition:height .6s var(--dock-spring),visibility 0s}
+.dock-menu-in{
+  position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  box-sizing:border-box;padding:8px 8px 6px;
+  display:flex;flex-direction:column;gap:2px;
+  overflow-y:auto;overscroll-behavior:contain;
+}
+
+.dock-row{
+  box-sizing:border-box;
+  display:flex;align-items:center;gap:12px;
+  padding:11px 12px;border-radius:var(--r,8px);
+  font-family:var(--font-body,'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size:14px;font-weight:500;line-height:1.2;letter-spacing:-.011em;white-space:nowrap;
+  color:rgba(var(--dock-fg),.66);text-decoration:none;
+  background:none;border:none;cursor:pointer;width:100%;text-align:left;
+  /* строки проявляются лесенкой снизу вверх; --i ставит navbar.js */
+  opacity:0;transform:translateY(8px);
+  transition:color .25s,background .25s,opacity .18s,transform .25s var(--dock-calm);
+}
+.dock.open .dock-row{
+  opacity:1;transform:none;
+  transition:color .25s,background .25s,
+             opacity .4s cubic-bezier(.16,1,.3,1) calc(var(--i,0) * 28ms + 90ms),
+             transform .5s var(--dock-spring) calc(var(--i,0) * 28ms + 90ms);
+}
+a.dock-row:hover,button.dock-row:hover{color:var(--fg,#f0ede8);background:rgba(var(--dock-fg),.08)}
+.dock.open a.dock-row:active,.dock.open button.dock-row:active{transform:scale(.97);transition:transform .12s}
+.dock-row svg{width:16px;height:16px;flex:0 0 16px}
+.dock-row .row-note{margin-left:auto;padding-left:20px;font-size:12px;color:rgba(var(--dock-fg),.36);overflow:hidden;text-overflow:ellipsis}
+.dock-row.copied .row-note{color:var(--fg,#f0ede8)}
+
+/* разделы крупнее остальных строк */
+.dock-nav{font-size:17px;font-weight:600;letter-spacing:-.02em;color:rgba(var(--dock-fg),.9);padding:12px 12px}
+
+.dock-nav .row-note{font-size:12px;font-weight:500;letter-spacing:-.011em;line-height:1}
+.dock-nav .row-note svg{display:block;width:15px;height:15px;opacity:.5;transition:opacity .25s,transform .35s var(--dock-spring)}
+.dock-nav:hover .row-note svg{opacity:1;transform:translate(2px,-2px)}
+/* пункт без ссылки (CV ещё не загружен): виден, но не нажимается */
+.dock-row.is-off,.dock-row.is-off:hover{cursor:default;background:none;color:rgba(var(--dock-fg),.34)}
+.dock.open a.dock-row.is-off:active{transform:none}
+
+.dock-div{height:1px;margin:6px 12px;background:rgba(var(--dock-fg),.1);flex:0 0 1px}
+
+/* строка языка: сама не нажимается, нажимаются EN и CZ */
+.dock-langrow{cursor:default}
+.dock-lang{display:flex;align-items:center;gap:2px;margin:-5px -6px -5px auto;padding-left:20px}
+.dock-lang button{
+  background:none;border:none;cursor:pointer;
+  font:inherit;font-size:12px;font-weight:600;
+  color:rgba(var(--dock-fg),.42);padding:7px 9px;border-radius:6px;
+  transition:color .25s,background .25s,transform .2s var(--dock-spring);
+}
+.dock-lang button:hover{color:rgba(var(--dock-fg),.85)}
+.dock-lang button:active{transform:scale(.92)}
+.dock-lang button.active{color:var(--fg,#f0ede8);background:rgba(var(--dock-fg),.12)}
+
+/* ═══ Полоска: логотип слева, бургер справа ═══ */
+.dock-bar{
+  box-sizing:border-box;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  height:58px;padding:0 8px;
+  border-top:1px solid transparent;transition:border-color .3s;
+}
+.dock.open .dock-bar{border-top-color:rgba(var(--dock-fg),.1)}
+
+/* Логотип: слово SHUSTER, буквы рисует assets/logo.js.
+   font-size здесь = высота букв. Ширина слова постоянная (5.168em),
+   поэтому при смене шрифтов остальной док стоит на месте. */
+.dock-logo{
+  flex:0 0 auto;height:42px;
+  display:flex;align-items:center;
+  padding:0 10px 0 14px;border-radius:var(--r,8px);
+  color:var(--fg,#f0ede8);text-decoration:none;
+  font-family:var(--font-display,'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif);
+  font-size:20px;font-weight:700;line-height:1;letter-spacing:.02em;
+  transition:background .25s;
+}
+.dock-logo:hover{background:rgba(var(--dock-fg),.07)}
+.sh-logo{position:relative;display:block;flex:0 0 auto;width:5.168em;height:1em}
+.sh-l{position:absolute;left:0;top:0;height:1em;will-change:transform}
+.sh-on .sh-l{transition:transform .55s cubic-bezier(.16,1,.3,1)}
+.sh-l svg{display:block;height:1em;overflow:visible;fill:currentColor;transform-origin:50% 100%}
+
+/* ═══ Бургер: он же переключатель ═══ */
+.dock-more{
+  display:flex;align-items:center;justify-content:center;
+  box-sizing:border-box;width:42px;height:42px;flex:0 0 42px;border-radius:var(--r,8px);
+  background:none;border:none;padding:0;cursor:pointer;
+  color:rgba(var(--dock-fg),.72);
+  transition:color .25s,background .25s,transform .25s var(--dock-spring);
+}
+.dock-more:hover{color:var(--fg,#f0ede8);background:rgba(var(--dock-fg),.07)}
+.dock-more:active{transform:scale(.9)}
+/* плюс из двух уголков (┘ и ┌ с зазором), как в FAQ: при открытии зазор раскрывается,
+   плюс поворачивается в крестик, зазор возвращается; при закрытии наоборот */
+.dock-more .sp{position:relative;display:block;width:18px;height:18px;--s:8px;--g:.65px;transition:transform .6s cubic-bezier(.65,0,.25,1)}
+.dock-more .sp::before,.dock-more .sp::after{content:'';position:absolute;left:50%;top:50%;box-sizing:border-box;width:var(--s);height:var(--s);border:1.5px solid currentColor;animation:nb0 .6s cubic-bezier(.65,0,.25,1)}
+.dock-more .sp::before{margin:calc(var(--g) - var(--s)) 0 0 calc(var(--g) - var(--s));border-top:0;border-left:0;border-bottom-right-radius:4px}
+.dock-more .sp::after{margin:calc(0px - var(--g)) 0 0 calc(0px - var(--g));border-bottom:0;border-right:0;border-top-left-radius:4px;animation-name:nb1}
+.dock-more.open .sp{transform:rotate(45deg)}
+.dock-more.open .sp::before{animation-name:nb2}
+.dock-more.open .sp::after{animation-name:nb3}
+@keyframes nb0{45%{transform:translate(-1.2px,-1.2px)}}@keyframes nb2{45%{transform:translate(-1.2px,-1.2px)}}
+@keyframes nb1{45%{transform:translate(1.2px,1.2px)}}@keyframes nb3{45%{transform:translate(1.2px,1.2px)}}
+@media(prefers-reduced-motion:reduce){.dock-more .sp,.dock-more .sp::before,.dock-more .sp::after{transition:none;animation:none}}
+
+/* ── ТЕЛЕФОН ── */
+@media(max-width:600px){
+  .dock-wrap{bottom:16px;max-width:calc(100vw - 20px)}
+  .dock-bar{height:54px}
+  .dock-logo{height:40px;padding:0 6px 0 12px;font-size:18px}
+  .dock-more{width:40px;height:40px;flex-basis:40px}
+}
+@media(max-width:380px){
+  .dock-logo{padding:0 4px 0 10px;font-size:16px}
+}
+/* Экран ниже 480px по высоте — не перекрываем контент */
+@media(max-height:460px){.dock-wrap{bottom:10px}}
+
+@media(prefers-reduced-motion:reduce){
+  .sh-on .sh-l{transition:none}
+  nav.dock,nav.dock.open,nav.dock.squish,.dock-menu,.dock.open .dock-menu,.dock-row,.dock.open .dock-row{transition-duration:.01s;transition-delay:0s}
+  nav.dock.squish{transform:none}
+}
+
+/* Чтобы док не наезжал на последний блок страницы */
+body.has-dock footer{padding-bottom:120px}
+@media(max-width:600px){body.has-dock footer{padding-bottom:104px}}

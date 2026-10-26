@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="cs" data-lang="cs" data-pt-wait>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<!-- переход между страницами: чёрный экран с первого кадра, без белой вспышки (подробно в assets/transition.js) -->
+<style>html.pt-in{background:#0a0a0a}html.pt-in::before{content:'';position:fixed;inset:0;z-index:2147483000;background:#0a0a0a;pointer-events:none}html.pt-in.pt-open::before{display:none}@view-transition{navigation:auto}::view-transition-group(root),::view-transition-old(root),::view-transition-new(root){animation:none}</style>
+<script>/* ?lang=en или ?lang=cs в ссылке: язык для этого визита и дальше */(function(){var q=(location.search.match(/[?&]lang=(cs|en)(?:&|$)/)||[])[1];if(!q)return;window.__LANGQ=q;try{localStorage.setItem('lang',q);}catch(e){}document.documentElement.setAttribute('data-lang',q);document.documentElement.lang=q;})();</script>
+<script>try{if(sessionStorage.getItem('pt')){sessionStorage.removeItem('pt');document.documentElement.className+=' pt-in';var tc=document.querySelector('meta[name=theme-color]');if(tc){tc.setAttribute('data-c',tc.content);tc.content='#0a0a0a';}}}catch(e){}</script>
+<title>Případová studie · Stepan Shuster, UX/UI designer</title>
+<meta name="description" content="Případová studie webu nebo e‑shopu od Stepana Shustera, UX/UI a produktového designera z Prahy.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Stepan Shuster">
+<meta property="og:image" content="https://shuster.design/media/common/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23ff4a1f'/><text y='.85em' font-size='78' font-family='Arial Black,sans-serif' font-weight='900' fill='%230c0c0c' x='14'>S</text></svg>">
+<link rel="icon" type="image/png" sizes="96x96" href="/media/common/favicon-96.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="assets/transition.css?v=20261102c">
+<link rel="stylesheet" href="assets/navbar.css?v=20261031d">
+<link rel="stylesheet" href="assets/reveal.css?v=20261020d">
+<link href="https://fonts.googleapis.com/css2?family=Hedvig+Letters+Serif:opsz@12..24&family=Inter+Tight:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{color-scheme:light;--bg:#fff;--bg-rgb:255,255,255;--surface:#fff;--fg:#0c0c0c;--fg-rgb:12,12,12;--fg-dim:rgba(12,12,12,.58);--fg-mute:rgba(12,12,12,.32);--border:rgba(12,12,12,.12);--chip:rgba(12,12,12,.05);--accent:#ff4a1f;--on-accent:#fff;--r:8px;--tint:#f4f4f3;--font-serif:'Hedvig Letters Serif',Georgia,'Times New Roman',serif;--font-display:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;--font-body:var(--font-display);--font-mono:var(--font-display);
+  --edge:40px;          /* боковые поля */
+  --text:663px;         /* ширина колонки текста */
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;font-weight:400;line-height:1.5;letter-spacing:-.011em;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:var(--on-accent)}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:rgba(var(--fg-rgb),.18)}
+
+/* ═══ КАРКАС: слева липкое оглавление, справа кейс ═══ */
+.c{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));column-gap:20px;max-width:1440px;margin:0 auto;padding:128px var(--edge) 100px}
+.c-nav{grid-column:1/3;position:sticky;top:128px;align-self:start;display:flex;flex-direction:column;align-items:flex-start;gap:40px;padding-right:20px}
+.c-main{grid-column:3/9;min-width:0}
+
+/* кнопки: маленькие, как чипы */
+.c-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;font:inherit;font-size:14px;font-weight:600;letter-spacing:-.011em;text-decoration:none;color:var(--fg);background:var(--chip);border:0;border-radius:var(--r);cursor:pointer;white-space:nowrap;transition:background .25s,color .25s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+.c-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.c-btn--accent{background:var(--accent);color:var(--on-accent)}
+.c-btn{--hx-tint:rgba(var(--fg-rgb),.08)}.c-btn--accent{--hx-tint:rgba(255,255,255,.16)}
+.c-btn:active{transform:scale(.92);transition-duration:.25s,.25s,.12s}
+
+.c-toc{list-style:none;display:flex;flex-direction:column;gap:8px;counter-reset:toc}
+.c-toc a{display:flex;gap:10px;font-size:15px;font-weight:500;line-height:1.3;letter-spacing:-.015em;color:var(--fg-mute);text-decoration:none;transition:color .3s}
+.c-toc a i{font-style:normal;font-size:12px;font-variant-numeric:tabular-nums;padding-top:2px;min-width:16px}
+.c-toc a:hover,.c-toc a.on{color:var(--fg)}
+
+/* ═══ ШАПКА ═══ */
+.c-head{display:flex;flex-direction:column;gap:28px}
+.c-tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none}
+.c-tags li{display:inline-flex;align-items:center;height:28px;padding:0 10px;border-radius:8px;font-size:12px;font-weight:500;line-height:1;letter-spacing:-.005em;background:rgba(0,0,0,.06);color:rgba(0,0,0,.62)}
+.c-title{font-family:var(--font-display);font-size:clamp(52px,7.4vw,124px);font-weight:400;line-height:.92;letter-spacing:-.045em;text-wrap:balance}
+.c-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px;margin-top:24px;padding-top:24px;border-top:1px solid var(--border)}
+.c-facts dt{font-size:12px;color:var(--fg-dim);margin-bottom:6px}
+.c-facts dd{font-size:16px;font-weight:500;letter-spacing:-.015em;line-height:1.4}
+.c-facts dd small{display:block;font-size:14px;font-weight:400;color:var(--fg-dim);margin-top:2px}
+.c-facts ul{list-style:none}
+.c-facts .w{grid-column:1/-1}
+.c-over{font-size:clamp(18px,1.7vw,22px)!important;font-weight:500!important;line-height:1.4!important;letter-spacing:-.022em!important;max-width:var(--text);text-wrap:pretty}
+.c-facts dd a{text-decoration:none;border-bottom:1px solid var(--border);transition:border-color .25s}
+.c-facts dd a:hover{border-color:var(--accent)}
+
+/* ═══ ТЕЛО ═══ */
+.c-cover{margin-top:56px}
+.c-cover img,.c-cover video{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r);background:var(--tint)}
+.c-sec{padding-top:96px;scroll-margin-top:40px}
+.c-eyebrow{display:flex;gap:10px;font-size:13px;font-weight:500;color:var(--fg-dim);margin-bottom:14px}
+.c-eyebrow b{font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+.c-h2{font-family:var(--font-display);font-size:clamp(26px,2.6vw,34px);font-weight:500;line-height:1.12;letter-spacing:-.025em;max-width:var(--text);text-wrap:balance}
+.c-text{max-width:var(--text);margin-top:20px;font-size:17px;line-height:1.6;color:rgba(var(--fg-rgb),.78)}
+.c-text p+p{margin-top:16px}
+.c-sec--take .c-h2{font-size:clamp(30px,3.6vw,48px);line-height:1.06;letter-spacing:-.035em}
+.c-block{margin-top:40px}
+
+/* было → стало, рассматривали → сделали */
+.c-ins{list-style:none;display:flex;flex-direction:column;gap:28px;max-width:var(--text)}
+.c-ins li{display:flex;gap:24px}
+.c-ins-ico{flex:0 0 48px;height:48px;border-radius:var(--r);background:var(--chip);display:grid;place-items:center}
+.c-ins-ico svg{width:20px;height:20px;fill:none;stroke:var(--fg-dim);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.c-ins li.is-after .c-ins-ico{background:var(--accent)}
+.c-ins li.is-after .c-ins-ico svg{stroke:var(--on-accent)}
+.c-ins-x{display:flex;flex-direction:column;gap:6px;min-width:0}
+.c-ins-k{font-size:12px;font-weight:500;color:var(--fg-dim)}
+.c-ins-t{font-size:clamp(18px,1.6vw,22px);font-weight:600;line-height:1.35;letter-spacing:-.02em}
+.c-ins li:not(.is-after) .c-ins-t{color:var(--fg-dim)}
+
+/* цифры и отзыв */
+.c-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px}
+.c-stat{padding-top:16px;border-top:1px solid var(--border)}
+.c-stat-val{font-size:clamp(40px,4.6vw,64px);font-weight:500;line-height:1;letter-spacing:-.045em}
+.c-stat-label{margin-top:10px;font-size:14px;line-height:1.4;color:var(--fg-dim);max-width:26ch}
+.c-quote{max-width:var(--text)}
+.c-quote blockquote{font-family:var(--font-serif);font-style:normal;font-size:clamp(26px,2.9vw,38px);font-weight:400;line-height:1.15;letter-spacing:-.01em;text-indent:-.36em}
+.c-quote figcaption{margin-top:16px;font-size:14px;font-weight:500;color:var(--fg-dim)}
+
+/* визуалы */
+.c-media{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+.cm{grid-column:1/-1;position:relative;margin:0;min-width:0}
+.cm--half{grid-column:span 3}
+.cm--third{grid-column:span 2}
+.cm--text{max-width:var(--text)}
+.cm-box{position:relative;overflow:hidden;border-radius:var(--r);background:var(--tint);cursor:zoom-in}
+.cm-box img,.cm-box video{width:100%;display:block;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.cm-box:hover img{transform:scale(1.015)}
+.cm-cap{font-size:13px;font-weight:500;color:var(--fg-dim);padding-top:10px}
+.cm-box.tall{aspect-ratio:16/10}
+.cm-box.tall img{height:100%;object-fit:cover;object-position:top}
+.cm-box.tall::after{content:attr(data-hint);position:absolute;left:14px;bottom:14px;z-index:2;font-size:12px;font-weight:600;color:var(--fg);background:rgba(255,255,255,.9);padding:5px 10px;border-radius:var(--r);backdrop-filter:blur(6px);opacity:0;transition:opacity .3s;pointer-events:none}
+.cm-box.tall:hover::after{opacity:1}
+
+/* финал: кто сделал и как связаться */
+.c-snap{display:flex;align-items:center;gap:24px;margin-top:120px;padding:28px;border-radius:12px;background:var(--tint)}
+.c-snap img{flex:0 0 72px;width:72px;height:72px;border-radius:50%;object-fit:cover}
+.c-snap-x{flex:1;min-width:0}
+.c-snap-t{font-size:clamp(18px,1.7vw,22px);font-weight:600;line-height:1.3;letter-spacing:-.02em;max-width:30ch}
+.c-snap-a{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.c-snap .c-btn{background:var(--bg)}
+.c-snap .c-btn--accent{background:var(--accent)}
+
+.c-next{display:block;margin-top:20px;padding:28px;border-radius:12px;border:1px solid var(--border);text-decoration:none;transition:border-color .3s}
+.c-next-label{font-size:13px;font-weight:500;color:var(--fg-dim);margin-bottom:10px}
+.c-next-title{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:clamp(32px,4.4vw,64px);font-weight:400;letter-spacing:-.045em;line-height:1}
+.c-next-title span{font-family:var(--font-serif);font-style:normal;letter-spacing:-.015em;padding-right:.08em}
+.c-next-title svg{flex:0 0 auto;width:.6em;height:.6em;fill:none;stroke:currentColor;stroke-width:1.6;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+@media(hover:hover){.c-next:hover{border-color:rgba(var(--fg-rgb),.4)}.c-next:hover .c-next-title svg{transform:translateX(10px)}}
+
+/* ═══ ЛАЙТБОКС ═══ */
+.lb{position:fixed;inset:0;z-index:200;background:rgba(255,255,255,.97);display:none;align-items:center;justify-content:center;padding:40px;cursor:zoom-out;backdrop-filter:blur(8px)}
+.lb.open{display:flex}
+.lb img{max-width:100%;max-height:90vh;object-fit:contain}
+.lb.tall{align-items:flex-start;overflow-y:auto;overscroll-behavior:contain;padding:40px 40px 80px}
+.lb.tall img{max-width:min(1000px,100%);max-height:none;height:auto;margin:0 auto}
+.lb-close{position:absolute;top:24px;right:32px;font-size:13px;font-weight:500;color:var(--fg-dim)}
+
+footer{border-top:1px solid var(--border)}
+.footer-inner{max-width:1440px;margin:0 auto;padding:40px var(--edge);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:40px}
+.footer-name{font-size:13px;font-weight:600}
+.footer-copy{font-size:13px;color:var(--fg-dim);text-align:center}
+.footer-links{display:flex;gap:24px}
+.footer-links a{color:var(--fg-dim);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+.footer-links a:hover{color:var(--fg)}
+.c-error{padding:200px var(--edge);font-size:15px;color:var(--fg-dim)}
+
+/* планшет: оглавление уходит, остаётся строка кнопок над шапкой */
+@media(max-width:1024px){
+  :root{--edge:28px}
+  .c{grid-template-columns:minmax(0,1fr);padding-top:96px}
+  .c-nav{grid-column:1;position:static;flex-direction:row;justify-content:space-between;align-items:center;gap:12px;padding:0 0 36px}
+  .c-toc{display:none}
+  .c-main{grid-column:1}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:20px}
+  .footer-copy{grid-column:1/-1;order:3;text-align:left}
+}
+@media(max-width:768px){
+  :root{--edge:20px}
+  .c{padding-top:72px;padding-bottom:72px}
+  .c-head{gap:20px}
+  .c-facts{grid-template-columns:1fr 1fr;gap:22px 16px;margin-top:12px}
+  .c-cover{margin-top:36px}
+  .c-cover img,.c-cover video{aspect-ratio:4/3}
+  .c-sec{padding-top:72px}
+  .c-block{margin-top:32px}
+  .c-media{grid-template-columns:1fr;gap:12px}
+  .cm--half,.cm--third{grid-column:1/-1}
+  .c-ins li{gap:16px}
+  .c-ins-ico{flex-basis:40px;height:40px}
+  .c-snap{flex-direction:column;align-items:flex-start;gap:16px;padding:22px;margin-top:80px}
+  .c-next{padding:22px}
+  .lb.tall{padding:16px 16px 48px}
+  .footer-inner{grid-template-columns:1fr;padding:32px var(--edge)}
+  .footer-links{flex-wrap:wrap;gap:16px}
+}
+@media(max-width:480px){
+  :root{--edge:16px}
+  .c-facts{grid-template-columns:1fr}
+  .c-snap-a .c-btn{flex:1 1 auto;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<main id="app"></main>
+
+<div class="lb" id="lightbox"><div class="lb-close" data-en="Close" data-cs="Zavřít">Close</div><img id="lbImg" alt=""></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-name">STEPAN SHUSTER</div>
+    <div class="footer-copy" id="footerCopy">© 2026 · Všechna práva vyhrazena</div>
+    <div class="footer-links">
+      <a href="https://www.behance.net/shusters" target="_blank" rel="noopener">Behance</a>
+      <a href="https://www.linkedin.com/in/shusterdesign/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/stepamonstaxd/" target="_blank" rel="noopener">Instagram</a>
+      <a href="mailto:ahoj@shuster.design">Email</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+var LANG = 'cs';
+try { LANG = window.__LANGQ || localStorage.getItem('lang') || 'cs'; } catch(e){}
+var DATA = null, NEXT = null;
+var SEC = [];   // секции текущего кейса, по ним строится оглавление
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+// чешская версия, если заполнена, иначе английская
+function t(o,k){ var v = LANG==='cs' ? o[k+'_cs'] : null; return (v && String(v).trim()) ? v : (o[k]||''); }
+function para(txt){ return String(txt||'').split(/\n\s*\n/).filter(Boolean).map(function(p){return '<p>'+esc(p).replace(/\n/g,'<br>')+'</p>';}).join(''); }
+
+var T = {
+  en:{did:'What I did',role:'Role',timeline:'Timeline',team:'Team',platform:'Platform',before:'Before',after:'After',considered:'Considered',chosen:'Shipped',fact:'Highlight',client:'Client',site:'Live site',overview:'Overview',contents:'Contents',works:'Works',next:'Next case',live:'Live site',snap:'Looking for a designer who can handle projects like this one? Let\'s meet.',write:'Get in touch',notfound:'Case not found',back:'Back to works'},
+  cs:{did:'Co jsem dělal',role:'Role',timeline:'Doba trvání',team:'Tým',platform:'Platforma',before:'Dřív',after:'Teď',considered:'Zvažováno',chosen:'Realizováno',fact:'Zajímavost',client:'Klient',site:'Živý web',overview:'Přehled',contents:'Obsah',works:'Projekty',next:'Další projekt',live:'Živý web',snap:'Hledáte do týmu designera, který zvládne podobné projekty? Pojďme se poznat.',write:'Ozvěte se',notfound:'Projekt nenalezen',back:'Zpět na projekty'}
+};
+
+function setLang(l){
+  LANG = l;
+  try { localStorage.setItem('lang', l); } catch(e){}
+  try{var _u=new URL(location.href);if(_u.searchParams.has('lang')&&_u.searchParams.get('lang')!==l){_u.searchParams.set('lang',l);history.replaceState(history.state,'',_u);}}catch(e){}
+  document.documentElement.setAttribute('data-lang', l);
+  var be = document.getElementById('btnEN'), bc = document.getElementById('btnCS');
+  if (be) be.classList.toggle('active', l==='en');
+  if (bc) bc.classList.toggle('active', l==='cs');
+  document.querySelectorAll('[data-en]').forEach(function(el){ var v = el.getAttribute('data-'+l); if(v) el.innerHTML = v; });
+  var y = new Date().getFullYear();
+  document.getElementById('footerCopy').textContent = l==='cs' ? '© '+y+' · Všechna práva vyhrazena' : '© '+y+' · All rights reserved';
+  if (DATA) render();
+}
+
+// телефон или экономия трафика: лёгкие видео и постеры (cover_video_m, cover_sm)
+var LITE = matchMedia('(max-width:768px)').matches || !!(navigator.connection && navigator.connection.saveData);
+
+var IC = {
+  back:'<svg class="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+  ne:'<svg class="i-ne" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  was:'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  alt:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/></svg>',
+  ok:'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'
+};
+
+function fact(label, val, cls){
+  return val ? '<div'+(cls?' class="'+cls+'"':'')+'><dt>'+esc(label)+'</dt><dd'+(cls==='w'?' class="c-over"':'')+'>'+val+'</dd></div>' : '';
+}
+
+/* Один визуал: картинка или видео */
+function mediaItem(m){
+  if (!m || !m.src) return '';
+  var size = m.size || 'wide';
+  var inner = m.type === 'video'
+    ? '<video src="'+esc(m.src)+'" autoplay muted loop playsinline'+(m.poster?' poster="'+esc(m.poster)+'"':'')+'></video>'
+    : '<img src="'+esc(m.src)+'" alt="'+esc(t(m,'caption'))+'" loading="lazy">';
+  return '<figure class="cm cm--'+esc(size)+'">'
+    + '<div class="cm-box" data-src="'+esc(m.src)+'"'+(m.type==='video'?' data-novideo="1"':'')+'>'+inner+'</div>'
+    + (t(m,'caption') ? '<figcaption class="cm-cap">'+esc(t(m,'caption'))+'</figcaption>' : '')
+    + '</figure>';
+}
+
+function render(){
+  var d = DATA, L = T[LANG], h = '', toc = '';
+  var keep = TOC.at > -1 && TOC.secs[TOC.at] ? { i:TOC.at, top:TOC.secs[TOC.at].getBoundingClientRect().top } : null;
+  var chapters = (d.chapters || []).filter(function(c){
+    if (c.kind === 'final') return (c.media||[]).length;
+    return t(c,'title') || t(c,'text') || (c.media||[]).length || (c.stats||[]).length || t(c,'quote') || t(c,'after');
+  });
+  var host = (d.link||'').replace(/^https?:\/\/(www\.)?/,'').replace(/\/.*$/,'');
+
+  // ── шапка: теги, название, факты, обзор, обложка ──
+  var tags = t(d,'category').split('·').map(function(s){ return s.trim(); }).filter(Boolean);
+  if (d.year) tags.push(String(d.year));
+  var services = (LANG==='cs' && d.services_cs && d.services_cs.length ? d.services_cs : (d.services||[]));
+  h += '<header class="c-head" id="top">'
+    +  (tags.length ? '<ul class="c-tags">'+tags.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul>' : '')
+    +  '<h1 class="c-title">'+esc(d.title)+'</h1>'
+    +  '<dl class="c-facts">'
+    +    fact(L.did, services.length ? '<ul>'+services.map(function(s){ return '<li>'+esc(s)+'</li>'; }).join('')+'</ul>' : '')
+    +    fact(L.role, esc(t(d,'role')))
+    +    fact(L.team, d.team ? esc(d.team)+(t(d,'team_note') ? '<small>'+esc(t(d,'team_note'))+'</small>' : '') : '')
+    +    (d.client && d.client !== d.title ? fact(L.client, esc(d.client)) : '')
+    +    fact(L.timeline, esc(t(d,'timeline')))
+    +    fact(L.platform, esc(d.platform))
+    +    fact(L.fact, esc(t(d,'fact')))
+    +    fact(L.site, host && '<a href="'+esc(d.link)+'" target="_blank" rel="noopener">'+esc(host)+'</a>')
+    +    fact(L.overview, esc(t(d,'tagline')), 'w')
+    +  '</dl>'
+    +  '</header>'
+    +  (d.cover_video
+         ? '<div class="c-cover"><video src="'+esc(LITE && d.cover_video_m ? d.cover_video_m : d.cover_video)+'" autoplay muted loop playsinline'+(d.cover?' poster="'+esc(LITE && d.cover_sm ? d.cover_sm : d.cover)+'"':'')+'></video></div>'
+         : d.cover ? '<div class="c-cover"><img src="'+esc(d.cover)+'"'+(d.cover_sm?' srcset="'+esc(d.cover_sm)+' 1200w, '+esc(d.cover)+' 2400w" sizes="(max-width:768px) 100vw, 1200px"':'')+' alt="'+esc(d.title)+'" fetchpriority="high"></div>' : '');
+
+  // ── секции: заголовок, текст, было/стало, цифры, отзыв, визуалы ──
+  SEC = chapters.map(function(c, i){
+    var num = ('0'+(i+1)).slice(-2), txt = t(c,'text'), name = t(c,'label') || t(c,'title') || num;
+    var stats = (c.stats||[]).filter(function(x){ return x && x.value; });
+    var ex = c.pair === 'ex';
+    var ins = t(c,'after') ? '<ul class="c-ins c-block">'
+        + (t(c,'before') ? '<li><span class="c-ins-ico">'+(ex?IC.alt:IC.was)+'</span><div class="c-ins-x"><span class="c-ins-k">'+esc(ex?L.considered:L.before)+'</span><p class="c-ins-t">'+esc(t(c,'before'))+'</p></div></li>' : '')
+        + '<li class="is-after"><span class="c-ins-ico">'+IC.ok+'</span><div class="c-ins-x"><span class="c-ins-k">'+esc(ex?L.chosen:L.after)+'</span><p class="c-ins-t">'+esc(t(c,'after'))+'</p></div></li>'
+        + '</ul>' : '';
+    h += '<section class="c-sec'+(c.kind==='takeaway'?' c-sec--take':'')+'" id="ch'+(i+1)+'">'
+      +  '<div class="c-eyebrow"><b>'+num+'</b>'+esc(name)+'</div>'
+      +  (t(c,'title') ? '<h2 class="c-h2">'+esc(t(c,'title'))+'</h2>' : '')
+      +  (txt ? '<div class="c-text">'+para(txt)+'</div>' : '')
+      +  ins
+      +  (stats.length ? '<div class="c-stats c-block">'+stats.map(function(x){
+            return '<div class="c-stat"><div class="c-stat-val">'+esc(x.value)+'</div><div class="c-stat-label">'+esc(t(x,'label'))+'</div></div>';
+          }).join('')+'</div>' : '')
+      +  (t(c,'quote') ? '<figure class="c-quote c-block"><blockquote>“'+esc(t(c,'quote'))+'”</blockquote>'
+            + (c.quote_author ? '<figcaption>'+esc(c.quote_author)+'</figcaption>' : '')+'</figure>' : '')
+      +  ((c.media||[]).length ? '<div class="c-media c-block">'+c.media.map(mediaItem).join('')+'</div>' : '')
+      +  '</section>';
+    toc += '<li><a href="#ch'+(i+1)+'" data-i="'+i+'"><i>'+num+'</i>'+esc(name)+'</a></li>';
+    return { num:num, name:name };
+  });
+
+  // ── финал: связаться и следующий кейс ──
+  h += '<aside class="c-snap"><img src="media/contact/stepan-face.webp" alt="Stepan Shuster" loading="lazy" decoding="async" width="72" height="72">'
+    +  '<div class="c-snap-x"><p class="c-snap-t">'+esc(L.snap)+'</p><div class="c-snap-a">'
+    +    '<a class="c-btn c-btn--accent" href="index.html#contact">'+esc(L.write)+'</a>'
+    +    '<a class="c-btn" href="mailto:ahoj@shuster.design">ahoj@shuster.design</a>'
+    +  '</div></div></aside>';
+  if (NEXT){
+    h += '<a class="c-next" href="case.html?slug='+encodeURIComponent(NEXT.slug)+'">'
+      +  '<div class="c-next-label">'+esc(L.next)+'</div>'
+      +  '<div class="c-next-title"><span>'+esc(NEXT.title)+'</span>'+IC.arrow+'</div></a>';
+  }
+
+  var nav = '<a class="c-btn" href="index.html#works">'+esc(L.works)+'</a>'
+    + (SEC.length > 1 ? '<ol class="c-toc">'+toc+'</ol>' : '')
+    + (d.link ? '<a class="c-btn c-btn--accent" href="'+esc(d.link)+'" target="_blank" rel="noopener">'+esc(L.live)+'</a>' : '');
+
+  document.getElementById('app').innerHTML = '<article class="c"><nav class="c-nav" aria-label="'+esc(L.contents)+'">'+nav+'</nav><div class="c-main">'+h+'</div></article>';
+  document.documentElement.lang = LANG;
+  var slug = new URLSearchParams(location.search).get('slug') || '';
+  var url = 'https://shuster.design/case.html?slug=' + encodeURIComponent(slug);
+  var desc = t(d,'tagline') || t(d,'card_desc');
+  document.title = d.title + (LANG === 'cs' ? ' · případová studie · Stepan Shuster' : ' · case study · Stepan Shuster');
+  function meta(sel, attr, key, val){ var m = document.head.querySelector(sel); if (!m) { m = document.createElement(attr === 'link' ? 'link' : 'meta'); if (attr === 'link') m.rel = key; else m.setAttribute(attr, key); document.head.appendChild(m); } m.setAttribute(attr === 'link' ? 'href' : 'content', val); }
+  meta('meta[name=description]', 'name', 'description', desc);
+  meta('link[rel=canonical]', 'link', 'canonical', url);
+  meta('meta[property="og:title"]', 'property', 'og:title', document.title);
+  meta('meta[property="og:description"]', 'property', 'og:description', desc);
+  meta('meta[property="og:url"]', 'property', 'og:url', url);
+  if (d.cover) meta('meta[property="og:image"]', 'property', 'og:image', 'https://shuster.design' + d.cover);
+  var ld = document.getElementById('caseLd') || document.head.appendChild(Object.assign(document.createElement('script'), { id:'caseLd', type:'application/ld+json' }));
+  ld.textContent = JSON.stringify({ '@context':'https://schema.org', '@type':'CreativeWork', name:d.title, headline:document.title, description:desc, url:url,
+    inLanguage:LANG, image:d.cover ? 'https://shuster.design' + d.cover : undefined, dateCreated:d.year || undefined,
+    genre:t(d,'category'), keywords:(d.services||[]).join(', '),
+    creator:{ '@type':'Person', name:'Stepan Shuster', url:'https://shuster.design/' },
+    about:{ '@type':'Organization', name:d.client || d.title, url:d.link || undefined } });
+  var same = keep && document.getElementById('ch'+(keep.i+1));
+  if (same) window.scrollTo(0, same.getBoundingClientRect().top + window.scrollY - keep.top);
+  tocBuild();
+  initTall();
+  initLightbox();
+  if (window.TextReveal) window.TextReveal.scan();
+}
+
+/* ═══ Оглавление: подсвечивает секцию на экране, ведёт к секции по клику ═══ */
+var TOC = { at:-1, secs:[], links:[] };
+function tocBuild(){
+  TOC.secs = SEC.map(function(s,i){ return document.getElementById('ch'+(i+1)); });
+  TOC.links = [].slice.call(document.querySelectorAll('.c-toc a'));
+  TOC.at = -1; tocTrack();
+  if (!TOC.init){
+    TOC.init = true;
+    var wait = false;
+    window.addEventListener('scroll', function(){ if (!wait) { wait = true; requestAnimationFrame(function(){ wait = false; tocTrack(); }); } }, {passive:true});
+    document.addEventListener('click', function(e){
+      var a = e.target.closest('.c-toc a'); if (!a) return;
+      e.preventDefault();
+      var el = TOC.secs[+a.dataset.i];
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 40, behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth' });
+    });
+  }
+}
+function tocTrack(){
+  var best = -1, line = window.innerHeight * .4;
+  TOC.secs.forEach(function(s,i){ if (s && s.getBoundingClientRect().top <= line) best = i; });
+  if (best === TOC.at) return;
+  TOC.at = best;
+  TOC.links.forEach(function(a,k){ a.classList.toggle('on', k === best); });
+}
+
+/* Длинные скриншоты страниц подрезаем до верхней части, без движения */
+function initTall(){
+  var TALL = 2.2;
+  document.querySelectorAll('.cm-box').forEach(function(box){
+    var img = box.querySelector('img');
+    if (!img) return;
+    function mark(){
+      if (img.naturalWidth && img.naturalHeight / img.naturalWidth > TALL){
+        box.classList.add('tall');
+        box.dataset.hint = LANG === 'cs' ? 'Celá stránka' : 'Full page';
+        box.dataset.tall = '1';
+      }
+    }
+    if (img.complete) mark(); else img.addEventListener('load', mark);
+  });
+}
+
+function initLightbox(){
+  var lb = document.getElementById('lightbox'), img = document.getElementById('lbImg');
+  document.querySelectorAll('.cm-box').forEach(function(box){
+    if (box.dataset.novideo) { box.style.cursor = 'default'; return; }
+    box.addEventListener('click', function(){
+      img.src = box.dataset.src;
+      lb.classList.toggle('tall', box.dataset.tall === '1');
+      lb.classList.add('open');
+      lb.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  lb.onclick = function(){ lb.classList.remove('open'); document.body.style.overflow=''; img.src=''; };
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb.classList.contains('open')) lb.click(); });
+}
+
+// ── старт ──
+// переход пикселями ждёт, пока кейс отрисуется и обложка будет готова (не дольше 1.2 с)
+function ptReady(){
+  if (window.__ptReady) return;
+  var done = function(){ if (window.__ptReady) return; window.__ptReady = true; document.dispatchEvent(new Event('pt:ready')); };
+  var m = document.querySelector('.c-cover img, .c-cover video');
+  if (!m) return done();
+  if (m.tagName === 'IMG') { if (m.complete) return done(); m.addEventListener('load', done); m.addEventListener('error', done); }
+  else { if (m.readyState >= 2) return done(); m.addEventListener('loadeddata', done); m.addEventListener('error', done); }
+  setTimeout(done, 1200);
+}
+(function(){
+  var slug = new URLSearchParams(location.search).get('slug');
+  if (!slug) { location.replace('index.html#works'); return; }
+  slug = slug.replace(/[^a-z0-9\-_]/gi,'');
+
+  Promise.all([
+    fetch('content/cases/'+slug+'.json', { cache: 'no-cache' }).then(function(r){ if(!r.ok) throw 0; return r.json(); }),
+    fetch('content/home.json', { cache: 'no-cache' }).then(function(r){ return r.ok ? r.json() : {featured:[]}; }).catch(function(){ return {featured:[]}; })
+  ]).then(function(res){
+    DATA = res[0];
+    // следующий кейс — тот, что идёт дальше в сетке и имеет свою страницу
+    var list = (res[1].featured||[]).map(function(f){ return f.case; });
+    var i = list.indexOf(slug);
+    if (i > -1 && list.length > 1){
+      var order = list.slice(i+1).concat(list.slice(0,i));
+      return (function nextOf(k){
+        if (k >= order.length) return;
+        var ns = order[k];
+        return fetch('content/cases/'+ns+'.json', { cache: 'no-cache' }).then(function(r){ return r.ok ? r.json() : null; })
+          .then(function(n){
+            if (n && !n.external) { NEXT = {slug:ns, title:n.title}; return; }
+            return nextOf(k+1);
+          }).catch(function(){ return nextOf(k+1); });
+      })(0);
+    }
+  }).then(function(){
+    setLang(LANG);
+    if (DATA) render();
+    ptReady();
+  }).catch(function(){
+    ptReady();
+    document.getElementById('app').innerHTML = '<div class="c-error">'+T[LANG].notfound+' — <a href="index.html#works" style="border-bottom:1px solid">'+T[LANG].back+'</a></div>';
+  });
+})();
+</script>
+<script src="assets/logo.js?v=20261020d"></script>
+<script src="assets/hx.js?v=20261031b"></script>
+<script src="assets/navbar.js?v=20261031d"></script>
+<script src="assets/reveal.js?v=20261020d"></script>
+<script src="assets/transition.js?v=20261102c"></script>
+<script src="assets/cursor.js?v=20261020d"></script>
+<script src="assets/analytics.js?v=20261025a"></script>
+</body>
+</html>

@@ -100,12 +100,5 @@
     return { root: it.root, stop: function () { clearInterval(t); } };
   }
 
-  // Все начертания одной буквы: [[ширина, контур], ...], высота прописной CAP. Нужно фавиконке.
-  function glyphs(letter) {
-    var out = [];
-    for (var f in G) if (G[f][letter]) out.push(G[f][letter]);
-    return out;
-  }
-
-  window.ShusterLogo = { mount: mount, spin: spin, glyphs: glyphs, CAP: CAP };
+  window.ShusterLogo = { mount: mount, spin: spin };
 })();

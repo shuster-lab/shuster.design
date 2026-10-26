@@ -1,0 +1,88 @@
+{
+  "apps": [
+    {
+      "name": "Most",
+      "icon": "media/playground/most-icon.png",
+      "subtitle": "One keyboard and mouse for a Mac and a PC",
+      "subtitle_cs": "Jedna klávesnice a myš pro Mac i PC",
+      "platforms": "macOS, Windows",
+      "desc": "Push the cursor past the edge of the screen and it lands on the other computer. The keyboard and the clipboard follow.",
+      "desc_cs": "Dotlač kurzor za okraj obrazovky a objeví se na druhém počítači. Klávesnice i schránka jdou za ním.",
+      "about": "Built for my own desk: a Windows PC with a MacBook open next to it. One keyboard and mouse control both, in either direction, and copied text, screenshots and files travel with the cursor.",
+      "about_cs": "Vzniklo pro můj vlastní stůl: počítač s Windows a vedle otevřený MacBook. Jedna klávesnice a myš ovládají oba, oběma směry, a zkopírovaný text, screenshoty i soubory putují s kurzorem.",
+      "features": [
+        {
+          "text": "Works both ways: either computer can lead",
+          "text_cs": "Funguje oběma směry: hlavní může být kterýkoli počítač"
+        },
+        {
+          "text": "Shared clipboard for text, images, files and folders",
+          "text_cs": "Sdílená schránka pro text, obrázky, soubory i složky"
+        },
+        {
+          "text": "All traffic encrypted (Noise, ChaCha20 Poly1305, X25519), paired by key",
+          "text_cs": "Veškerý provoz šifrovaný (Noise, ChaCha20 Poly1305, X25519), párování klíčem"
+        },
+        {
+          "text": "Finds the other computer on the local network by itself",
+          "text_cs": "Druhý počítač v místní síti najde sám"
+        },
+        {
+          "text": "Lives in the tray and starts with the system, no windows",
+          "text_cs": "Žije v liště a spouští se se systémem, žádná okna"
+        },
+        {
+          "text": "Keyboard layouts just work: the key travels, the letter is picked locally",
+          "text_cs": "Rozložení klávesnice fungují: posílá se klávesa, písmeno vybírá počítač, na kterém píšeš"
+        }
+      ],
+      "note": "The Mac app isn't notarized yet. The first time, right click it and choose Open.",
+      "note_cs": "Aplikace pro Mac zatím není notarizovaná. Poprvé na ni klikni pravým tlačítkem a zvol Otevřít.",
+      "version": "0.3.1",
+      "size": "1.9 MB",
+      "stack": "Rust",
+      "mac": "/media/apps/Most-0.3.1.dmg",
+      "win": ""
+    },
+    {
+      "name": "Accept",
+      "icon": "media/playground/accept-icon.svg",
+      "subtitle": "Accept a Dota 2 match from your phone",
+      "subtitle_cs": "Přijmi zápas v Dotě 2 z telefonu",
+      "platforms": "Windows + iOS, Android",
+      "desc": "Match found while you're in the kitchen? Tap Accept on your phone and pick your hero before you're back at the desk.",
+      "desc_cs": "Hra se našla, zatímco jsi v kuchyni? Klepni na telefonu na Přijmout a hrdinu si vyber dřív, než dojdeš ke stolu.",
+      "about": "A tiny app on the PC and a web app on the phone. I made it for myself and the friends I play with, so a match found while we're away from the desk is never lost.",
+      "about_cs": "Malá aplikace na PC a webová aplikace v telefonu. Udělal jsem ji pro sebe a kamarády, se kterými hraju, aby se žádný nalezený zápas neztratil jen proto, že zrovna nesedíme u stolu.",
+      "features": [
+        {
+          "text": "Pair the phone with the PC by scanning a QR code",
+          "text_cs": "Telefon s PC spáruješ naskenováním QR kódu"
+        },
+        {
+          "text": "Add it to the home screen like an app, on iPhone and Android",
+          "text_cs": "Přidáš si ji na plochu jako aplikaci, na iPhonu i Androidu"
+        },
+        {
+          "text": "Accept the match, then pick a hero from an alphabetical list",
+          "text_cs": "Přijmeš zápas a pak vybereš hrdinu z abecedního seznamu"
+        },
+        {
+          "text": "Light and dark theme that follows the system",
+          "text_cs": "Světlý a tmavý režim podle systému"
+        },
+        {
+          "text": "Uses practically no resources on the PC",
+          "text_cs": "Na PC nezabírá skoro žádné prostředky"
+        }
+      ],
+      "note": "",
+      "note_cs": "",
+      "version": "",
+      "size": "",
+      "stack": "",
+      "mac": "",
+      "win": ""
+    }
+  ]
+}
