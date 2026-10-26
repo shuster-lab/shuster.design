@@ -100,7 +100,9 @@ function size() {
   return { h: h, at: [.5, mid + h / 2], fs: phone ? 5 : (W > 1600 ? 7 : 6) };
 }
 function mount() {
-  var s = size(); lastH = s.h;
+  var s = size();
+  if (!(s.h > 0) || !isFinite(s.h)) return;   // окно ещё без размера (фоновая вкладка): соберём на первом resize
+  lastH = s.h;
   var old = host.querySelector('canvas');
   if (old) { try { var gl = old.getContext('webgl'); gl && gl.getExtension('WEBGL_lose_context') && gl.getExtension('WEBGL_lose_context').loseContext(); } catch (e) {} }
   var el = document.createElement('div'); el.className = 'nf-ascii'; el.setAttribute('aria-hidden', 'true'); el.id = 'ascii';
@@ -116,7 +118,7 @@ function mount() {
 var rt = 0;
 addEventListener('resize', function () {
   clearTimeout(rt);
-  rt = setTimeout(function () { var s = size(); if (Math.abs(s.h - lastH) / lastH > .12) mount(); }, 250);
+  rt = setTimeout(function () { var s = size(); if (!(lastH > 0) || Math.abs(s.h - lastH) / lastH > .12) mount(); }, 250);
 });
 function go() { if (SRC) return; SRC = render(); mount(); }
 (document.fonts && document.fonts.load ? document.fonts.load('800 100px "Inter Tight"', '404') : Promise.resolve()).then(go, go);
